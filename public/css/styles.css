@@ -1,6 +1,851 @@
+:root {
+
+  /**
+   * colors
+   */
+  --primary-color: #6A2055;
+  --secondary-color: #F4E2DE;
+  --accent-1: #928b8b;
+  --accent-2: #15069c;
+  --accent-3: #fcf9f9;
+
+  --gradient: linear-gradient(315deg, var(--accent-2) 0%, var(--primary-color) 100%);
+  --valid: rgb(189, 242, 189);
+
+  --shadow: 4px 4px var(--secondary-color);
+  /**
+   * typography
+   */
+  --ff-poppins: 'Poppins', sans-serif;
+  --ff-open-sans: 'Open Sans', sans-serif;
+
+
+
+  /**
+   * transition
+   */
+
+  --transition: 0.5s ease;
+
+  /* Border radius */
+  --radius: 8px;
+}
+
+.lavishly-yours-regular {
+  font-family: "Lavishly Yours", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-thin {
+  font-family: "Poppins", serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.poppins-extralight {
+  font-family: "Poppins", serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.poppins-light {
+  font-family: "Poppins", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-regular {
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.poppins-extrabold {
+  font-family: "Poppins", serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.poppins-black {
+  font-family: "Poppins", serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.poppins-thin-italic {
+  font-family: "Poppins", serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.poppins-extralight-italic {
+  font-family: "Poppins", serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.poppins-light-italic {
+  font-family: "Poppins", serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.poppins-regular-italic {
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.poppins-medium-italic {
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.poppins-semibold-italic {
+  font-family: "Poppins", serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.poppins-bold-italic {
+  font-family: "Poppins", serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.poppins-extrabold-italic {
+  font-family: "Poppins", serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.poppins-black-italic {
+  font-family: "Poppins", serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+
 /******* Change Box Model ***************/
-*,
-*:before,
-*:after {
+* {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/*-----------------------------------*/
+#RESET
+/*-----------------------------------*/
+
+body {
+  font-family: var(--ff-poppins);
+  font-weight: normal;
+  background-color: var(--secondary-color);
+  min-width: 320px;
+}
+
+h1 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--secondary-color);
+}
+
+button,
+.btn {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  font-size: .95rem;
+  padding: 2%;
+  border-radius: 4px;
+  margin: 1rem auto;
+  height: 2.5rem;
+  width: 100%;
+}
+
+button:hover,
+.btn:hover,
+input[type=submit]:hover {
+  border: solid 2px black;
+  background-color: var(--secondary-color);
+  color: black;
+}
+
+input[type=text],
+input[type=checkbox],
+input[type=radio],
+input[type=password],
+select {
+  background-color: var(--accent-3);
+  border: 1px solid var(--primary-color);
+}
+
+input:required:valid {
+  background-color: var(--valid);
+}
+
+input:required:invalid,
+input:focus:invalid {
+  background-color: var(--secondary-color);
+}
+
+/* #wrapper{  
+  background-color: var(--secondary-color);
+} */
+
+/* Header Style */
+#top-header {
+  background-color: var(--primary-color);
+  padding: 2% 2% 0 2%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#top-header a {
+  color: var(--secondary-color);
+  font-size: .9rem;
+}
+
+#tools {
+  border: 1px solid #F4E2DE;
+  height: fit-content;
+  padding: 1% 2%;
+  border-radius: 10px;
+}
+
+/*End Header Style */
+
+/* Navigation's Style */
+
+.navbar {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  background-color: black;
+  min-height: 3rem;
+  padding: 0 2% 2% 0;
+  width: 100%;
+  margin-top: 0;
+  z-index: 10;
+}
+
+.nav-menu {
+  display: none;
+  gap: 0;
+  text-align: center;
+  margin: 0 auto;
+  transition: .4s;
+}
+
+.nav-menu.active {
+  left: 0;
+
+}
+
+.nav-item {
+  list-style: none;
+  margin: 15px 0;
+}
+
+.nav-link {
+  transition: 0.4s ease;
+  font-size: 1.2rem;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+}
+
+.hambmenu {
+  position: relative;
+
+}
+
+.hamburger {
+  display: block;
+  cursor: pointer;
+  right: 4%;
+  position: relative;
+}
+
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active .bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.bar {
+  position: relative;
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px;
+  border-radius: 10px;
+  background-color: var(--secondary-color);
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+main {
+  max-width: 1200px;
+  min-height: 70vh;
+  margin: -.5rem auto;
+  padding: 4%;
+  background-color: white;
+}
+
+/* Hero */
+
+/*Flash message style*/
+ul.notice-success,
+ul.notice-error {
+  padding: 2%;
+  font-size: 1.1rem;
+  margin: 0 auto;
+  width: 50%;
+}
+
+ul.notice-success {
+  background: #e4f3da;
+}
+
+ul.notice-error {
+  background-color: var(--accent-3);
+  color: red;
+  font-weight: bold;
+}
+
+/*Flash message style*/
+
+.hero-car {
+  height: 18vh;
+}
+
+.hero-car img {
+  width: 100%;
+  z-index: -1;
+}
+
+.hero-car-details {
+  position: relative;
+  z-index: 1;
+  margin-top: -52%;
+  font-size: .95rem;
+  line-height: 1.2rem;
+  opacity: .7;
+  background-color: white;
+  padding: 2%;
+  width: fit-content;
+  color: var(--primary-color);
+  border-radius: 4px;
+  border: solid 1px darkgrey;
+}
+
+.car-features {
+  margin-top: 15%;
+  line-height: 1.6rem;
+}
+
+.car-features .card {
+  margin-bottom: 8%;
+}
+
+.car-features .card ul {
+  margin-left: 1.2rem;
+}
+
+.car-features .card ul li {
+  list-style-type: disc;
+}
+
+.car-features img {
+  width: 30%;
+}
+
+.upgrades {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2%;
+}
+
+.upgrades div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 4%;
+}
+
+.upgrades img {
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+}
+
+.upgrades a {
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+/* Inventory Display */
+.title {
+  background-color: var(--secondary-color);
+  padding: 2%;
+  margin-bottom: .5%;
+  margin-top: -3%;
+}
+
+.item-display,
+ul.inv-display {
+  width: 100%;
+  display: grid;
+  gap: 1%;
+  margin-bottom: 5rem;
+}
+
+.upgrades div,
+ul.inv-display li {
+  border: solid 1px var(--accent-1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform .2s;
+  /* Animation */
+}
+
+.upgrades div:hover,
+ul.inv-display li:hover {
+  transform: scale(1.03);
+  /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.item-display img,
+ul.inv-display img {
+  width: 100%;
+  height: 12rem;
+}
+
+ul.inv-display img {
+  border-radius: var(--radius);
+}
+
+li.nav-data {
+  margin: .7rem;
+}
+
+.namePrice {
+  padding: 2%;
+}
+
+.namePrice a {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.namePrice span {
+  font-weight: bold;
+}
+
+.item-price {
+  background-color: var(--accent-1);
+  color: var(--primary-color);
+  padding: 4%;
+  text-align: end;
+  font-size: 1.1rem;
+}
+
+.item-table table {
+  text-align: left;
+  width: 100%;
+  font-size: 1.1rem;
+}
+
+.item-table table tr:nth-child(odd) {
+  background-color: var(--secondary-color);
+}
+
+.item-table table td {
+  padding-left: 2%;
+  line-height: 1.5rem;
+}
+
+.item-table table tr {
+  padding: 8%;
+}
+
+/* Inventory Display */
+
+/* Error content display */
+.errorContent img {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Error content display */
+
+/* Login Form */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+  height: auto;
+}
+
+.form-card {
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+  border: solid 1px var(--accent-1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.form-card.login-card {
+  max-width: 500px;
+}
+
+.form-card.login-card input:required:invalid,
+.form-card.login-card input:required:focus {
+  border-color: var(--accent-1);
+  background-color: var(--secondary-color);
+  border-style: double;
+}
+
+.form-card.login-card input:valid {
+  border-color: var(--accent-1);
+  background-color: var(--valid);
+}
+
+.form-card.login-card button {
+  width: 100%;
+}
+
+.form-container h2 {
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+.form-container h2,
+.form-container hr {
+  margin-bottom: 4%;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-form .togglePasswd input {
+  width: fit-content;
+}
+
+.account-form .togglePasswd {
+  width: 100%;
+  display: flex;
+  gap: 4%;
+  padding: 2%;
+}
+
+.account-form small {
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: .9rem;
+  text-align: left;
+  margin-bottom: 4%;
+}
+
+.account-form label {
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.account-form input,
+.account-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.account-form input {
+  border: none;
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+.form-link {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.form-link a {
+  color: var(--accent-2);
+  text-decoration: none;
+}
+
+.form-link a:hover {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* End Login Form */
+
+/* Vehicle Management Page Style */
+.management {
+  display: grid;
+  gap: 2%;
+}
+
+.management .btn {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0 0 0;
+
+}
+
+/* Vehicle Management Page Style */
+
+
+/* Footer */
+footer {
+  margin-top: 4%;
+  background-color: black;
+  color: var(--secondary-color);
+  padding: 4%;
+}
+
+/* End Footer */
+
+@media(min-width: 426px) and (max-width: 1023px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .btn {
+    font-size: 1.1rem;
+  }
+
+  .navbar {
+    padding: 1% 2% 2% 0;
+  }
+
+  .hero-car-details {
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+  }
+
+  .car-features {
+    margin-top: 35%;
+    font-size: 1.1rem;
+  }
+
+  .upgrades div {
+    box-shadow: var(--shadow);
+  }
+
+  /* Inventory Display */
+  ul.inv-display {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  ul.inv-display img {
+    height: 200px;
+  }
+
+  .namePrice a {
+    font-size: 1.2rem;
+  }
+
+  .item-display img {
+    height: 26rem;
+    text-align: center;
+  }
+
+  .item-price {
+    font-size: 1.2rem;
+  }
+
+  button,
+  .btn {
+    width: 50%;
+  }
+
+  /* Inventory Display */
+
+  /* Form container */
+  .form-container {
+    margin: 2% auto;
+    /* width: 60%; */
+  }
+
+  /* End Login Form */
+
+  /* Vehicle Management Page Style */
+  .management {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* End Vehicle Management Page Style */
+
+}
+
+@media(min-width: 1024px) {
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 2%;
+  }
+
+  .title {
+    margin-top: -2%;
+  }
+
+
+  main {
+    margin: 0 auto;
+    padding: 2%;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .navbar {
+    padding: .5%;
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    transition: .04s;
+    gap: 40px;
+    flex-direction: row;
+    margin: 0 auto;
+  }
+
+  button,
+  .btn,
+  a.btn {
+    font-size: 1.1rem;
+    width: 50%;
+  }
+
+  .hero-car-details {
+    font-size: 1.3rem;
+    line-height: 2rem;
+  }
+
+  .car-features {
+    margin-top: 45%;
+    font-size: 1.2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2%;
+    line-height: 2.5rem;
+  }
+
+  /* Inventory Display */
+  ul.inv-display {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  ul.inv-display img {
+    height: 230px;
+  }
+
+  .namePrice a {
+    font-size: 1.3rem;
+  }
+
+  .item-display {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .item-display img {
+    height: 21rem;
+  }
+
+  .item-price {
+    padding: 4%;
+    font-size: 1.2rem;
+  }
+
+  /* Inventory Display */
+
+  /* Error content display */
+  .errorContent {
+    text-align: center;
+  }
+
+  .errorContent img {
+    width: 60%;
+  }
+
+  /* Error content display */
+
+  /* Login Form */
+  .form-container {
+    margin: 1% auto;
+    width: 50%;
+  }
+
+  .account-form input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .account-form input[type=submit] {
+    width: 60%;
+    margin: 2% auto;
+  }
+
+  .form-card.login-card button {
+    max-width: 60%;
+    margin: 0 auto;
+  }
+
+  /* End Form style */
+
+  /* Vehicle Management Page Style */
+  .management {
+    grid-template-columns: 1fr 1fr;
+
+  }
+
+  /* End Vehicle Management Page Style */
+
+
 }
