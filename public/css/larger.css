@@ -1,0 +1,160 @@
+@media(min-width: 1024px) {
+  header {
+    padding: 1rem 2rem;
+    justify-content: space-between;
+  }
+
+  header .logo{
+    width:150px;
+  }
+  /*Nav bar styling*/
+  .hamburger {
+    display: none;
+    /* hide hamburger */
+  }
+
+  .nav-bar ul {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .nav-bar ul li {
+    border: none;
+    padding: 1rem 1.5rem;
+  }
+
+  .nav-bar a {
+    padding: 0.5rem 1rem;
+  }
+    /*Nav bar styling*/
+  
+  h1 {
+    font-size: 2.2rem;
+    margin-bottom: 2%;
+  }
+
+  
+
+  .title {
+    margin-top: -2%;
+  }
+
+
+  main {
+    margin: 0 auto;
+    padding: 2%;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .navbar {
+    padding: .5%;
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    transition: .04s;
+    gap: 40px;
+    flex-direction: row;
+    margin: 0 auto;
+  }
+
+  button,
+  .btn,
+  a.btn {
+    font-size: 1.1rem;
+    width: 50%;
+  }
+
+  .hero-car-details {
+    font-size: 1.3rem;
+    line-height: 2rem;
+  }
+
+  .car-features {
+    margin-top: 45%;
+    font-size: 1.2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2%;
+    line-height: 2.5rem;
+  }
+
+  /* Inventory Display */
+  ul.inv-display {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  ul.inv-display img {
+    height: 230px;
+  }
+
+  .namePrice a {
+    font-size: 1.3rem;
+  }
+
+  .item-display {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .item-display img {
+    height: 21rem;
+  }
+
+  .item-price {
+    padding: 4%;
+    font-size: 1.2rem;
+  }
+
+  /* Inventory Display */
+
+  /* Error content display */
+  .errorContent {
+    text-align: center;
+  }
+
+  .errorContent img {
+    width: 60%;
+  }
+
+  /* Error content display */
+
+  /* Login Form */
+  .form-container {
+    margin: 1% auto;
+    width: 50%;
+  }
+
+  .account-form input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .account-form input[type=submit] {
+    width: 60%;
+    margin: 2% auto;
+  }
+
+  .form-card.login-card button {
+    max-width: 60%;
+    margin: 0 auto;
+  }
+
+  /* End Form style */
+
+  /* Vehicle Management Page Style */
+  .management {
+    grid-template-columns: 1fr 1fr;
+
+  }
+
+  /* End Vehicle Management Page Style */
+
+
+}

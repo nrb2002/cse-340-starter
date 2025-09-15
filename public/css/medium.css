@@ -1,0 +1,78 @@
+@media(min-width: 426px) and (max-width: 1023px) {
+  #top-header .logo{
+    width:120px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+
+  .btn {
+    font-size: 1.1rem;
+  }
+
+  .navbar {
+    padding: 1% 2% 2% 0;
+  }
+
+  .hero-car-details {
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+  }
+
+  .car-features {
+    margin-top: 35%;
+    font-size: 1.1rem;
+  }
+
+  .upgrades div {
+    box-shadow: var(--shadow);
+  }
+
+  /* Inventory Display */
+  ul.inv-display {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  ul.inv-display img {
+    height: 200px;
+  }
+
+  .namePrice a {
+    font-size: 1.2rem;
+  }
+
+  .item-display img {
+    height: 26rem;
+    text-align: center;
+  }
+
+  .item-price {
+    font-size: 1.2rem;
+  }
+
+  button,
+  .btn {
+    width: 50%;
+  }
+
+  
+
+  /* Inventory Display */
+
+  /* Form container */
+  .form-container {
+    margin: 2% auto;
+    /* width: 60%; */
+  }
+
+  /* End Login Form */
+
+  /* Vehicle Management Page Style */
+  .management {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* End Vehicle Management Page Style */
+
+}

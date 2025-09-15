@@ -8,6 +8,7 @@
   --accent-1: #928b8b;
   --accent-2: #15069c;
   --accent-3: #fcf9f9;
+  --text-light:var(--accent-3);
 
   --gradient: linear-gradient(315deg, var(--accent-2) 0%, var(--primary-color) 100%);
   --valid: rgb(189, 242, 189);
@@ -222,90 +223,122 @@ input:focus:invalid {
 } */
 
 /* Header Style */
-#top-header {
+header {
   background-color: var(--primary-color);
-  padding: 2% 2% 0 2%;
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--secondary-color);
+  margin: 0;
 }
 
-#top-header a {
+header .logo{
+  width:90px;
+  border-radius:25px;
+  display: block;
+  height: auto;
+  padding: .25rem;
+}
+
+header a {
   color: var(--secondary-color);
   font-size: .9rem;
+}
+
+header span {
+    font-size: 1.2rem;
 }
 
 #tools {
   border: 1px solid #F4E2DE;
   height: fit-content;
-  padding: 1% 2%;
-  border-radius: 10px;
+  padding: 1rem;
+  border-radius: 25px;
 }
 
 /*End Header Style */
 
+
 /* Navigation's Style */
 
-.navbar {
-  display: flex;
-  justify-content: end;
-  align-items: center;
+.nav-bar {
   background-color: black;
-  min-height: 3rem;
-  padding: 0 2% 2% 0;
+  color: var(--secondary-color);
   width: 100%;
-  margin-top: 0;
-  z-index: 10;
+  border-top: none;
+    /* ensures no double border */
 }
+.nav-bar ul{
+  /* display: none; */
 
-.nav-menu {
-  display: none;
-  gap: 0;
-  text-align: center;
-  margin: 0 auto;
-  transition: .4s;
-}
-
-.nav-menu.active {
-  left: 0;
-
-}
-
-.nav-item {
-  list-style: none;
-  margin: 15px 0;
-}
-
-.nav-link {
-  transition: 0.4s ease;
-  font-size: 1.2rem;
-}
-
-.nav-link:hover {
-  color: var(--primary-color);
-}
-
-.hambmenu {
-  position: relative;
-
-}
-
-.hamburger {
-  display: block;
-  cursor: pointer;
-  right: 4%;
-  position: relative;
-}
-
-.hamburger.active .bar:nth-child(2) {
+  max-height: 0;
+  /* collapsed */
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
   opacity: 0;
 }
 
-.hamburger.active .bar:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
+/* Show nav when toggled */
+.nav-bar ul.show {
+  /* display: block; */
+  max-height: 500px;
+  /* large enough to fit all items */
+  opacity: 1;
 }
 
-.hamburger.active .bar:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
+/* Mobile first */
+.nav-bar ul {
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-bar ul li {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-bar a {
+  display: block;
+  color: var(--text-light);
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.nav-bar a:hover,
+.nav-bar li.current,
+.nav-bar a:hover {
+    background-color: var(--primary-color);
+    border-top: var(--accent-1);
+  }
+
+/* Hamburger */
+.hamburger {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-color);
+  display: block;
+  text-align: right;
+  justify-self: end;
+  margin: 0;
+  padding: 0 .5rem;
+  width: fit-content; 
+  
+}
+
+.hamburger::after {
+  content: '\2630';
+  /* menu icon */
+}
+
+.hamburger.active::after {
+  content: '\00D7';
+  /* close icon */
+  font-size: 2.5rem;
+  font-weight: bold;
 }
 
 .bar {
@@ -320,10 +353,10 @@ input:focus:invalid {
   transition: all .4s ease-in-out;
 }
 
+
 main {
   max-width: 1200px;
   min-height: 70vh;
-  margin: -.5rem auto;
   padding: 4%;
   background-color: white;
 }
@@ -649,203 +682,4 @@ footer {
 
 /* End Footer */
 
-@media(min-width: 426px) and (max-width: 1023px) {
-  h1 {
-    font-size: 2rem;
-  }
 
-  .btn {
-    font-size: 1.1rem;
-  }
-
-  .navbar {
-    padding: 1% 2% 2% 0;
-  }
-
-  .hero-car-details {
-    font-size: 1.1rem;
-    line-height: 1.5rem;
-  }
-
-  .car-features {
-    margin-top: 35%;
-    font-size: 1.1rem;
-  }
-
-  .upgrades div {
-    box-shadow: var(--shadow);
-  }
-
-  /* Inventory Display */
-  ul.inv-display {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  ul.inv-display img {
-    height: 200px;
-  }
-
-  .namePrice a {
-    font-size: 1.2rem;
-  }
-
-  .item-display img {
-    height: 26rem;
-    text-align: center;
-  }
-
-  .item-price {
-    font-size: 1.2rem;
-  }
-
-  button,
-  .btn {
-    width: 50%;
-  }
-
-  /* Inventory Display */
-
-  /* Form container */
-  .form-container {
-    margin: 2% auto;
-    /* width: 60%; */
-  }
-
-  /* End Login Form */
-
-  /* Vehicle Management Page Style */
-  .management {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  /* End Vehicle Management Page Style */
-
-}
-
-@media(min-width: 1024px) {
-  h1 {
-    font-size: 2.2rem;
-    margin-bottom: 2%;
-  }
-
-  .title {
-    margin-top: -2%;
-  }
-
-
-  main {
-    margin: 0 auto;
-    padding: 2%;
-  }
-
-  .hamburger {
-    display: none;
-  }
-
-  .navbar {
-    padding: .5%;
-  }
-
-  .nav-menu {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    transition: .04s;
-    gap: 40px;
-    flex-direction: row;
-    margin: 0 auto;
-  }
-
-  button,
-  .btn,
-  a.btn {
-    font-size: 1.1rem;
-    width: 50%;
-  }
-
-  .hero-car-details {
-    font-size: 1.3rem;
-    line-height: 2rem;
-  }
-
-  .car-features {
-    margin-top: 45%;
-    font-size: 1.2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2%;
-    line-height: 2.5rem;
-  }
-
-  /* Inventory Display */
-  ul.inv-display {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  ul.inv-display img {
-    height: 230px;
-  }
-
-  .namePrice a {
-    font-size: 1.3rem;
-  }
-
-  .item-display {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .item-display img {
-    height: 21rem;
-  }
-
-  .item-price {
-    padding: 4%;
-    font-size: 1.2rem;
-  }
-
-  /* Inventory Display */
-
-  /* Error content display */
-  .errorContent {
-    text-align: center;
-  }
-
-  .errorContent img {
-    width: 60%;
-  }
-
-  /* Error content display */
-
-  /* Login Form */
-  .form-container {
-    margin: 1% auto;
-    width: 50%;
-  }
-
-  .account-form input {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-
-  .account-form input[type=submit] {
-    width: 60%;
-    margin: 2% auto;
-  }
-
-  .form-card.login-card button {
-    max-width: 60%;
-    margin: 0 auto;
-  }
-
-  /* End Form style */
-
-  /* Vehicle Management Page Style */
-  .management {
-    grid-template-columns: 1fr 1fr;
-
-  }
-
-  /* End Vehicle Management Page Style */
-
-
-}
