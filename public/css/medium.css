@@ -11,8 +11,11 @@
     font-size: 1.1rem;
   }
 
-  .navbar {
+  .nav-bar {
     padding: 1% 2% 2% 0;
+  }
+  .nav-bar a {
+    font-size: 1.2rem;
   }
 
   .hero-car-details {

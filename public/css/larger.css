@@ -47,22 +47,33 @@
     padding: 2%;
   }
 
+  /* Nav Bar*/
   .hamburger {
     display: none;
+    /* hide hamburger on larger screens */
   }
 
-  .navbar {
-    padding: .5%;
-  }
-
-  .nav-menu {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    transition: .04s;
-    gap: 40px;
+  .nav-bar ul {
+    display: flex !important;
+    /* force nav visible */
+    max-height: none;
+    /* remove slide-down limit */
+    opacity: 1;
+    /* always visible */
     flex-direction: row;
-    margin: 0 auto;
+    /* horizontal menu */
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+
+  .nav-bar ul li {
+    border: none;
+    /* no dividers on desktop */
+    padding: 0.5rem 1rem;
+  }
+
+  .nav-bar a {
+    font-size: 1.3rem;
   }
 
   button,

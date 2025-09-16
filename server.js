@@ -28,9 +28,19 @@ app.use(static)
 
 //Index route
 //This is the base route fetched by a function that takes the request and response objects as parameters.
-app.get("/", function(req, res){
-  res.render("index", {title: "Home"}) //Express function that will retrieve the specified view - "index" - to be sent back to the browser.
+app.get("/", (req, res) => {
+  res.render("index", {page: "Home", title:"Home"}) //Express function that will retrieve the specified view - "index" - to be sent back to the browser.
 })
+
+//Other routes
+/**
+ * app.get('/custom', (req, res) => {
+  res.render('custom', { page: 'custom' });
+});
+
+// repeat for sedan, suv, truck
+ * 
+*/
 
 
 /* ***********************
