@@ -10,6 +10,7 @@ const expressLayouts = require("express-ejs-layouts") //Import ejs
 const env = require("dotenv").config() //Import environment variables
 const app = express() //Create express application
 const static = require("./routes/static") //Import static routes
+const baseController = require("./controllers/baseController") //Import the baseController
  
 /* ***********************
  * View Engine and Templates
@@ -27,10 +28,14 @@ app.set("layout", "./layouts/layout")
 app.use(static)
 
 //Index route
+
 //This is the base route fetched by a function that takes the request and response objects as parameters.
-app.get("/", (req, res) => {
-  res.render("index", {page: "Home", title:"Home"}) //Express function that will retrieve the specified view - "index" - to be sent back to the browser.
-})
+// app.get("/", (req, res) => {
+//   res.render("index", {page: "Home", title:"Home"}) //Express function that will retrieve the specified view - "index" - to be sent back to the browser.
+// })
+
+app.get("/", baseController.buildHome) //This will execute the function in the controller, build the navigation bar and pass it and the title name-value pair to the index.ejs view, which will then be sent to the client.
+
 
 //Other routes
 /**
