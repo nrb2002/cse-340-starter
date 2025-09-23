@@ -9,7 +9,13 @@ const Util = {} //create an empty Util object
  ************************** */
 //creates an asynchronous function, which accepts the request, response and next methods as parameters. The function is then stored in a getNav variable of the Util object.
 Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications() //calls the getClassifications() function from the inventory-model file and stores the returned resultset into the data variable
+  //Create the hamburger menu
+  let hambMenu =  '<button id="ham-btn" class="hamburger" aria-label="hamburgerMenu">'
+  hambMenu += '</button>'  
+
+  let data = await invModel.getClassifications() //calls the getClassifications() function from the inventory-model file and stores the returned resultset into the data variable  
+
+  //Build the menu list dynamically
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
   //uses a forEach loop to move through the rows of the data array one at a time.
@@ -26,7 +32,8 @@ Util.getNav = async function (req, res, next) {
     list += "</li>"
   })
   list += "</ul>"
-  return list //sends the finished string, back to where the getNav function was called.
+  
+  return hambMenu + list //return both the hamburger menu and the menu items.
 }
 
 module.exports = Util
