@@ -5,7 +5,7 @@ const invModel = require("../models/inventory-model") //Import inventory-model f
 const Util = {} //create an empty Util object
 
 /* ************************
- * Constructs the nav HTML unordered list
+ * Constructs the nav bar
  ************************** */
 //creates an asynchronous function, which accepts the request, response and next methods as parameters. The function is then stored in a getNav variable of the Util object.
 Util.getNav = async function (req, res, next) {
@@ -15,23 +15,21 @@ Util.getNav = async function (req, res, next) {
 
   let data = await invModel.getClassifications() //calls the getClassifications() function from the inventory-model file and stores the returned resultset into the data variable  
 
+  //Test print the data found to the console
+  console.log(data)
+
   //Build the menu list dynamically
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
   //uses a forEach loop to move through the rows of the data array one at a time.
   data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>"
-    list += "</li>"
+    list += '<li>'
+    list += '<a href="/inv/type/' + row.classification_id + '" title="See our inventory of ' + row.classification_name + ' vehicles">' + 
+    row.classification_name +
+    '</a>'
+    list += '</li>'
   })
-  list += "</ul>"
+  list += '</ul>'
   
   return hambMenu + list //return both the hamburger menu and the menu items.
 }

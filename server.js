@@ -9,8 +9,13 @@ const express = require("express") //Import express package
 const expressLayouts = require("express-ejs-layouts") //Import ejs
 const env = require("dotenv").config() //Import environment variables
 const app = express() //Create express application
+
 const static = require("./routes/static") //Import static routes
+const inventoryRoute = require("./routes/inventoryRoute") //Import the Inventory route
+
 const baseController = require("./controllers/baseController") //Import the baseController
+
+
  
 /* ***********************
  * View Engine and Templates
@@ -36,8 +41,7 @@ app.use(static)
 
 app.get("/", baseController.buildHome) //This will execute the function in the controller, build the navigation bar and pass it and the title name-value pair to the index.ejs view, which will then be sent to the client.
 
-
-//Other routes
+//Other static routes
 /**
  * app.get('/custom', (req, res) => {
   res.render('custom', { page: 'custom' });
@@ -46,6 +50,10 @@ app.get("/", baseController.buildHome) //This will execute the function in the c
 // repeat for sedan, suv, truck
  * 
 */
+
+//Inventory routes
+
+app.use("/inv", inventoryRoute) //This means that any route that starts with /inv will then be redirected to the inventoryRoute.js file, to find the rest of the route in order to fulfill the request.
 
 
 /* ***********************
