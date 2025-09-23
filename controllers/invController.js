@@ -11,7 +11,7 @@ const invCont = {} //Empty object
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId //collect the classification_id that has been sent, as a named parameter, through the URL
   const data = await invModel.getInventoryByClassificationId(classification_id) //Get inventory data from the model
-  const grid = await utilities.buildClassificationGrid(data) //call a utility function to build a grid, containing all vehicles within that classification
+  const grid = await utilities.buildClassificationGrid(data) //call grid function from the utilities, containing all vehicles within that classification
   let nav = await utilities.getNav() //call the function to build the navigation bar
   const className = data[0].classification_name //extract the name of the classification, which matches the classification_id, from the data returned from the database
 

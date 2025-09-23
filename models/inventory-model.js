@@ -21,7 +21,7 @@ async function getClassifications(){
 //declare an asynchronous function by name and passes a variable, which should contain the classification_id value, as a parameter.
 async function getInventoryByClassificationId(classification_id) {
   try {
-    //Select all items by classification 
+    //Select items by classification 
     const data = await pool.query(
       `SELECT * FROM public.inventory AS i 
       JOIN public.classification AS c 
