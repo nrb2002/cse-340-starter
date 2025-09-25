@@ -72,4 +72,22 @@ Util.buildClassificationGrid = async function(data){
 }
 
 
+
+
+
+
+/* **************************************
+* Build the error background
+* ************************************ */
+//Build an asynchronous function that creates a grid for data returned as an array
+//from the model query
+Util.buildErrorContent = async function (){
+  let errorContent = '<div class="errorContent">'
+  errorContent += '<img src="/images/site/cse-404-1.jpg">'
+  errorContent += '</div>'
+
+  return errorContent
+}
+
+
 module.exports = Util

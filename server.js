@@ -15,6 +15,8 @@ const inventoryRoute = require("./routes/inventoryRoute") //Import the Inventory
 
 const baseController = require("./controllers/baseController") //Import the baseController
 
+const utilities = require("./utilities/") //Import the utilities
+
 
  
 /* ***********************
@@ -54,6 +56,74 @@ app.get("/", baseController.buildHome) //This will execute the function in the c
 //Inventory routes
 
 app.use("/inv", inventoryRoute) //This means that any route that starts with /inv will then be redirected to the inventoryRoute.js file, to find the rest of the route in order to fulfill the request.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
+
+/* ***********************
+* Express 404 Catch-All
+* Place this AFTER all routes, BEFORE the error handler
+*************************/
+app.use((req, res, next) => {
+  const err = new Error("File Not Found")
+  err.status = 404
+  next(err)
+})
+
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
+app.use(async (err, req, res, next) => {
+  let nav = await utilities.getNav() // Build navigation bar
+  let errorContent = await utilities.buildErrorContent() // Build error image
+
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+
+  // Default to 500 if no status is set
+  if (!err.status) {
+    err.status = 500
+  }
+
+  // 404 message for page not found
+  let message
+  if (err.status === 404) {
+    message = "The page you are looking for does not exist."
+  } else {
+    message = "Query aborted. Please contact your system administrator."
+  }
+
+  // Render the error view
+  res.status(err.status).render("errors/error", {
+    title: `${err.status} | ${err.status === 404 ? "Page not found!" : "Internal server error!"}`,
+    message,
+    nav,
+    errorContent
+  })
+})
+
 
 
 /* ***********************
