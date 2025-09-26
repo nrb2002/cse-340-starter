@@ -79,18 +79,17 @@ Util.buildClassificationGrid = async function(data){
 /* **************************************
 * Build the error background
 * ************************************ */
-//Build an asynchronous function that creates a grid for data returned as an array
-//from the model query
-Util.buildErrorImage = async function (){
-  let error404Image = '<div class="error404Image">'
-  error404Image += '<img src="/images/site/cse-404-1.jpg">'
-  error404Image += '</div>'
+//Build error image depending on error code
+Util.buildErrorImage = async function (status){
+  let errorImage = ''
 
-  let error500Image = '<div class="error500Image">'
-  error500Image += '<img src="/images/site/cse-404-1.jpg">'
-  error500Image += '</div>'
+  if (status === 404) {
+    errorImage = '<div class="errorImage"><img src="/images/site/cse-404-1.jpg"></div>'
+  }else {
+    errorImage = '<div class="errorImage"><img src="/images/site/cse-500.jpg"></div>'
+  }
 
-  return error404Image, error500Image
+  return errorImage
 }
 
 

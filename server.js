@@ -103,7 +103,7 @@ app.use((req, res, next) => {
 *************************/
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav() // Build navigation bar
-  let error404Image = await utilities.buildErrorImage() // Build error image
+  let errorImage = await utilities.buildErrorImage(err.status) // call error image dynamically depending on error status code
 
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
 
@@ -125,7 +125,7 @@ app.use(async (err, req, res, next) => {
     title: `${err.status} | ${err.status === 404 ? "Page not found!" : "Internal server error!"}`,
     message,
     nav,
-    error404Image
+    errorImage
   })
 })
 
