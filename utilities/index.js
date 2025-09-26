@@ -81,13 +81,35 @@ Util.buildClassificationGrid = async function(data){
 * ************************************ */
 //Build an asynchronous function that creates a grid for data returned as an array
 //from the model query
-Util.buildErrorContent = async function (){
-  let errorContent = '<div class="errorContent">'
-  errorContent += '<img src="/images/site/cse-404-1.jpg">'
-  errorContent += '</div>'
+Util.buildErrorImage = async function (){
+  let error404Image = '<div class="error404Image">'
+  error404Image += '<img src="/images/site/cse-404-1.jpg">'
+  error404Image += '</div>'
 
-  return errorContent
+  let error500Image = '<div class="error500Image">'
+  error500Image += '<img src="/images/site/cse-404-1.jpg">'
+  error500Image += '</div>'
+
+  return error404Image, error500Image
 }
+
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+
+//Create a function which accepts a request, a response, and next as parameters along with another arrow function
+/**
+ * The wrapped function is called and attempts to fulfill its normal process, but now does so within a JavaScript promise. 
+ * If it succeeds, then the promise is resolved and everything continues normally.
+ * 
+ * If there is an error, the promise fails.  
+ */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+//Because it is an "error" that is being passed via the "next" function, the Express Error Handler will catch the error and then build and deliver the error view to the client.
 
 
 module.exports = Util

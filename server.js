@@ -41,7 +41,12 @@ app.use(static)
 //   res.render("index", {page: "Home", title:"Home"}) //Express function that will retrieve the specified view - "index" - to be sent back to the browser.
 // })
 
-app.get("/", baseController.buildHome) //This will execute the function in the controller, build the navigation bar and pass it and the title name-value pair to the index.ejs view, which will then be sent to the client.
+/**
+ * Catch any errors generated and send them to the Express Error Handler.
+ */
+app.get("/", utilities.handleErrors(baseController.buildHome)) //This will execute the function in the controller, build the navigation bar and pass it and the title name-value pair to the index.ejs view, which will then be sent to the client.
+
+
 
 //Other static routes
 /**
@@ -98,7 +103,7 @@ app.use((req, res, next) => {
 *************************/
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav() // Build navigation bar
-  let errorContent = await utilities.buildErrorContent() // Build error image
+  let error404Image = await utilities.buildErrorImage() // Build error image
 
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
 
@@ -120,7 +125,7 @@ app.use(async (err, req, res, next) => {
     title: `${err.status} | ${err.status === 404 ? "Page not found!" : "Internal server error!"}`,
     message,
     nav,
-    errorContent
+    error404Image
   })
 })
 
