@@ -693,8 +693,7 @@ li.nav-data {
 
 #vehicle-detail {
   display: flex;
-  gap: 2rem;
-  padding: 1rem;
+  flex-direction: column;
 }
 .vehicle-info{
   background-color: var(--secondary-color);
