@@ -13,7 +13,7 @@
   --gradient: linear-gradient(315deg, var(--accent-2) 0%, var(--primary-color) 100%);
   --valid: rgb(189, 242, 189);
 
-  --shadow: 4px 4px var(--secondary-color);
+  --shadow: 10px 10px var(--secondary-color);
   /**
    * typography
    */
@@ -168,6 +168,8 @@ body {
 h1 {
   color: var(--primary-color);
   font-size: 1.5rem;
+  background-color: var(--secondary-color);
+  padding: 1rem;
 }
 
 
@@ -684,17 +686,16 @@ li.nav-data {
 
 }
 
-/* Vehicle Management Page Style */
-.vehicle-detail {
+/* Vehicle Detail View */
+.vehicle-detail-container {
+  border: solid 1px var(--accent-2);
+}
+
+#vehicle-detail {
   display: flex;
-  /* grid-template-columns: 1fr; */
   gap: 2rem;
   padding: 1rem;
 }
-.vehicle-detail h1 {
-  background-color: var(--secondary-color);
-}
-
 .vehicle-info{
   background-color: var(--secondary-color);
 }

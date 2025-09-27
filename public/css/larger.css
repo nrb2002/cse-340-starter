@@ -44,7 +44,6 @@
 
   main {
     margin: 0 auto;
-    padding: 2%;
   }
 
   /* Nav Bar*/
@@ -166,6 +165,13 @@
   }
 
   /* End Vehicle Management Page Style */
+
+  /* SINGLE VEHICLE VIEW */
+  #vehicle-detail{
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  /* SINGLE VEHICLE VIEW */
 
 
 }

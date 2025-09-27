@@ -78,13 +78,4 @@
 
   /* End Vehicle Management Page Style */
 
-  /* VEHICLE DETAIL VIEW */
-    .vehicle-detail {
-      grid-template-columns: 1fr 1fr;
-      align-items: flex-start;
-    }
-  
-
-  /* VEHICLE DETAIL VIEW */
-
 }
