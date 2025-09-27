@@ -686,9 +686,27 @@ li.nav-data {
 
 /* Vehicle Management Page Style */
 .vehicle-detail {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  /* grid-template-columns: 1fr; */
   gap: 2rem;
+  padding: 1rem;
+}
+.vehicle-detail h1 {
+  background-color: var(--secondary-color);
+}
+
+.vehicle-info{
+  background-color: var(--secondary-color);
+}
+
+.vehicle-info h2{
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 1rem;
+}
+
+.vehicle-info h2,
+.vehicle-info p{
   padding: 1rem;
 }
 
@@ -732,13 +750,6 @@ li.nav-data {
 .vehicle-detail__specs li {
   margin-bottom: 0.5rem;
   font-size: 1rem;
-}
-
-@media (min-width: 768px) {
-  .vehicle-detail {
-    grid-template-columns: 1fr 1fr;
-    align-items: flex-start;
-  }
 }
 
 /* VEHICLE DETAIL VIEW */
