@@ -33,14 +33,6 @@
   }
 
   /* Inventory Display */
-  ul.inv-display {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  ul.inv-display img {
-    height: 200px;
-  }
-
   .namePrice a {
     font-size: 1.2rem;
   }

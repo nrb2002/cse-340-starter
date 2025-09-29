@@ -5,7 +5,7 @@
    */
   --primary-color: #6A2055;
   --secondary-color: #F4E2DE;
-  --accent-1: #928b8b;
+  --accent-1: #cbbfbf;
   --accent-2: #15069c;
   --accent-3: #fcf9f9;
   --text-light:var(--accent-3);
@@ -13,7 +13,7 @@
   --gradient: linear-gradient(315deg, var(--accent-2) 0%, var(--primary-color) 100%);
   --valid: rgb(189, 242, 189);
 
-  --shadow: 10px 10px var(--secondary-color);
+  --shadow: 5px 5px var(--accent-1);
   /**
    * typography
    */
@@ -475,41 +475,46 @@ ul.notice-error {
 }
 
 .item-display,
-ul.inv-display {
-  /* width: 100%;
+ul#inv-display {
   display: grid;
-  gap: 1%;
-  margin-bottom: 5rem;*/
-  display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    margin-bottom: 5rem;
-    width: 100%;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  width: 100%;
+  justify-content:left;
 } 
 
 .upgrades div,
-ul.inv-display li {
+ul#inv-display li {
   border: solid 1px var(--accent-1);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   transition: transform .2s;
+  max-width: 350px;
+
   /* Animation */
 }
 
 .upgrades div:hover,
-ul.inv-display li:hover {
+ul#inv-display li:hover {
   transform: scale(1.03);
   /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 .item-display img,
-ul.inv-display img {
+ul#inv-display img {
   width: 100%;
-  height: 12rem;
+  height: 13rem;
 }
 
-ul.inv-display img {
+ul#inv-display img {
   border-radius: var(--radius);
+}
+
+.vehicle-info ul{
+  padding: 1rem;
+}
+.vehicle-info ul li{
+  margin-bottom: .5rem;
 }
 
 li.nav-data {

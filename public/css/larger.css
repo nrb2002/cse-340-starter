@@ -97,14 +97,11 @@
   }
 
   /* Inventory Display */
-  ul.inv-display {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  ul.inv-display img {
-    height: 230px;
-  }
-
+    .item-display img,
+    ul#inv-display img {
+      height: 15rem;
+    }
+  
   .namePrice a {
     font-size: 1.3rem;
   }
@@ -122,7 +119,7 @@
     font-size: 1.2rem;
   }
 
-  /* Inventory Display */
+  /* End Inventory Display */
 
   /* Error content display */
   .errorContent {
