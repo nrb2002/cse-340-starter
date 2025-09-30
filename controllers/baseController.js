@@ -8,6 +8,10 @@ const baseController = {} //create an empty object for the controller
 //Create an anonymous asynchronous function which will build the home page
 baseController.buildHome = async function(req, res){
 const nav = await utilities.getNav() //calls a getNav() function from utilities > index.js file
+
+//For testing purposes only
+//req.flash("notice", "This is a flash message.") //uses the "flash" package to assign the message to the request object. The first parameter indicates the "type" of message - it becomes a class in the browser - while the second one is the actual message.
+
 res.render("index", {title: "Home", nav}) //use EJS to send the index view back to the client, using the response object. The index view will need the "title" name - value pair, and the nav variable. The nav variable will contain the string of HTML code to render this dynamically generated navigation bar.
 }
 
