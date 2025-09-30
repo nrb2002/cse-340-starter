@@ -5,6 +5,8 @@
 /* ***********************
  * Require Statements
  *************************/
+const session = require("express-session") //Import session package
+const pool = require('./database/') //Import connection to the database
 const express = require("express") //Import express package
 const expressLayouts = require("express-ejs-layouts") //Import ejs
 const env = require("dotenv").config() //Import environment variables
@@ -16,6 +18,34 @@ const inventoryRoute = require("./routes/inventoryRoute") //Import the Inventory
 const baseController = require("./controllers/baseController") //Import the baseController
 
 const utilities = require("./utilities/") //Import the utilities
+
+
+
+/* ***********************
+ * Middleware to handle the session
+ * ************************/
+//Apply the session
+ app.use(session({ //invokes the app.use() function and indicates the session is to be applied.
+  //Store session data in a table in our PostgreSQL database using connect-pg-simple package
+  store: new (require('connect-pg-simple')(session))({ //store is referring to where the session data will be stored.
+    createTableIfMissing: true, //tells the session to create a "session" table in the database if it does not already exist.
+    pool, //uses our database connection pool to interact with the database server.
+  }),
+  secret: process.env.SESSION_SECRET, //indicates a "secret" name - value pair that will be used to protect the session. This is stored in the .env file
+  resave: true, //This session for the session in the database is typically "false". But, because we are using "flash" messages we need to resave the session table after each message, so it must be set to "true".
+  saveUninitialized: true, //this setting is important to the creation process when the session is first created.
+  name: 'sessionId', //this is the "name" we are assigning to the unique "id" that will be created for each session.
+}))
+
+
+// Express Messages Middleware
+app.use(require('connect-flash')()) //Make connect-flash package accessible throughout the application.
+app.use(function(req, res, next){
+  //This allows any message to be stored into the response, making it available in a view.
+  res.locals.messages = require('express-messages')(req, res)
+  next() //passing control to the next piece of middleware in the application.
+})
+
 
 
  
