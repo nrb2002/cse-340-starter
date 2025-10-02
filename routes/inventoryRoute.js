@@ -16,13 +16,19 @@ const utilities = require("../utilities/")
  * invController.buildByClassification indicates the buildByClassification function within the invController will be used to fulfill the request sent by the route.
  * 
  */
-router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId))
+router.get(
+    "/type/:classificationId", 
+    utilities.handleErrors(invController.buildByClassificationId)
+)
 
 
 /* ***************************
  *  Route for single vehicle detail view
  * ************************** */
-router.get("/detail/:inv_id", utilities.handleErrors(invController.buildByDetailView))
+router.get(
+    "/detail/:inv_id", 
+    utilities.handleErrors(invController.buildByDetailView) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
+)
 
 //Export the router to be used in other areas of the application
 module.exports = router;

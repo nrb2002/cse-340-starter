@@ -1,0 +1,42 @@
+<!-- Check to see if a title variable exists -->
+<% if (title) { %>
+    <!-- if a title variable exists, then display it as an h1 -->
+    <h1 class="title"><%= title %></h1>
+<% } else {
+    // Otherwise, redirect the response obkect to the home view
+    res.redirect('/')
+} %>
+
+<!-- Flash notifications -->
+<%- messages() %>
+<!--If there are errors, create an unordered list with a class for styling.
+    create a list item and display the message attached to the error element.
+-->
+<% if (errors) { %>
+    <ul class="notice-error">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+<!-- This is the main content to be displayed in the view -->
+
+<div class="form-container">
+    <div class="form-card">
+        <h2>Please fill out this form to add a new classification</h2><hr> 
+
+        <form class="account-form" id="classificationForm" action="" method="POST">
+            <label for="classification_name">Classification Name</label>
+            <input type="text" id="classification_name" name="classification_name" minlength="3" pattern="^[a-zA-Z0-9äöüÄÖÜ_ ]*$" placeholder="Enter Classification Name" value="<%= locals.classification_name %>" required>
+            <small>The classification name cannot contain a space or special character.</small>
+            <button>Submit</button>
+        </form>
+
+        <div class="form-link"><a href="/inv" >Go back to the Vehicle Management page.</a></div>
+    
+    </div>
+</div>
+
+
+

@@ -15,6 +15,8 @@ const app = express() //Create express application
 const static = require("./routes/static") //Import static routes
 const inventoryRoute = require("./routes/inventoryRoute") //Import the Inventory route
 
+const accountRoute = require("./routes/accountRoute") //Import account route
+
 const baseController = require("./controllers/baseController") //Import the baseController
 
 const utilities = require("./utilities/") //Import the utilities
@@ -56,9 +58,12 @@ app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 
+
+
 /* ***********************
  * Routes
  *************************/
+
 /**The resource which has been exported in the static file is now to be used by the app. 
  * This single line of code now allows the app to know where the public folder is located and that it and all of its subfolders will be used for static files.
 */
@@ -89,8 +94,10 @@ app.get("/", utilities.handleErrors(baseController.buildHome)) //This will execu
 */
 
 //Inventory routes
-
 app.use("/inv", inventoryRoute) //This means that any route that starts with /inv will then be redirected to the inventoryRoute.js file, to find the rest of the route in order to fulfill the request.
+
+//Account routes
+app.use("/account", accountRoute) //All routes starting with /account will be redirected to the accountRoute.js file to find the next part of the route. 
 
 
 

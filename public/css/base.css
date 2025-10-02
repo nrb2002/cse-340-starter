@@ -5,13 +5,15 @@
    */
   --primary-color: #6A2055;
   --secondary-color: #F4E2DE;
-  --accent-1: #cbbfbf;
-  --accent-2: #15069c;
+  --tertiary-color: rgb(223, 247, 223);
+  --accent-1: #d1cccc;
+  --accent-2: #064c9c;
   --accent-3: #fcf9f9;
   --text-light:var(--accent-3);
 
   --gradient: linear-gradient(315deg, var(--accent-2) 0%, var(--primary-color) 100%);
-  --valid: rgb(189, 242, 189);
+  --valid: var(--tertiary-color);
+  --invalid: var(--secondary-color)
 
   --shadow: 5px 5px var(--accent-1);
   /**
@@ -187,8 +189,7 @@ button,
   background-color: var(--primary-color);
   color: var(--secondary-color);
   font-size: .95rem;
-  padding: 2%;
-  border-radius: 4px;
+  border-radius: var(--radius);
   margin: 1rem auto;
   height: 2.5rem;
   width: 100%;
@@ -197,12 +198,13 @@ button,
 button:hover,
 .btn:hover,
 input[type=submit]:hover {
-  border: solid 2px black;
-  background-color: var(--secondary-color);
-  color: black;
+  background-color: var(--accent-2);
+  color: white;
 }
 
-input[type=text],
+input[type=text]{
+  border:none;
+}
 input[type=checkbox],
 input[type=radio],
 input[type=password],
@@ -217,7 +219,7 @@ input:required:valid {
 
 input:required:invalid,
 input:focus:invalid {
-  background-color: var(--secondary-color);
+  background-color: var(--invalid);
 }
 
 /* #wrapper{  
@@ -369,8 +371,8 @@ header span {
 main {
   max-width: 1200px;
   min-height: 70vh;
-  padding: 4%;
   background-color: white;
+  padding: 1rem;
 }
 
 /* Hero */
@@ -571,109 +573,76 @@ li.nav-data {
 
 /* Error content display */
 
+
+/* =======================
+   Login Form Styles Only
+   ======================= */
+
 /* Login Form */
-.form-container {
+.login-form {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2%;
-  height: auto;
-}
-
-.form-card {
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 400px;
   width: 100%;
-  background-color: #fff;
-  padding: 20px;
-  border: solid 1px var(--accent-1);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  text-align: center;
+  margin: 0 auto;
+  border: 1px solid var(--accent-1);
+  padding: .5rem;
 }
 
-.form-card.login-card {
-  max-width: 500px;
-}
-
-.form-card.login-card input:required:invalid,
-.form-card.login-card input:required:focus {
-  border-color: var(--accent-1);
-  background-color: var(--secondary-color);
-  border-style: double;
-}
-
-.form-card.login-card input:valid {
-  border-color: var(--accent-1);
-  background-color: var(--valid);
-}
-
-.form-card.login-card button {
-  width: 100%;
-}
-
-.form-container h2 {
-  font-size: 1.1rem;
-  font-style: italic;
-}
-
-.form-container h2,
-.form-container hr {
-  margin-bottom: 4%;
-}
-
-.account-form {
+/* Groups */
+.form-group {
   display: flex;
   flex-direction: column;
 }
 
-.account-form .togglePasswd input {
-  width: fit-content;
+.form-group label {
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #333;
 }
 
-.account-form .togglePasswd {
+.form-group input {
   width: 100%;
-  display: flex;
-  gap: 4%;
-  padding: 2%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.account-form small {
-  font-weight: bold;
-  color: var(--primary-color);
-  font-size: .9rem;
-  text-align: left;
-  margin-bottom: 4%;
+.form-group input:focus {
+  border-color: #0077cc;
+  box-shadow: 0 0 5px rgba(0, 119, 204, 0.4);
+  outline: none;
 }
 
-.account-form label {
-  text-align: left;
-  margin-bottom: 5px;
+
+/* Register link */
+.register-link {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
 }
 
-.account-form input,
-.account-form select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.account-form input {
-  border: none;
-  border-bottom: 1px solid var(--secondary-color);
-}
-
-.form-link {
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-.form-link a {
-  color: var(--accent-2);
+.register-link a {
+  color: #0077cc;
+  font-weight: 600;
   text-decoration: none;
 }
 
-.form-link a:hover {
-  color: var(--primary-color);
-  text-decoration: none;
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+
+.flash-message {
+  margin: 1rem auto;
+  padding: 1rem;
+  max-width: 400px;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  border-radius: 8px;
 }
 
 /* End Login Form */
