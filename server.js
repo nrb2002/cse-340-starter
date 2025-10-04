@@ -9,6 +9,7 @@ const session = require("express-session") //Import session package
 const pool = require('./database/') //Import connection to the database
 const express = require("express") //Import express package
 const expressLayouts = require("express-ejs-layouts") //Import ejs
+const bodyParser = require("body-parser")
 const env = require("dotenv").config() //Import environment variables
 const app = express() //Create express application
 
@@ -48,6 +49,9 @@ app.use(function(req, res, next){
   next() //passing control to the next piece of middleware in the application.
 })
 
+//Express body-parser for post data processing
+app.use(bodyParser.json()) //tells the express application to use the body parser to work with JSON data
+app.use(bodyParser.urlencoded({ extended: true })) // tells the express application to read and work with data sent via a URL as well as from a form, stored in the request object's body. The "extended: true" object is a configuration that allows rich objects and arrays to be parsed.
 
 
  
@@ -136,8 +140,7 @@ app.use((req, res, next) => {
 })
 
 /* ***********************
-* Express Error Handler
-* Place after all other middleware
+* Express Error 500 handler
 *************************/
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav() // Build navigation bar

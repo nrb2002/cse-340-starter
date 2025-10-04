@@ -1,3 +1,4 @@
+const { registerAccount } = require("../models/account-model")
 const utilities = require("../utilities/") //Import Utilities
 
 
@@ -33,10 +34,52 @@ async function buildRegister(req, res, next) {
   })
 }
 
+/* ****************************************
+*  Process Registration
+* *************************************** */
+async function registerAccount(req, res) {
+  let nav = await utilities.getNav()
+
+  //collects and stores the values from the HTML form that are being sent from the browser in the body of the request object.
+  const { 
+    account_firstname, 
+    account_lastname, 
+    account_email, 
+    account_password 
+  } = req.body 
+
+  //calls registerAccount function, from the model, and uses the "await" keyword to indicate that a result should be returned and wait until it arrives. The result is stored in a local variable.
+  const regResult = await accountModel.registerAccountModel(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_password
+  )
+  //if a result was received, sets a flash message to be displayed.
+  if (regResult) {
+    req.flash(
+      "notice",
+      `Congratulations, you\'re registered ${account_firstname}. Please log in.`
+    )
+    //calls the render function to return the login view, along with an HTTP 201 status code for a successful insertion of data
+    res.status(201).render("account/login", {
+      title: "Login",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Sorry, the registration failed.") //sets the failure message if the insertion failed.
+    res.status(501).render("account/register", { //calls the render function, sends the route to trigger a return to the registration view and sends a HTTP 501 status code. In this instance, the 501 status should be interpreted as "not successful".
+      title: "Registration",
+      nav,
+    })
+  }
+}
+
 
 
 
 module.exports = { 
   buildLogin,
-  buildRegister 
+  buildRegister,
+  registerAccount 
 }

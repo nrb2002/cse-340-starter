@@ -25,6 +25,13 @@ router.get(
   utilities.handleErrors(accountController.buildRegister) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
 )
 
+/* ***************************
+ *  Route to register new account
+ * ************************** */
+router.post(
+  "/register",
+  utilities.handleErrors(accountController.registerAccount) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
+)
 
 // Export the router
 module.exports = router
