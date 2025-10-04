@@ -61,7 +61,7 @@ async function registerAccount(req, res) {
   if (regResult && regResult.rows && regResult.rows.length > 0) {
     req.flash(
       "notice",
-      `Congratulations, you\'re registered ${account_firstname}. Please log in.`
+      `Congratulations, ${account_firstname}! You\'re now registered. Please log in.`
     )
     //calls the render function to return the login view, along with an HTTP 201 status code for a successful insertion of data
     res.status(201).render("account/login", {
