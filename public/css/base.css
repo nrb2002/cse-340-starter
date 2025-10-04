@@ -382,12 +382,11 @@ header span {
   transition: all .4s ease-in-out;
 }
 
-
 main {
   max-width: 1200px;
-  min-height: 70vh;
+  min-height: 75vh;
   background-color: white;
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 /* Hero */
@@ -605,7 +604,6 @@ form {
   max-width: 400px;
 }
 
-
 /* Make fieldset visible and clean */
 fieldset {
   display: flex;
@@ -667,13 +665,21 @@ legend {
   padding-right: 2.5rem;
 }
 
-#togglePassword {
+button.togglePassword {
   position: absolute;
-  right: 0.75rem;
-  background: transparent;
+  right: 0.25rem;
+  background: var(--accent-1);
+  color: var(--primary-color);
   border: none;
   cursor: pointer;
   font-size: 1.1rem;
+  width: fit-content;
+}
+button.togglePassword:hover,
+button.togglePassword:focus {
+  background: transparent;
+  color: black;
+  border: none;
 }
 
 .password-note {

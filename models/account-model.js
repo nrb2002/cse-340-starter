@@ -24,7 +24,7 @@ It queries the database to see if a record exists with the same email that is be
 /* *****************************
 *   Register new account
 * *************************** */
-async function registerAccountModel(
+async function registerAccount(
   account_firstname, account_lastname, account_email, account_password){
   
   try {
@@ -36,6 +36,11 @@ async function registerAccountModel(
 
     return await pool.query(sql, [account_firstname, account_lastname, account_email, account_password]) //returns the result of the query execution.
   } catch (error) { //Accepts an "error" variable to store any error that is thrown should the "try" block fail.
+    console.error() //Print the error details in the console
+    
+    console.error("❌ Database insertion error:", error); // 👈 affiche le vrai message d'erreur
+    throw error; // renvoie l’erreur pour que utilities.handleErrors la capture
+    
     return error.message //sends back any error message that is found in the error object.
   }
 }
@@ -57,6 +62,7 @@ async function registerAccountModel(
 
 
 module.exports = { 
-  registerAccountModel, 
-  checkExistingEmail, 
-  resetAccount }
+  registerAccount, 
+  //checkExistingEmail, 
+  //resetAccount 
+  }
