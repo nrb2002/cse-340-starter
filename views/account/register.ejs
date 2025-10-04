@@ -1,66 +1,79 @@
-<!-- Check to see if a title variable exists -->
-<% if (title) { %>
-    <!-- if a title variable exists, then display it as an h1 -->
-    <h1 class="title"><%= title %></h1>
-<% } else {
-    // Otherwise, redirect the response obkect to the home view
-    res.redirect('/')
-} %>
-
-<!-- Flash notifications -->
-<%- messages() %>
-<!--If there are errors, create an unordered list with a class for styling.
-    create a list item and display the message attached to the error element.
+<!-- EJS code block to contain a JavaScript if structure to determine if a "title" variable exists. If the variable exists, displays within an <h1> element.
 -->
-<% if (errors) { %>
-    <ul class="notice-error">
-   <% errors.array().forEach(error => { %>
-     <li><%= error.msg %></li>
-  <%  }) %>
-   </ul>
-  <% } %>
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+    <!-- otherwise, redirect the response object to the default index route, to deliver the home view.-->
 
-<!-- This is the main content to be displayed in the view -->
-
-<div class="form-container">
-    <div class="form-card">
-        <h2>Please fill out this form to register</h2><hr> 
-
-        <form class="account-form" id="registerForm" action="/account/register" method="post">
-    
-            <p><small>All fields are required.</small></p><br><br>
-        
-            <label for="account_firstname">Firstname</label>
-            <input type="text" id="account_firstname" name="account_firstname" placeholder="Enter your Firstname" value="<%= locals.account_firstname %>" required>
-            
-            <label for="account_lastname">Lastname</label>
-            <input type="text" id="account_lastname" name="account_lastname" placeholder="Enter your Lastname" value="<%= locals.account_lastname %>" required>
-            
-            <label for="account_email">Email</label>
-            <input type="email" id="account_email" name="account_email" placeholder="Enter your email address" value="<%= locals.account_email %>" required>
-        
-            <label for="account_password">Password</label>
-            <input type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" id="account_password" name="account_password" placeholder="Enter your password" required>
-            <small>The password must contain at least 12 characters, 1 capital letter, 1 number, and 1 special character.</small>
-        
-            <label for="account_confirm_password">Confirm Password</label>
-            <input type="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" id="account_confirm_password" name="account_confirm_password" placeholder="Confirm your password" required>
-            <label class="togglePasswd"><input type="checkbox" onclick="togglePassword()">Show password</label>
-        
-            <label for="account_type">Account Type</label>
-            <select name="account_type" id="account_type" required>
-                <option value="">-- Select a type</option>
-                <option value="Client">Client</option>
-                <option value="Admin">Admin</option>
-            </select>
-        
-            <input class="btn" type="submit" value="Sign up">
-        </form>
-
-        <div class="form-link">Already have an account? <a href="/account/login" >Sign in here.</a></div>
-    
+    <!-- Flash message (if any) -->
+    <% if (messages && messages.length> 0) { %>
+    <div class="flash-message">
+        <% messages.forEach(function(message){ %>
+            <p>
+                <%= message %>
+            </p>
+            <% }) %>
     </div>
-</div>
+    <% } %>
 
+    <!-- Registration form -->
+    <form action="/account/register" method="POST" class="register-form" novalidate>
+        <fieldset>
+            <legend>Your Personal Info</legend>
+    
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" required
+                    autocomplete="given-name" value="<%= locals.first_name ? first_name : '' %>">
+            </div>
+    
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" placeholder="Enter your last name" required
+                    autocomplete="family-name" value="<%= locals.last_name ? last_name : '' %>">
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Your Credentials</legend>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email"
+                    value="<%= locals.email ? email : '' %>">
+            </div>
+    
+            <div class="form-group password-field">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required
+                        aria-describedby="password-note">
+                    <button type="button" id="togglePassword" aria-label="Toggle password visibility">
+                        👁
+                    </button>
+                </div>
+                <small id="password-note" class="password-note">
+                    Must be at least 12 characters long and contain one uppercase letter, one number, and one special
+                    character.
+                </small>
+            </div>
+            <div class="form-group password-field">
+                <label for="password">Confirm Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required
+                        aria-describedby="password-note">
+                    <button type="button" id="togglePassword" aria-label="Toggle password visibility">
+                        👁
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+        
+        <button type="submit" class="btn">Create Account</button>
+    </form>
 
-
+    <!-- Registration link -->
+    <p class="form-footer">
+        Already have an account?
+        <a href="/account/login">Sign in</a>.
+    </p>

@@ -6,7 +6,7 @@ const utilities = require("../utilities/")
 
 
 /* ***************************
- *  Route to build Login view
+ *  Route to deliver Login view
  * ************************** */
 
 // Route for "My Account" page
@@ -14,6 +14,17 @@ router.get(
   "/login",
   utilities.handleErrors(accountController.buildLogin) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
 )
+
+/* ***************************
+ *  Route to deliver Registration view
+ * ************************** */
+
+// Route for "Registration" page
+router.get(
+  "/register",
+  utilities.handleErrors(accountController.buildRegister) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
+)
+
 
 // Export the router
 module.exports = router

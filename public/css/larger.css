@@ -132,26 +132,33 @@
 
   /* Error content display */
 
-  /* Login Form */
-  .form-container {
+  /* Form Styles */
+  /* .form-container {
     margin: 1% auto;
     width: 50%;
-  }
+  } */
 
-  .account-form input {
+  /* .account-form input {
     border: 1px solid #ddd;
-    border-radius: 5px;
-  }
+    
+  } */
 
-  .account-form input[type=submit] {
+  input[type=text],
+  input[type=email],
+  input[type=password] {
+    border-radius: 4px;
+    border: 1px solid darkgrey;
+  }
+/* 
+  .form-group input[type=submit] {
     width: 60%;
     margin: 2% auto;
-  }
-
+  } */
+/* 
   .form-card.login-card button {
     max-width: 60%;
     margin: 0 auto;
-  }
+  } */
 
   /* End Form style */
 

@@ -55,12 +55,11 @@
 
   /* Inventory Display */
 
-  /* Login form */
-    .login-form {
-      padding: 1.5rem;
-      box-shadow: var(--shadow);
-      gap: 1rem;
-    }
+  /* Form styles */
+  form {
+    box-shadow: var(--shadow);
+    gap: 1rem;
+  }
 
   /* End Login Form */
 
