@@ -2,7 +2,13 @@
 const utilities = require(".")
 
 //Import the express validator package
-const { body, validationResult } = require("express-validator")
+/**
+ * Express validator contains multiple tools, two of which we have indicated we wish to use: body and validationResult. 
+ * The body tool allows the validator to access the body object, which contains all the data, sent via the HTTPRequest. 
+ * The validationResult is an object that contains all errors detected by the validation process. 
+ * Thus, we use the first tool to access the data and the second to retrieve any errors.
+ */
+const { body, validationResult } = require("express-validator") 
 const validate = {}
 
 //Import the account model

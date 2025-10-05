@@ -2,9 +2,8 @@
 -->
 <% if (title) { %>
   <h1><%= title %></h1>
-<% } else { %>
-  <h1>Register</h1>
-<% } %>
+  <!-- otherwise, redirect the response object to the default index route, to deliver the home view.-->
+<% } else { res.redirect('/') } %>
    
 
 <!-- Flash message (if any) -->
@@ -25,13 +24,13 @@
 
         <div class="form-group">
             <label>First Name
-                <input type="text" id="account_firstname" name="account_firstname" placeholder="Enter your first name" autocomplete="given-name" value="<%= account_firstname ? account_firstname : '' %>" required>
+                <input type="text" id="account_firstname" name="account_firstname" minlength=1 maxlength=100 placeholder="Enter your first name" autocomplete="given-name" value="<%= account_firstname ? account_firstname : '' %>" required>
             </label>
         </div>
 
         <div class="form-group">
             <label>Last Name
-                <input type="text" id="account_lastname" name="account_lastname" placeholder="Enter your last name" autocomplete="account_lastname" value="<%= account_lastname ? account_lastname : '' %>" required>
+                <input type="text" id="account_lastname" name="account_lastname" minlength=2 maxlength=100 placeholder="Enter your last name" autocomplete="account_lastname" value="<%= account_lastname ? account_lastname : '' %>" required>
             </label>
         </div>
     </fieldset>

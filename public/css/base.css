@@ -216,7 +216,6 @@ input[type=password]{
   transition: border-color 0.3s, box-shadow 0.3s;
   border: none;
   border-bottom: 2px solid darkgrey;
-  background: white;
   color: #333;
   width: 100%;
 }
@@ -225,7 +224,6 @@ input[type=checkbox],
 input[type=radio],
 input[type=password],
 select {
-  background-color: var(--accent-3);
   border: 1px solid var(--primary-color);
 }
 
@@ -645,7 +643,7 @@ legend {
   transition: border-color 0.3s, box-shadow 0.3s;
   border: none;
   border-bottom: 2px solid darkgrey;
-  background: white;
+  /* background: white; */
   color: #333;
   width: 100%;
 }
@@ -654,6 +652,7 @@ legend {
   border-color: #0077cc;
   box-shadow: 0 0 5px rgba(0, 119, 204, 0.3);
   outline: none;
+  background-color:white;
 }
 
 /* Password */
