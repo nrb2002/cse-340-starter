@@ -13,7 +13,7 @@ async function buildLogin(req, res, next) {
   res.render("account/login", { //the login view is inside the account folder, which is inside the "views" folder.
     title: "Login",
     nav, //call nav bar
-    erros: null,
+    errors: null,
     //messages: req.flash("notice") //call flash message
     messages: [].concat(req.flash("notice") || [])
   })
@@ -30,9 +30,14 @@ async function buildRegister(req, res, next) {
   res.render("account/register", { //the registration view is inside the account folder, which is inside the "views" folder.
     title: "Register",
     nav, //call nav bar
-    erros: null,
-    messages: [].concat(req.flash("notice") || [])
-    //messages: req.flash("notice") //call flash message
+    errors: null,
+    messages: [].concat(req.flash("notice") || []),
+    //messages: req.flash("notice"), //call flash message
+    account_firstname: "",
+    account_lastname: "",
+    account_email: "",
+    account_password: "",
+    confirm_password: ""
   })
 }
 

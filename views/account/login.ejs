@@ -13,24 +13,24 @@
         <% messages.forEach(function(message){ %>
             <p>
                 <%= message %>
-            </p>
+            </p><br>
             <% }) %>
     </div>
     <% } %>
 
     <!-- Login form -->
-    <form action="/account/login" method="post" class="login-form" novalidate>
+    <form action="/account/login" method="post" class="login-form">
         <fieldset>
             <legend>Please enter your credentatials</legend>
             <div class="form-group">
-                <label for="email">Email Address
-                <input type="email" id="email" name="email" placeholder="username@domain.com" required>
+                <label>Email Address
+                    <input type="email" id="email" name="email" placeholder="username@domain.com" required>
                 </label>
             </div>
         
             <div class="form-group">
-                <label for="password">Password
-                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <label>Password
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </label>
             </div>
             

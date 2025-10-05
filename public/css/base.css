@@ -5,15 +5,16 @@
    */
   --primary-color: #6A2055;
   --secondary-color: #F4E2DE;
-  --tertiary-color: rgb(223, 247, 223);
+  --tertiary-color: rgba(202, 243, 202, 1);
   --accent-1: #d1cccc;
   --accent-2: #064c9c;
   --accent-3: #fcf9f9;
+  --accent-4: #fca0a0ff;
   --text-light:var(--accent-3);
 
   --gradient: linear-gradient(315deg, var(--accent-2) 0%, var(--primary-color) 100%);
   --valid: var(--tertiary-color);
-  --invalid: var(--secondary-color)
+  --invalid: var(--accent-4)
 
   --shadow: 5px 5px var(--accent-1);
   /**
@@ -228,12 +229,14 @@ select {
   border: 1px solid var(--primary-color);
 }
 
-input:required:valid {
+input:required:valid,
+select:required:valid {
   background-color: var(--valid);
 }
 
 input:required:invalid,
-input:focus:invalid {
+input:focus:invalid,
+select:required:invalid{
   background-color: var(--invalid);
 }
 
@@ -686,6 +689,7 @@ button.togglePassword:focus {
   font-size: 0.85rem;
   color: #666;
   margin-top: 0.25rem;
+  font-style:italic;
 }
 
  
