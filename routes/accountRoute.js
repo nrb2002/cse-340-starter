@@ -2,7 +2,8 @@
 const express = require("express") //import express
 const router = new express.Router() //create a new router from express package
 const accountController = require("../controllers/accountController") //Import Account controller
-const utilities = require("../utilities/")
+const utilities = require("../utilities/") //Import utilities index.js file
+const regValidate = require('../utilities/account-validation') //Import the account-validation file from utilities
 
 
 /* ***************************
@@ -29,9 +30,14 @@ router.get(
  *  Route to register new account
  * ************************** */
 router.post(
-  "/register",
+  "/register", //The path being watched for in the route.
+  regValidate.registrationRules(), //The function containing the rules to be used in the validation process.
+  regValidate.checkRegData, //The call to run the validation and handle the errors, if any.
   utilities.handleErrors(accountController.registerAccount) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
 )
+
+
+
 
 // Export the router
 module.exports = router

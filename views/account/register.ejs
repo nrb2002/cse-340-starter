@@ -3,7 +3,7 @@
 <% if (title) { %>
   <h1><%= title %></h1>
   <!-- otherwise, redirect the response object to the default index route, to deliver the home view.-->
-<% } else { res.redirect('/') } %>
+<% } /*else { res.redirect('/') }*/ %>
    
 
 <!-- Flash message (if any) -->
@@ -15,6 +15,16 @@
         </p><br>
         <% }) %>
 </div>
+<% } %>
+
+<!-- Errors to display, if any -->
+<!-- If there are errors, create an unordered list with a class for styling. -->
+<% if (errors && errors.array && errors.array().length > 0) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
 <% } %>
 
 <!-- Registration form -->
@@ -45,7 +55,7 @@
         <div class="form-group password-field">
             <label>Password
                 <div class="password-wrapper">
-                    <input type="password" id="accountPassword" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" placeholder="Enter your password" minlength=12 aria-describedby="password-note" value="<%= account_password ? account_password : '' %>" required>
+                    <input type="password" id="accountPassword" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" placeholder="Enter your password" minlength=12 aria-describedby="password-note" value="<%= typeof account_password !== 'undefined' ? account_password : '' %>" required>
                     <!-- The regular expression pattern indicates that there must be at least 12 characters, one must be a number, one must be a lowercase letter, one must be a capital letter, and one must be a non-alphanumeric character. -->
                     <button type="button" tabindex="-1" class="togglePassword" aria-label="Toggle password visibility">👁</button>
                 </div>
@@ -57,7 +67,7 @@
         <div class="form-group password-field">
             <label>Confirm Password
                 <div class="password-wrapper">
-                    <input type="password" id="confirmPassword" name="confirm_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" value="<%= confirm_password ? confirm_password : '' %>" placeholder="Enter your password" minlength=12 aria-describedby="password-note">
+                    <input type="password" id="confirmPassword" name="confirm_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" value="<%= typeof confirm_password !== 'undefined' ? confirm_password : '' %>" placeholder="Enter your password" minlength=12 aria-describedby="password-note">
                     <button type="button" tabindex="-1" class="togglePassword" aria-label="Toggle password visibility">👁</button>
                 </div>
             </label>

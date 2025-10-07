@@ -388,11 +388,20 @@ main {
   min-height: 75vh;
   background-color: white;
   padding: 0 1rem;
+  margin: 0 auto;
 }
 
 /* Hero */
 
 /*Flash message style*/
+ul.notice{
+  color:red;
+  font-style: italic;
+  margin: 2rem 0;
+  line-height: 1.5rem;
+  border-top: 2px solid red;
+  border-bottom: 2px solid red;
+}
 ul.notice-success,
 ul.notice-error {
   padding: 2%;
@@ -403,6 +412,7 @@ ul.notice-error {
 
 ul.notice-success {
   background: #e4f3da;
+  color: green;
 }
 
 ul.notice-error {
@@ -601,8 +611,13 @@ form {
   margin: 0 auto;
   justify-content: center;
 }
+
 .login-form{
   max-width: 400px;
+}
+
+.login-form fieldset{
+  padding: 1rem;
 }
 
 /* Make fieldset visible and clean */

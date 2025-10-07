@@ -4,8 +4,11 @@ const utilities = require(".")
 //Import the express validator package
 /**
  * Express validator contains multiple tools, two of which we have indicated we wish to use: body and validationResult. 
+ * 
  * The body tool allows the validator to access the body object, which contains all the data, sent via the HTTPRequest. 
+ * 
  * The validationResult is an object that contains all errors detected by the validation process. 
+ * 
  * Thus, we use the first tool to access the data and the second to retrieve any errors.
  */
 const { body, validationResult } = require("express-validator") 
@@ -81,7 +84,7 @@ validate.checkLoginData = async (req, res, next) => {
  This is a function that will return an array of rules to be used when checking the incoming data. 
  Each rule focuses on a specific input from the registration form.
   */
-validate.registationRules = () => {
+validate.registrationRules = () => {
     return [
       // firstname is required and must be string
       body("account_firstname")
@@ -139,23 +142,26 @@ will be returned to the registration view for correction
 
 */
 validate.checkRegData = async (req, res, next) => {
-    const { account_firstname, account_lastname, account_email } = req.body
-    let errors = []
-    errors = validationResult(req)
+    const { account_firstname, account_lastname, account_email } = req.body //use JavaScript destructuring method to collect and store the firstname, lastname and email address values from the request body.
+    
+    let errors = [] //creates an empty "errors" array.
+    errors = validationResult(req) //calls the express-validator "validationResult" function and sends the request object (containing all the incoming data) as a parameter. All errors, if any, will be stored into the errors array.
+
+    //If there are any errors, call the render function to rebuild the registration view.
     if (!errors.isEmpty()) {
       let nav = await utilities.getNav()
       res.render("account/register", {
         errors,
         title: "Registration",
         nav,
-        
+        //These variables below - except the password - will be used to re-populate the form if errors are found.
         account_firstname,
         account_lastname,
         account_email,
       })
       return
     }
-    next()
+    next() //if no errors are detected, the "next()" function is called, which allows the process to continue into the controller for the registration to be carried out.
   }
 
 /************************************************************************************************** */
@@ -202,7 +208,7 @@ validate.checkRegData = async (req, res, next) => {
   ]
 }
 
-   /* ******************************
+/* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
 /*
@@ -228,4 +234,9 @@ validate.checkResetData = async (req, res, next) => {
   next()
 }
   
-  module.exports = validate
+
+
+
+
+
+module.exports = validate

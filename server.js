@@ -6,6 +6,7 @@
  * Require Statements
  *************************/
 const session = require("express-session") //Import session package
+const flash = require("connect-flash"); //Import connect-flash 
 const pool = require('./database/') //Import connection to the database
 const express = require("express") //Import express package
 const expressLayouts = require("express-ejs-layouts") //Import ejs
@@ -42,10 +43,11 @@ const utilities = require("./utilities/") //Import the utilities
 
 
 // Express Messages Middleware
-app.use(require('connect-flash')()) //Make connect-flash package accessible throughout the application.
+app.use(flash()) //Make connect-flash package accessible throughout the application.
 app.use(function(req, res, next){
   //This allows any message to be stored into the response, making it available in a view.
-  res.locals.messages = require('express-messages')(req, res)
+  //res.locals.messages = require('express-messages')(req, res)
+  res.locals.messages = req.flash()
   next() //passing control to the next piece of middleware in the application.
 })
 
