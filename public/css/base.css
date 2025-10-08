@@ -727,17 +727,63 @@ button.togglePassword:focus {
 
 /* End Form Styles */
 
-/* Vehicle Management Page Style */
-.management {
-  display: grid;
-  gap: 2%;
+/* ==============================
+   Inventory Management Section
+   ============================== */
+
+.management-links {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+  max-width: 600px;
+  margin: 2rem auto;
 }
 
-.management .btn {
-  width: 100%;
-  text-align: center;
-  padding: 10px 0 0 0;
+.management-links:hover {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
 
+.management-links h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-2); /* Primary accent color */
+  border-bottom: 2px solid #e6ebf3;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  letter-spacing: 0.3px;
+}
+
+.management-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Action buttons */
+.management-links .action-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+.management-links:hover,
+.management-links .action-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px var(--secondary-color);
+}
+
+.management-links .action-link:active {
+  transform: scale(0.98);
 }
 
 /* Vehicle Detail View */

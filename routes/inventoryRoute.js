@@ -6,6 +6,29 @@ const utilities = require("../utilities/")
 
 
 /* ***************************
+ *  Route to build inventory management view
+ * ************************** */
+
+/**"get" indicates that the route will listen for the GET method within the request (typically a clicked link or the URL itself).
+ * 
+ */
+//Route to the management view
+router.get(
+    "/", 
+    utilities.handleErrors(invController.buildManagementView)
+)
+//Route to the addClassification view
+router.get(
+    "/add-classification", 
+    utilities.handleErrors(invController.buildAddClassificationView)
+)
+//Route to the addInventory view
+router.get(
+    "/add-inventory", 
+    utilities.handleErrors(invController.buildAddInventoryView)
+)
+
+/* ***************************
  *  Route to build inventory by classification view
  * ************************** */
 

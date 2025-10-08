@@ -3,6 +3,68 @@ const utilities = require("../utilities/") //Import Utilities
 
 const invCont = {} //Empty object
 
+
+/* ***************************
+ * Build the inventory management view
+ * ************************** */
+invCont.buildManagementView = async function (req, res, next) {
+  try {
+    // Get navigation bar
+    let nav = await utilities.getNav()
+
+    // Render the management view
+    res.render("./inventory/management", {
+      title: "Inventory Management",
+      nav,
+      message: req.flash("notice") || null
+    })
+  } catch (error) {
+    console.error("Error displaying Invetory Management page:", error)
+    next(error)
+  }
+}
+
+/* ***************************
+ * Build Add Classification View
+ * ************************** */
+invCont.buildAddClassificationView = async function (req, res, next) {
+  try {
+    // Build the navigation bar
+    let nav = await utilities.getNav()
+
+    // Render the add-classification view
+    res.render("inventory/add-classification", {
+      title: "Add New Classification",
+      nav,
+      message: req.flash("notice") || null
+    })
+  } catch (error) {
+    console.error("Error building Add Classification view:", error)
+    next(error)
+  }
+}
+
+/* ***************************
+ * Build Add Inventory View
+ * ************************** */
+invCont.buildAddInventoryView = async function (req, res, next) {
+  try {
+    // Build the navigation bar
+    let nav = await utilities.getNav()
+
+    // Render the add-inventory view
+    res.render("inventory/add-inventory", {
+      title: "Add New Inventory Item",
+      nav,
+      message: req.flash("notice") || null
+    })
+  } catch (error) {
+    console.error("Error building Add Inventory view:", error)
+    next(error)
+  }
+}
+
+
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
@@ -16,7 +78,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const className = data[0].classification_name //extract the name of the classification, which matches the classification_id, from the data returned from the database
 
   //return a view to the browser named classification (see inventory directory in the views folder), containing the title, nav bar, and a grid to display matching cars. 
-  res.render("./inventory/classification", {
+  res.render("inventory/classification", {
     title: className + " vehicles",
     nav,
     grid,

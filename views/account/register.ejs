@@ -1,9 +1,10 @@
 <!-- EJS code block to contain a JavaScript if structure to determine if a "title" variable exists. If the variable exists, displays within an <h1> element.
 -->
 <% if (title) { %>
-  <h1><%= title %></h1>
-  <!-- otherwise, redirect the response object to the default index route, to deliver the home view.-->
-<% } /*else { res.redirect('/') }*/ %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
    
 
 <!-- Flash message (if any) -->
@@ -28,54 +29,56 @@
 <% } %>
 
 <!-- Registration form -->
-<form action="/account/register" method="POST" class="register-form">
-    <fieldset>
-        <legend>Your Personal Info</legend>
+<section>
+    <form action="/account/register" method="POST" class="register-form">
+        <fieldset>
+            <legend>Your Personal Info</legend>
 
-        <div class="form-group">
-            <label>First Name
-                <input type="text" id="account_firstname" name="account_firstname" minlength=1 maxlength=100 placeholder="Enter your first name" autocomplete="given-name" value="<%= account_firstname ? account_firstname : '' %>" required>
-            </label>
-        </div>
+            <div class="form-group">
+                <label>First Name
+                    <input type="text" id="account_firstname" name="account_firstname" minlength=1 maxlength=100 placeholder="Enter your first name" autocomplete="given-name" value="<%= account_firstname ? account_firstname : '' %>" required>
+                </label>
+            </div>
 
-        <div class="form-group">
-            <label>Last Name
-                <input type="text" id="account_lastname" name="account_lastname" minlength=2 maxlength=100 placeholder="Enter your last name" autocomplete="account_lastname" value="<%= account_lastname ? account_lastname : '' %>" required>
-            </label>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Your Credentials</legend>
-        <div class="form-group">
-            <label>Email Address
-                <input type="email" id="account_email" name="account_email" placeholder="you@example.com" required autocomplete="account_email" value="<%= account_email ? account_email : '' %>">
-            </label>
-        </div>
+            <div class="form-group">
+                <label>Last Name
+                    <input type="text" id="account_lastname" name="account_lastname" minlength=2 maxlength=100 placeholder="Enter your last name" autocomplete="account_lastname" value="<%= account_lastname ? account_lastname : '' %>" required>
+                </label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Your Credentials</legend>
+            <div class="form-group">
+                <label>Email Address
+                    <input type="email" id="account_email" name="account_email" placeholder="you@example.com" required autocomplete="account_email" value="<%= account_email ? account_email : '' %>">
+                </label>
+            </div>
 
-        <div class="form-group password-field">
-            <label>Password
-                <div class="password-wrapper">
-                    <input type="password" id="accountPassword" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" placeholder="Enter your password" minlength=12 aria-describedby="password-note" value="<%= typeof account_password !== 'undefined' ? account_password : '' %>" required>
-                    <!-- The regular expression pattern indicates that there must be at least 12 characters, one must be a number, one must be a lowercase letter, one must be a capital letter, and one must be a non-alphanumeric character. -->
-                    <button type="button" tabindex="-1" class="togglePassword" aria-label="Toggle password visibility">👁</button>
-                </div>
-            </label>
-            <small id="password-note" class="password-note">
-                Must be at least 12 characters long and contain one uppercase letter, one number, and one special character.
-            </small>
-        </div>
-        <div class="form-group password-field">
-            <label>Confirm Password
-                <div class="password-wrapper">
-                    <input type="password" id="confirmPassword" name="confirm_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" value="<%= typeof confirm_password !== 'undefined' ? confirm_password : '' %>" placeholder="Enter your password" minlength=12 aria-describedby="password-note">
-                    <button type="button" tabindex="-1" class="togglePassword" aria-label="Toggle password visibility">👁</button>
-                </div>
-            </label>
-        </div>
-    </fieldset>
-    
-    <input type="submit" class="btn" value="Register Account">
-</form>
+            <div class="form-group password-field">
+                <label>Password
+                    <div class="password-wrapper">
+                        <input type="password" id="accountPassword" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" placeholder="Enter your password" minlength=12 aria-describedby="password-note" value="<%= typeof account_password !== 'undefined' ? account_password : '' %>" required>
+                        <!-- The regular expression pattern indicates that there must be at least 12 characters, one must be a number, one must be a lowercase letter, one must be a capital letter, and one must be a non-alphanumeric character. -->
+                        <button type="button" tabindex="-1" class="togglePassword" aria-label="Toggle password visibility">👁</button>
+                    </div>
+                </label>
+                <small id="password-note" class="password-note">
+                    Must be at least 12 characters long and contain one uppercase letter, one number, and one special character.
+                </small>
+            </div>
+            <div class="form-group password-field">
+                <label>Confirm Password
+                    <div class="password-wrapper">
+                        <input type="password" id="confirmPassword" name="confirm_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" value="<%= typeof confirm_password !== 'undefined' ? confirm_password : '' %>" placeholder="Enter your password" minlength=12 aria-describedby="password-note">
+                        <button type="button" tabindex="-1" class="togglePassword" aria-label="Toggle password visibility">👁</button>
+                    </div>
+                </label>
+            </div>
+        </fieldset>
+        
+        <input type="submit" class="btn" value="Register Account">
+    </form>
+</section>
 
 <!-- Registration link -->
 <p class="form-footer">Already have an account?
