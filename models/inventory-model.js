@@ -51,6 +51,26 @@ async function getVehicleById(inv_id) {
   }
 }
 
+/* *****************************
+*   Add New Classification
+* *************************** */
+async function addNewClassification(classification_name){
+  
+  try {
+    //declares a "sql" variable and the SQL query to write the data to the database.
+    const sql = "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *"
+    /*The "RETURNING *" clause indicates to the PostgrSQL server to return values based on the record that was inserted. It is a way to confirm that the insertion worked.*/
+
+    return await pool.query(sql, [classification_name]) //returns the result of the query execution.
+  } catch (error) { //Accepts an "error" variable to store any error that is thrown should the "try" block fail.
+    console.error() //Print the error details in the console
+    
+    console.error("❌ Database insertion error:", error); //  affiche le vrai message d'erreur
+    throw error; // renvoie l’erreur pour que utilities.handleErrors la capture
+    
+    return error.message //sends back any error message that is found in the error object.
+  }
+}
 
 
 
@@ -59,5 +79,6 @@ async function getVehicleById(inv_id) {
 module.exports = {
   getClassifications, 
   getInventoryByClassificationId,
-  getVehicleById
+  getVehicleById,
+  addNewClassification
 }

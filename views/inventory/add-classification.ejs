@@ -3,8 +3,7 @@
     <h1>
         <%= title %>
     </h1>
-    <!-- If no title available, then redirect to home page -->
-<% } else { res.redirect('/') } %>
+<% } %>
 
 <!-- Flash message (if any) -->
 <% if (messages && messages.length> 0) { %>
@@ -18,24 +17,28 @@
 <% } %>
 
 <!-- This is the main content to be displayed in the view -->
-<section>
-<div class="form-container">
-    <div class="form-card">
-        <h2>Please fill out this form to add a new classification</h2><hr> 
+<section class="form-container">
+    <h2>Please fill out the form</h2><hr>
 
-        <form class="account-form" action="" method="POST">
-            <label for="classification_name">Classification Name</label>
-            <input type="text" id="classification_name" name="classification_name" minlength="3" pattern="^[a-zA-Z0-9äöüÄÖÜ_ ]*$" placeholder="Enter Classification Name" value="<%= locals.classification_name %>" required>
-            <small>The classification name cannot contain a space or special character.</small>
-            <button>Submit</button>
-        </form>
+    <form class="account-form" action="" method="POST">
+        <fieldset>
+            <legend>New Classification</legend>
+            <div class="form-group">
+                <label>Name
+                    <input type="text" name="classification_name" minlength="3" pattern="^[a-zA-Z0-9äöüÄÖÜ_ ]*$" placeholder="Enter Classification Name" value="<%= locals.classification_name %>" required>
+                </label>
+                <small><i>The classification name cannot contain a space or special character.</i></small>
+            </div>
+        </fieldset>
+        <button>Add to the Collection</button>
+    </form>
 
-        <div class="form-link"><a href="/inv" >Go back to the Vehicle Management page.</a></div>
-    
-    </div>
-</div>
-
+    <p class="form-footer">
+        <a href="/inv" >Go back to the Vehicle Management page.</a>
+    </p>
 </section>
+
+
 
 
 

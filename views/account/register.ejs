@@ -29,7 +29,8 @@
 <% } %>
 
 <!-- Registration form -->
-<section>
+<section class="form-container">
+    <h2>Please fill out the Registration Form</h2><hr>
     <form action="/account/register" method="POST" class="register-form">
         <fieldset>
             <legend>Your Personal Info</legend>
@@ -63,7 +64,8 @@
                     </div>
                 </label>
                 <small id="password-note" class="password-note">
-                    Must be at least 12 characters long and contain one uppercase letter, one number, and one special character.
+                    <i>Must be at least 12 characters long and contain one uppercase letter, one number, and one special character.
+                    </i>
                 </small>
             </div>
             <div class="form-group password-field">
@@ -78,9 +80,10 @@
         
         <input type="submit" class="btn" value="Register Account">
     </form>
+
+    <!-- Registration link -->
+    <p class="form-footer">Already have an account?
+        <a href="/account/login">Sign in</a>.
+    </p>
 </section>
 
-<!-- Registration link -->
-<p class="form-footer">Already have an account?
-    <a href="/account/login">Sign in</a>.
-</p>

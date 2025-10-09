@@ -56,6 +56,9 @@
   /* Inventory Display */
 
   /* Form styles */
+  .form-container {
+    padding: 2rem;
+  }
   form {
     box-shadow: var(--shadow);
     gap: 1rem;

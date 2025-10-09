@@ -101,16 +101,59 @@ invCont.buildByDetailView = async function (req, res, next) {
 
   //Build the nav and detail HTML
   const nav = await utilities.getNav()
-  const vehicleHTML = await utilities.buildVehicleDetail(vehicleData)
+  const singleVehicleDetail = await utilities.buildVehicleDetail(vehicleData)
 
   //Render the view
   const pageTitle = `${vehicleData.inv_make} ${vehicleData.inv_model}`
   res.render("inventory/detail", {
     title: pageTitle,
     nav,
-    vehicleHTML
+    singleVehicleDetail
   })
 }
+
+/* ****************************************
+*  Process Add New Classification
+* *************************************** */
+async function addClassification(req, res) {
+  let nav = await utilities.getNav()
+
+  //collects and stores the values from the HTML form that are being sent from the browser in the body of the request object.
+  const { classification_name } = req.body 
+  try{
+    //calls addClassification function, from the model, and uses the "await" keyword to indicate that a result should be returned and wait until it arrives. The result is stored in a local variable.
+    const regResult = await invModel.addNewClassification (classification_name)
+  
+    //if a result was received, sets a flash message to be displayed.
+    if (regResult && regResult.rows && regResult.rows.length > 0) {
+      req.flash(
+        "notice-success",
+        `New classification "${classification_name}" created successfully!`
+      )
+      //calls the render function to return the add-classification view, along with an HTTP 201 status code for a successful insertion of data
+      res.status(201).render("inventory/add-classification", {
+        title: "Add New Classification",
+        nav,
+        errors: null,
+        messages: req.flash("notice-success") || []
+      })
+    } else {
+      throw new Error("Error inserting data! Please try again or contact your system administrator.")
+    }
+  } catch (err) {
+    console.error("Registration error:", err)
+    req.flash("notice-error", "Sorry, the data insertion failed.")
+    res.status(501).render("inventory/add-classification", {
+      title: "Add New Classification",
+      nav,
+      
+      messages: req.flash("notice-error") || [],
+      errors: null,
+      classification_name
+    })
+  }
+}
+
 
 
 //Export the inventory object to be used in other areas of the application

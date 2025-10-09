@@ -731,21 +731,20 @@ button.togglePassword:focus {
    Inventory Management Section
    ============================== */
 
-.management-links {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 2rem;
+.form-container {
+  background-color: #edebebff;
+  padding: 1rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease;
   max-width: 600px;
-  margin: 2rem auto;
+  margin: 0 auto;
 }
 
-.management-links:hover {
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+.form-container:hover {
+  box-shadow: 0 4px 18px var(--primary-color);
 }
 
-.management-links h2 {
+.form-container h2 {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--accent-2); /* Primary accent color */
@@ -756,7 +755,7 @@ button.togglePassword:focus {
   letter-spacing: 0.3px;
 }
 
-.management-links ul {
+.form-container ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -766,7 +765,7 @@ button.togglePassword:focus {
 }
 
 /* Action buttons */
-.management-links .action-link {
+.form-container .action-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -776,13 +775,11 @@ button.togglePassword:focus {
   width: 100%;
 }
 
-.management-links:hover,
-.management-links .action-link:hover {
+.form-container .action-link:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px var(--secondary-color);
 }
 
-.management-links .action-link:active {
+.form-container .action-link:active {
   transform: scale(0.98);
 }
 
