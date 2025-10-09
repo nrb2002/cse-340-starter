@@ -4,6 +4,8 @@ const router = new express.Router() //create a new router from express package
 const invController = require("../controllers/invController") //Import Inventory controller
 const utilities = require("../utilities/")
 
+const classValidate = require('../utilities/inventory-validation') //Import the account-validation file from utilities
+
 
 /* ***************************
  *  Route to build inventory management view
@@ -52,6 +54,17 @@ router.get(
     "/detail/:inv_id", 
     utilities.handleErrors(invController.buildByDetailView) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
 )
+
+/* ***************************
+ *  Route to add new classification
+ * ************************** */
+router.post(
+  "/add-classification", //The path being watched for in the route.
+  classValidate.classificationRules(), //The function containing the rules to be used in the validation process.
+  classValidate.checkClassData, //The call to run the validation and handle the errors, if any.
+  utilities.handleErrors(invController.addClassification) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
+)
+
 
 //Export the router to be used in other areas of the application
 module.exports = router;
