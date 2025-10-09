@@ -1,9 +1,11 @@
-<!-- Display page title -->
+<!-- EJS code block to contain a JavaScript if structure to determine if a "title" variable exists. If the variable exists, displays within an <h1> element.
+-->
 <% if (title) { %>
     <h1>
-        <%= title %>
+        <%= title || "Add New Classification" %>
     </h1>
 <% } %>
+   
 
 <!-- Flash message (if any) -->
 <% if (messages && messages.length> 0) { %>
@@ -16,16 +18,26 @@
 </div>
 <% } %>
 
+<!-- Errors to display, if any -->
+<!-- If there are errors, create an unordered list with a class for styling. -->
+<% if (errors && errors.array && errors.array().length > 0) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
 <!-- This is the main content to be displayed in the view -->
 <section class="form-container">
-    <h2>Please fill out the form</h2><hr>
+    <h2>Please fill out the form</h2><hr><br>
 
     <form class="account-form" action="" method="POST">
         <fieldset>
             <legend>New Classification</legend>
             <div class="form-group">
                 <label>Name
-                    <input type="text" name="classification_name" minlength="3" pattern="^[a-zA-Z0-9äöüÄÖÜ_ ]*$" placeholder="Enter Classification Name" value="<%= locals.classification_name %>" required>
+                    <input type="text" name="classification_name" minlength="3" pattern="^[a-zA-Z0-9_]+$" placeholder="Enter Classification Name" value="<%= locals.classification_name %>" required>
                 </label>
                 <small><i>The classification name cannot contain a space or special character.</i></small>
             </div>

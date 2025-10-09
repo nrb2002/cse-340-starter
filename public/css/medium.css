@@ -73,4 +73,9 @@
 
   /* End Vehicle Management Page Style */
 
+    /*Flash message style*/
+  .flash-message,
+  .notice{
+    font-size: 1.1rem;
+  }
 }

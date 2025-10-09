@@ -51,6 +51,21 @@ async function getVehicleById(inv_id) {
   }
 }
 
+/* ****************************************
+ * Check if a classification already exists
+ * **************************************** */
+async function checkExistingClassification(classification_name) {
+  try {
+    const sql = "SELECT classification_name FROM classification WHERE classification_name = $1"
+    const values = [classification_name]
+    const result = await pool.query(sql, values)
+    return result.rows.length > 0 // true if exists, false if not
+  } catch (error) {
+    console.error("Error checking existing classification:", error)
+    throw error
+  }
+}
+
 /* *****************************
 *   Add New Classification
 * *************************** */
@@ -80,5 +95,6 @@ module.exports = {
   getClassifications, 
   getInventoryByClassificationId,
   getVehicleById,
-  addNewClassification
+  addNewClassification,
+  checkExistingClassification,
 }

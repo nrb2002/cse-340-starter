@@ -2,9 +2,9 @@
 -->
 <% if (title) { %>
     <h1>
-        <%= title %>
+        <%= title || "Register" %>
     </h1>
-<% } else { res.redirect('/') } %>
+<% } %>
    
 
 <!-- Flash message (if any) -->

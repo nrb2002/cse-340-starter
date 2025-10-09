@@ -1,71 +1,56 @@
-
-
-<!-- Check to see if a title variable exists -->
-<% if (title) { %>
-    <!-- if a title variable exists, then display it as an h1 -->
-    <h1 class="title"><%= title %></h1>
-<% } else {
-    // Otherwise, redirect the response obkect to the home view
-    res.redirect('/')
-} %>
-
-<!-- Flash notifications -->
-<%- messages() %>
-<!--If there are errors, create an unordered list with a class for styling.
-    create a list item and display the message attached to the error element.
+<!-- EJS code block to contain a JavaScript if structure to determine if a "title" variable exists. If the variable exists, displays within an <h1> element.
 -->
-<% if (errors) { %>
-    <ul class="notice-error">
-   <% errors.array().forEach(error => { %>
-     <li><%= error.msg %></li>
-  <%  }) %>
-   </ul>
-  <% } %>
+<% if (title) { %>
+    <h1>
+        <%= title || "Add New Classification" %>
+    </h1>
+<% } %>
+   
+
+<!-- Flash message (if any) -->
+<% if (messages && messages.length> 0) { %>
+<div class="flash-message">
+    <% messages.forEach(function(message){ %>
+        <p>
+            <%= message %>
+        </p><br>
+        <% }) %>
+</div>
+<% } %>
+
+<!-- Errors to display, if any -->
+<!-- If there are errors, create an unordered list with a class for styling. -->
+<% if (errors && errors.array && errors.array().length > 0) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
 
 <!-- This is the main content to be displayed in the view -->
+<section class="form-container">
+    <h2>Please fill out the form</h2><hr><br>
 
-<div class="form-container">
-    <div class="form-card">
-        <h2>Please fill out this form to add a new inventory</h2><hr> 
+    <form class="account-form" action="" method="POST">
+        <fieldset>
+            <legend>New Classification</legend>
+            <div class="form-group">
+                <label>Name
+                    <input type="text" name="classification_name" minlength="3" pattern="^[a-zA-Z0-9äöüÄÖÜ_ ]*$" placeholder="Enter Classification Name" value="<%= locals.classification_name %>" required>
+                </label>
+                <small><i>The classification name cannot contain a space or special character.</i></small>
+            </div>
+        </fieldset>
+        <button>Add to the Collection</button>
+    </form>
 
-        <form class="account-form" id="inventoryForm" action="" method="POST">
-            <%#- classificationList %>
-            
-            <label for="inv_make">Make</label>
-            <input type="text" id="inv_make" name="inv_make" minlength="3" pattern="^[a-zA-Z0-9äöüÄÖÜ_ ]*$" placeholder="Enter the vehicle's make" value="<%= locals.inv_make %>" required>
-            
-            <label for="inv_model">Model</label>
-            <input type="text" id="inv_model" name="inv_model" minlength="3" pattern="^[a-zA-Z0-9äöüÄÖÜ_ ]*$" placeholder="Enter the vehicle's model" value="<%= locals.inv_model %>" required>
-            
-            <label for="inv_year">Year</label>
-            <input id="inv_year" name="inv_year" type="number" min="1900" max="2099" step="1" value="2024" value="<%= locals.inv_year %>" required/>
+    <p class="form-footer">
+        <a href="/inv" >Go back to the Vehicle Management page.</a>
+    </p>
+</section>
 
-            <label for="inv_description">Description</label>
-            <textarea id="inv_description" name="inv_description" maxlength="200" pattern="" placeholder="Enter the vehicle's description" value="<%= locals.inv_description %>" required></textarea>
-            
-            <label for="inv_image">Image</label>
-            <input type="file" id="inv_image" name="inv_image" minlength="3" placeholder="Upload the vehicle's image" value="<%= locals.inv_image %>" required>
-            
-            <label for="inv_thumbnail">Thumbnail</label>
-            <input type="file" id="inv_thumbnail" name="inv_thumbnail" minlength="3" placeholder="Upload the vehicle's thumbnail" value="<%= locals.inv_thumbnail %>" required>
-            
-            <label for="inv_price">Price</label>
-            <input type="text" inputmode="decimal" id="inv_price" name="inv_price" pattern="[0-9]*[.,]?[0-9]*" placeholder="Enter the vehicle's price" value="<%= locals.inv_price %>" required>
-            <small>Please enter numbers only without the currency.</small>
 
-            <label for="inv_miles">Mileage</label>
-            <input type="text" inputmode="decimal" id="inv_miles" name="inv_miles" minlength="3" pattern="[0-9]*[.,]?[0-9]*" placeholder="Enter the vehicle's mileage" value="<%= locals.inv_miles %>" required>
-            
-            <label for="inv_color">Color</label>
-            <input type="text" id="inv_color" name="inv_color" minlength="3" pattern="^[a-zA-Z0-9äöüÄÖÜ_ ]*$" placeholder="Enter the vehicle's color" value="<%= locals.inv_color %>" required>
-            
-            <button>Submit</button>
-        </form>
-
-        <div class="form-link"><a href="/inv" > <<< Go back to the Vehicle Management page.</a></div>
-    
-    </div>
-</div>
 
 
 

@@ -3,7 +3,8 @@ const utilities = require(".")
 
 //Import the express validator package
 const { body, validationResult } = require("express-validator")
-const classValidate = {}
+
+const invValidate = {}
 
 //Import the inventory model
 const invModel = require("../models/inventory-model")
@@ -16,7 +17,7 @@ const invModel = require("../models/inventory-model")
  This is a function that will return an array of rules to be used when checking the incoming data. 
  Each rule focuses on a specific input from the Classification form.
   */
- classValidate.classificationRules = () => {
+ invValidate.classificationRules = () => {
   return [
     // Classification name is required and must be string
     body("classification_name")
@@ -31,13 +32,13 @@ const invModel = require("../models/inventory-model")
     .custom(async (classification_name) => {
       const classificationExists = await invModel.checkExistingClassification(classification_name)
       if (classificationExists){
-        throw new Error(`Classification ${classification_name} exists. Please try with a different name.`)
+        throw new Error(`Classification "${classification_name}" already exists. Please try with a different name.`)
       }
     })
   ]
 }
 
-classValidate.checkClassData = async (req, res, next) => {
+invValidate.checkClassData = async (req, res, next) => {
   const { classification_name } = req.body
   let errors = []
   errors = validationResult(req)
@@ -45,8 +46,9 @@ classValidate.checkClassData = async (req, res, next) => {
     let nav = await utilities.getNav()
     res.render("./inventory/add-classification", {
       errors,
-      title: "New Classification",
-      nav,      
+      title: "Add New Classification",
+      nav,
+      messages: req.flash("notice") || [],      
       classification_name,
     })
     return
@@ -61,7 +63,7 @@ classValidate.checkClassData = async (req, res, next) => {
  This is a function that will return an array of rules to be used when checking the incoming data. 
  Each rule focuses on a specific input from the Inventory form.
   */
- classValidate.inventoryRules = () => {
+ invValidate.inventoryRules = () => {
   return [
     // Make is required and must be string
     body("inv_make")
@@ -165,7 +167,7 @@ if errors are found, then the errors, along with the initial data,
 will be returned to the registration view for correction
 
 */
-classValidate.checkInvData = async (req, res, next) => {
+invValidate.checkInvData = async (req, res, next) => {
   const { 
     inv_make,
     inv_model,
@@ -208,4 +210,4 @@ classValidate.checkInvData = async (req, res, next) => {
 
 
 
-module.exports = classValidate
+module.exports = invValidate

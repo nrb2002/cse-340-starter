@@ -394,13 +394,19 @@ main {
 /* Hero */
 
 /*Flash message style*/
-ul.notice{
-  color:red;
+.flash-message,
+.notice{
+  max-width: 600px;
+  margin: 2rem auto;
   font-style: italic;
-  margin: 2rem 0;
-  line-height: 1.5rem;
-  border-top: 2px solid red;
-  border-bottom: 2px solid red;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.flash-message{
+  color:green;
+}
+.notice{
+  color:red;
 }
 ul.notice-success,
 ul.notice-error {

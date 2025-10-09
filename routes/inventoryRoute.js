@@ -4,7 +4,7 @@ const router = new express.Router() //create a new router from express package
 const invController = require("../controllers/invController") //Import Inventory controller
 const utilities = require("../utilities/")
 
-const classValidate = require('../utilities/inventory-validation') //Import the account-validation file from utilities
+const invValidate = require('../utilities/inventory-validation') //Import the account-validation file from utilities
 
 
 /* ***************************
@@ -60,8 +60,8 @@ router.get(
  * ************************** */
 router.post(
   "/add-classification", //The path being watched for in the route.
-  classValidate.classificationRules(), //The function containing the rules to be used in the validation process.
-  classValidate.checkClassData, //The call to run the validation and handle the errors, if any.
+  invValidate.classificationRules(), //The function containing the rules to be used in the validation process.
+  invValidate.checkClassData, //The call to run the validation and handle the errors, if any.
   utilities.handleErrors(invController.addClassification) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
 )
 

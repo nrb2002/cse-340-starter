@@ -1,10 +1,10 @@
 <!-- Display page title -->
 <% if (title) { %>
     <h1>
-        <%= title %>
+        <%= title || "Inventory Management" %>
     </h1>
-    <!-- If no title available, then redirect to home page -->
-<% } else { res.redirect('/') } %>
+    
+<% }  %>
 
 <!-- Flash message (if any) -->
 <% if (messages && messages.length> 0) { %>
@@ -20,16 +20,16 @@
 
 
 <section class="form-container">
-    <h2>Actions</h2><hr>
+    <h2>Actions</h2><hr><br>
     <ul>
-        <li class="action-link btn" class="action-link btn">
+        <li class="action-link btn">
             <a href="/inv/add-classification" >
                 ➕ Add New Classification
             </a>
         </li>
-        <li class="action-link btn" class="action-link btn">
+        <li class="action-link btn">
             <a href="/inv/add-inventory" >
-                🧾 Add New Inventory Item
+                ➕ Add New Inventory Item
             </a>
         </li>
     </ul>
