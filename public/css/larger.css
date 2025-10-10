@@ -121,10 +121,17 @@
   /* Error content display */
 
   /* Form Styles */
+  .form-container{
+    padding:2rem;
+  }
 
   input[type=text],
   input[type=email],
-  input[type=password] {
+  input[type=password],
+  input[type=number],
+  input[type=date],
+  select,
+  textarea {
     border-radius: 4px;
     border: 1px solid darkgrey;
   }

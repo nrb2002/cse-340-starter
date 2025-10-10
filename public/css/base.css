@@ -210,7 +210,10 @@ input[type=submit]:hover {
 
 input[type=text],
 input[type=email],
-input[type=password]{
+input[type=password],
+input[type=number],
+select,
+textarea{
   padding: 0.75rem 1rem;
   font-size: 1rem;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -223,18 +226,22 @@ input[type=password]{
 input[type=checkbox],
 input[type=radio],
 input[type=password],
-select {
+input[type=number],
+select,
+textarea {
   border: 1px solid var(--primary-color);
 }
 
 input:required:valid,
-select:required:valid {
+select:required:valid,
+textarea:required:valid {
   background-color: var(--valid);
 }
 
 input:required:invalid,
 input:focus:invalid,
-select:required:invalid{
+select:required:invalid,
+textarea:required:invalid{
   background-color: var(--invalid);
 }
 

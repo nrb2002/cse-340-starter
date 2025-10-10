@@ -11,9 +11,11 @@ const invModel = require("../models/inventory-model")
 
 
 /*  **********************************************************
-  *  Classification Data Validation Rules
+  *  Data Validation Rules
 /*  **********************************************************
- /* 
+ 
+//Classification data validation rule
+/* 
  This is a function that will return an array of rules to be used when checking the incoming data. 
  Each rule focuses on a specific input from the Classification form.
   */
@@ -38,29 +40,9 @@ const invModel = require("../models/inventory-model")
   ]
 }
 
-invValidate.checkClassData = async (req, res, next) => {
-  const { classification_name } = req.body
-  let errors = []
-  errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    let nav = await utilities.getNav()
-    res.render("./inventory/add-classification", {
-      errors,
-      title: "Add New Classification",
-      nav,
-      messages: req.flash("notice") || [],      
-      classification_name,
-    })
-    return
-  }
-  next()
-}
+//Inventory Data Validation Rules
 
-/*  **********************************
-  *  Inventory Data Validation Rules
-  * ********************************* */
- /* 
- This is a function that will return an array of rules to be used when checking the incoming data. 
+ /*This is a function that will return an array of rules to be used when checking the incoming data. 
  Each rule focuses on a specific input from the Inventory form.
   */
  invValidate.inventoryRules = () => {
@@ -151,13 +133,12 @@ invValidate.checkClassData = async (req, res, next) => {
       .notEmpty()
       .isLength({ min: 3 })
       .withMessage("Please provide a classification."), // on error this message is sent.
-
-    
-    
-
-    
   ]
 }
+
+
+
+
 
 /* ******************************
 * Check data and return errors or continue to registration
@@ -167,6 +148,26 @@ if errors are found, then the errors, along with the initial data,
 will be returned to the registration view for correction
 
 */
+//Check Classification data
+invValidate.checkClassData = async (req, res, next) => {
+  const { classification_name } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("./inventory/add-classification", {
+      errors,
+      title: "Add New Classification",
+      nav,
+      messages: req.flash("notice") || [],      
+      classification_name,
+    })
+    return
+  }
+  next()
+}
+
+//Check Inventory data
 invValidate.checkInvData = async (req, res, next) => {
   const { 
     inv_make,

@@ -65,6 +65,16 @@ router.post(
   utilities.handleErrors(invController.addClassification) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
 )
 
+/* ***************************
+ *  Route to add new inventory
+ * ************************** */
+router.post(
+  "/add-inventory",
+  invValidate.inventoryRules(), // validation rules
+  invValidate.checkInvData,    // check validation
+  utilities.handleErrors(invController.addInventory)
+);
+
 
 //Export the router to be used in other areas of the application
 module.exports = router;

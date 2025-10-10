@@ -16,6 +16,7 @@ invCont.buildManagementView = async function (req, res, next) {
     res.render("inventory/management", {
       title: "Inventory Management",
       nav,
+      errors: null,
       messages: req.flash("notice") || null
     })
   } catch (error) {
@@ -49,21 +50,23 @@ invCont.buildAddClassificationView = async function (req, res, next) {
  * Build Add Inventory View
  * ************************** */
 invCont.buildAddInventoryView = async function (req, res, next) {
-  try {
-    // Build the navigation bar
-    let nav = await utilities.getNav()
+  try {    
+    let nav = await utilities.getNav(); // navigation
+    const classificationList = await utilities.buildClassificationList(); // combo list
 
-    // Render the add-inventory view
     res.render("inventory/add-inventory", {
-      title: "Add New Inventory Item",
+      title: "Add New Vehicle",
       nav,
-      messages: req.flash("notice") || null
-    })
+      classificationList,
+      errors: null,
+      messages: req.flash("notice") || [],
+      locals: {}, // empty sticky form
+    });
   } catch (error) {
-    console.error("Error building Add Inventory view:", error)
-    next(error)
+    console.error("Error building Add Inventory view:", error);
+    next(error);
   }
-}
+};
 
 
 /* ***************************
@@ -123,9 +126,10 @@ invCont.addClassification = async function (req, res) {
 
   //collects and stores the values from the HTML form that are being sent from the browser in the body of the request object.
   const { classification_name } = req.body 
+
   try{
     //Insert into database
-    const classResult = await invModel.addNewClassification (classification_name)
+    const classResult = await invModel.insertClassification (classification_name)
   
     //If insertion succeeded, send back success message
     if (classResult && classResult.rows && classResult.rows.length > 0) {
@@ -133,14 +137,8 @@ invCont.addClassification = async function (req, res) {
         "notice",
         `New classification "${classification_name}" created successfully!`
       )
-      //Redirect to management view
-      res.status(201).render("inventory/management", {
-        title: "Inventory Management",
-        nav,
-        errors: null,
-        messages: req.flash("notice") || []
-      })
-    } else {
+      return res.redirect("/inv/management") // ✅ redirect here
+    }else {
       throw new Error("Database insertion failed.")
     }
   } catch (err) {
@@ -150,11 +148,71 @@ invCont.addClassification = async function (req, res) {
       title: "Add New Classification",
       nav,      
       messages: req.flash("notice") || [],
-      errors: errors || null,
+      errors: null,
       classification_name
     })
   }
 }
+
+/* ****************************************
+*  Process Add New Inventory
+* *************************************** */
+invCont.addInventory = async function (req, res) {
+  const {
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+  } = req.body;
+
+  try {
+    const invResult = await invModel.insertInventory(
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id
+    );
+
+    if (invResult && invResult.rows && invResult.rows.length > 0) {
+      req.flash(
+        "notice",
+        `Inventory ${inv_make} ${inv_model} added successfully!`
+      );
+      return res.redirect("/inv/management"); // redirect after success
+    } else {
+      throw new Error("Database insertion failed");
+    }
+  } catch (err) {
+    console.error("Add Inventory Error:", err);
+
+    // rebuild nav & classification list
+    const nav = await utilities.getNav();
+    const classificationList = await utilities.buildClassificationList();
+
+    // re-render the form with sticky data & flash messages
+    res.status(500).render("inventory/add-inventory", {
+      title: "Add New Vehicle",
+      nav,
+      classificationList,       // ✅ Pass it here!
+      messages: req.flash("notice") || [],
+      errors: null,             // or pass validation errors if any
+      locals: req.body           // sticky form data
+    });
+  }
+};
+
 
 
 

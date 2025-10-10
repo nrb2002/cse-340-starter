@@ -67,9 +67,9 @@ async function checkExistingClassification(classification_name) {
 }
 
 /* *****************************
-*   Add New Classification
+*   Insert New Classification into the database
 * *************************** */
-async function addNewClassification(classification_name){
+async function insertClassification(classification_name){
   
   try {
     //declares a "sql" variable and the SQL query to write the data to the database.
@@ -80,7 +80,24 @@ async function addNewClassification(classification_name){
   } catch (error) { //Accepts an "error" variable to store any error that is thrown should the "try" block fail.
     console.error() //Print the error details in the console
     
-    console.error("❌ Database insertion error:", error); //  affiche le vrai message d'erreur
+    console.error("Database insertion error:", error); //  affiche le vrai message d'erreur
+    throw error; // renvoie l’erreur pour que utilities.handleErrors la capture
+    
+    return error.message //sends back any error message that is found in the error object.
+  }
+}
+
+/* *****************************
+*   Insert New Classification into the database
+* *************************** */
+async function insertInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id){  
+  try {
+    const sql = "INSERT INTO inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *"
+    return await pool.query(sql, [inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id])
+  } catch (error) { //Accepts an "error" variable to store any error that is thrown should the "try" block fail.
+    console.error() //Print the error details in the console
+    
+    console.error("Database insertion error:", error); //  affiche le vrai message d'erreur
     throw error; // renvoie l’erreur pour que utilities.handleErrors la capture
     
     return error.message //sends back any error message that is found in the error object.
@@ -95,6 +112,7 @@ module.exports = {
   getClassifications, 
   getInventoryByClassificationId,
   getVehicleById,
-  addNewClassification,
+  insertClassification,
+  insertInventory,
   checkExistingClassification,
 }
