@@ -187,10 +187,13 @@ invValidate.checkInvData = async (req, res, next) => {
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
+    const classificationList = await utilities.buildClassificationList()
+    
     res.render("./inventory/add-inventory", {
       errors,
-      title: "New Inventory",
+      title: "Add New Vehicle",
       nav,
+      classificationList,
       
       inv_make,
       inv_model,
