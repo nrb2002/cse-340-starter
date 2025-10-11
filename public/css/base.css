@@ -286,22 +286,25 @@ header span {
 }
 
 #tools a{
+  color:var(--primary-color);
   font-size: 1.2rem;
-  color: var(--primary-color);
+}
+
+#tools a:hover {
+  color: var(--secondary-color);
+
 }
 
 #tools:hover {
-  background: transparent;
-  color: var(--secondary-color);
-}
-#tools a:hover {
-  color: var(--secondary-color);
+  background: transparent;  
 }
 
 /*End Header Style */
 
 
-/* Navigation's Style */
+/* ************************
+ * Navigation bar
+ ************************** */
 
 .nav-bar {
   background-color: black;
@@ -309,9 +312,10 @@ header span {
   width: 100%;
   min-height: 50px;
   border-top: none;
-    /* ensures no double border */
+  /* ensures no double border */
 }
-.nav-bar ul{
+
+.nav-bar ul {
   max-height: 0;
   /* collapsed */
   overflow: hidden;
@@ -338,11 +342,13 @@ header span {
   padding: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 .nav-bar li:hover,
-.nav-bar li.current{
+.nav-bar li.current {
   background-color: var(--primary-color);
   border-top: var(--accent-1);
 }
+
 .nav-bar a {
   display: block;
   color: var(--text-light);
@@ -362,8 +368,8 @@ header span {
   justify-self: end;
   margin: 0;
   padding: 0 .5rem;
-  width: fit-content; 
-  
+  width: fit-content;
+
 }
 
 .hamburger::after {
@@ -389,6 +395,9 @@ header span {
   -webkit-transition: all .4s ease-in-out;
   transition: all .4s ease-in-out;
 }
+
+
+/**  End Navigation */
 
 main {
   max-width: 1200px;

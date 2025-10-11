@@ -21,8 +21,6 @@ Util.getNav = async function (req, res, next) {
   //Build the menu list dynamically
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
-  list += '<li><a href="#" title="Vehicles">Vehicles</a></li>'
-  list += '<ul>'
   //uses a forEach loop to move through the rows of the data array one at a time.
   data.rows.forEach((row) => {
     list += '<li>'
@@ -35,7 +33,6 @@ Util.getNav = async function (req, res, next) {
   
   return hambMenu + list //return both the hamburger menu and the menu items.
 }
-
 
 
 
