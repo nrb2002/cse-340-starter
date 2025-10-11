@@ -21,6 +21,8 @@ Util.getNav = async function (req, res, next) {
   //Build the menu list dynamically
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
+  list += '<li><a href="#" title="Vehicles">Vehicles</a></li>'
+  list += '<ul>'
   //uses a forEach loop to move through the rows of the data array one at a time.
   data.rows.forEach((row) => {
     list += '<li>'
@@ -34,6 +36,13 @@ Util.getNav = async function (req, res, next) {
   return hambMenu + list //return both the hamburger menu and the menu items.
 }
 
+
+
+
+
+
+
+
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
@@ -46,7 +55,7 @@ Util.buildClassificationGrid = async function(data){
     grid = '<ul id="inv-display">'
     //set up a "forEach" loop, to break each element of the data array into a vehicle object.
     data.forEach(vehicle => { 
-      grid += '<li>'
+      grid += '<li>' 
       grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
       + 'details"><img src="' + vehicle.inv_thumbnail 
@@ -101,22 +110,21 @@ Util.buildVehicleDetail = async function (vehicle) {
 Util.buildClassificationList = async function (classification_id = null) {
   let data = await invModel.getClassifications()
   
-  let classificationList = '<select name="classification_id" id="classificationList" required>'
+  // The key fix here: name="classification_id" and id="classification_id"
+  let classificationList = '<select name="classification_id" id="classification_id" required>'
   classificationList += "<option value=''>Choose a Classification</option>"
-  data.rows.forEach((row) => {
-    classificationList += '<option value="' + row.classification_id + '"'
-    if (
-      classification_id != null &&
-      row.classification_id == classification_id
-    ) {
-      classificationList += " selected "
-    }
-    classificationList += ">" + row.classification_name + "</option>"
-  })
-  classificationList += "</select>"
 
+  data.rows.forEach((row) => {
+    classificationList += `<option value="${row.classification_id}" ${
+      classification_id && row.classification_id == classification_id ? "selected" : ""
+    }>${row.classification_name}</option>`
+  })
+
+  classificationList += "</select>"
+  
   return classificationList
 }
+
 
 
   

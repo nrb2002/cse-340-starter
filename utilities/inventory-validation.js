@@ -131,7 +131,6 @@ const invModel = require("../models/inventory-model")
       .trim()
       .escape()
       .notEmpty()
-      .isLength({ min: 3 })
       .withMessage("Please provide a classification."), // on error this message is sent.
   ]
 }
@@ -188,8 +187,8 @@ invValidate.checkInvData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
     const classificationList = await utilities.buildClassificationList()
-    
-    res.render("./inventory/add-inventory", {
+
+    res.render("inventory/add-inventory", {
       errors,
       title: "Add New Vehicle",
       nav,

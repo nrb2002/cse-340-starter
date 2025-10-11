@@ -82,27 +82,68 @@ async function insertClassification(classification_name){
     
     console.error("Database insertion error:", error); //  affiche le vrai message d'erreur
     throw error; // renvoie l’erreur pour que utilities.handleErrors la capture
-    
-    return error.message //sends back any error message that is found in the error object.
   }
 }
 
 /* *****************************
-*   Insert New Classification into the database
-* *************************** */
-async function insertInventory(inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id){  
+ * Check for existing inventory
+ * ***************************** */
+async function checkExistingInventory(inv_make, inv_model, inv_year) {
   try {
-    const sql = "INSERT INTO inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *"
-    return await pool.query(sql, [inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id])
-  } catch (error) { //Accepts an "error" variable to store any error that is thrown should the "try" block fail.
-    console.error() //Print the error details in the console
-    
-    console.error("Database insertion error:", error); //  affiche le vrai message d'erreur
-    throw error; // renvoie l’erreur pour que utilities.handleErrors la capture
-    
-    return error.message //sends back any error message that is found in the error object.
+    const sql = `
+      SELECT inv_id 
+      FROM public.inventory 
+      WHERE inv_make = $1 AND inv_model = $2 AND inv_year = $3
+    `
+    const result = await pool.query(sql, [inv_make, inv_model, inv_year])
+    return result.rowCount > 0
+  } catch (error) {
+    console.error("checkExistingInventory error:", error)
+    throw error
   }
 }
+
+/* *****************************
+*   Insert New Inventory into the database
+* *************************** */
+async function insertInventory(
+  inv_make,
+  inv_model,
+  inv_year,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_miles,
+  inv_color,
+  classification_id
+) {
+  try {
+    const sql = `
+      INSERT INTO inventory 
+      (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING *;
+    `
+    const result = await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+    ])
+    return result
+  } catch (error) {
+    console.error("Database insertion error:", error)
+    throw error // Pass the error to the global handler (utilities.handleErrors)
+  }
+}
+
 
 
 
@@ -115,4 +156,5 @@ module.exports = {
   insertClassification,
   insertInventory,
   checkExistingClassification,
+  checkExistingInventory,
 }

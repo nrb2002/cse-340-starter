@@ -134,10 +134,16 @@ invCont.addClassification = async function (req, res) {
     //If insertion succeeded, send back success message
     if (classResult && classResult.rows && classResult.rows.length > 0) {
       req.flash(
-        "notice",
-        `New classification "${classification_name}" created successfully!`
-      )
-      return res.redirect("/inv/management") // ✅ redirect here
+      "notice",
+      `Classification "${classification_name}" created successfully!`
+    )
+    //If successful insertion of data, go to management view
+    res.status(201).render("inventory/management", {
+      title: "Inventory Management",
+      nav,
+      errors: null,
+      messages: req.flash("notice") || null
+    })
     }else {
       throw new Error("Database insertion failed.")
     }
@@ -158,6 +164,8 @@ invCont.addClassification = async function (req, res) {
 *  Process Add New Inventory
 * *************************************** */
 invCont.addInventory = async function (req, res) {
+  let nav = await utilities.getNav()
+
   const {
     inv_make,
     inv_model,
@@ -188,9 +196,15 @@ invCont.addInventory = async function (req, res) {
     if (invResult && invResult.rows && invResult.rows.length > 0) {
       req.flash(
         "notice",
-        `Inventory ${inv_make} ${inv_model} added successfully!`
-      );
-      return res.redirect("/inv/management"); // redirect after success
+        `Inventory "${inv_make} ${inv_model} (${inv_year})" added successfully!`
+      )
+      //If successful insertion of data, go to management view
+      res.status(201).render("inventory/management", {
+        title: "Inventory Management",
+        nav,
+        errors: null,
+        messages: req.flash("notice") || null 
+      })
     } else {
       throw new Error("Database insertion failed");
     }
@@ -205,11 +219,11 @@ invCont.addInventory = async function (req, res) {
     res.status(500).render("inventory/add-inventory", {
       title: "Add New Vehicle",
       nav,
-      classificationList,       // ✅ Pass it here!
+      classificationList,       // Pass it here!
       messages: req.flash("notice") || [],
       errors: null,             // or pass validation errors if any
       locals: req.body           // sticky form data
-    });
+    })
   }
 };
 
