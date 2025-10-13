@@ -4,6 +4,11 @@
 const invModel = require("../models/inventory-model") //Import inventory-model file
 const Util = {} //create an empty Util object
 
+const jwt = require("jsonwebtoken") //Import JWT package
+
+require("dotenv").config() //Import environment variables
+
+
 /* ************************
  * Constructs the nav bar
  ************************** */
@@ -122,23 +127,6 @@ Util.buildClassificationList = async function (classification_id = null) {
   return classificationList
 }
 
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* **************************************
 * Build the error background
 * ************************************ */
@@ -153,6 +141,34 @@ Util.buildErrorImage = async function (status){
   }
 
   return errorImage
+}
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+
+//assigns it to the "checkJWTToken" property of the Util object. The function accepts the request, response and next parameters.
+Util.checkJWTToken = (req, res, next) => {
+  //check to see if the JWT cookie exists
+ if (req.cookies.jwt) {
+  //if the cookie exists, uses the jsonwebtoken "verify" function to check the validity of the token. The function takes three arguments: 1) the token (from the cookie), 2) the secret value stored as an environment variable, and 3) a callback function.
+  jwt.verify(
+    req.cookies.jwt,
+    process.env.ACCESS_TOKEN_SECRET,
+    function (err, accountData) {
+      //check to see to see if an error exists
+      if (err) {
+        req.flash("Please log in") //if an error, meaning the token is not valid, a flash message is created.
+        res.clearCookie("jwt") //the cookie is deleted.
+        return res.redirect("/account/login") //redirects to the "login" route, so the client can try again to "login".
+      }
+      res.locals.accountData = accountData //adds the accountData object to the response.locals object to be forwarded on through the rest of this request - response cycle.
+      res.locals.loggedin = 1 //adds "loggedin" flag with a value of "1" (meaning true) to the response.locals object to be forwarded on through the rest of this request - response cycle.
+      next()
+    })
+ } else {
+  next()
+ }
 }
 
 

@@ -2,9 +2,9 @@
 -->
 <% if (title) { %>
     <h1>
-        <%= title %>
+        <%= title || "Login" %>
     </h1>
-<% } else { res.redirect('/') } %>
+<% } %>
 <!-- otherwise, redirect the response object to the default index route, to deliver the home view.-->
 
 <!-- Flash message (if any) -->
@@ -20,10 +20,10 @@
 
     <!-- Login form -->
      <section class="form-container">
-        <h2>Please enter your credentials to login</h2>
+        <h2>Sign in to your account</h2>
         <form action="/account/login" method="post" class="login-form">
             <fieldset>
-                <legend>All fields are mandatory</legend>
+                <legend>User Info</legend>
                 <div class="form-group">
                     <label>Email Address
                         <input type="email" id="email" name="email" placeholder="username@domain.com" required>

@@ -6,6 +6,7 @@
  * Require Statements
  *************************/
 const session = require("express-session") //Import session package
+const cookieParser = require("cookie-parser")//Import cookie-parser
 const flash = require("connect-flash"); //Import connect-flash 
 const pool = require('./database/') //Import connection to the database
 const express = require("express") //Import express package
@@ -41,6 +42,11 @@ const utilities = require("./utilities/") //Import the utilities
   name: 'sessionId', //this is the "name" we are assigning to the unique "id" that will be created for each session.
 }))
 
+//Use the cookie-parser package
+app.use(cookieParser())
+
+//Use the JWT middleware to check token
+app.use(utilities.checkJWTToken)
 
 // Express Messages Middleware
 app.use(flash()) //Make connect-flash package accessible throughout the application.

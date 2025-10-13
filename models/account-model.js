@@ -16,7 +16,8 @@ async function checkExistingEmail(account_email){
     const email = await pool.query(sql, [account_email])
     return email.rowCount
   } catch (error) {
-    return error.message
+    console.log("Error checking existing email: ", error)
+    return 0
   }
 }
 
@@ -35,25 +36,53 @@ async function registerAccount(account_firstname, account_lastname, account_emai
 
     return await pool.query(sql, [account_firstname, account_lastname, account_email, account_password]) //returns the result of the query execution.
   } catch (error) { //Accepts an "error" variable to store any error that is thrown should the "try" block fail.
-    console.error() //Print the error details in the console
     
-    console.error("❌ Database insertion error:", error); // 👈 affiche le vrai message d'erreur
-    throw error; // renvoie l’erreur pour que utilities.handleErrors la capture
-    
+    console.error("❌ Database insertion error:", error); //Print error message in the console    
     return error.message //sends back any error message that is found in the error object.
   }
 }
 
 /* *****************************
+* Return account data using email address
+* ***************************** */
+async function getAccountByEmail(account_email) {
+  try {
+    const sql = `
+      SELECT 
+        account_id, 
+        account_firstname, 
+        account_lastname, 
+        account_email, 
+        account_type, 
+        account_password 
+      FROM account 
+      WHERE account_email = $1
+    `
+    const result = await pool.query(sql, [account_email])
+    return result.rows[0] || null
+  } catch (error) {
+    console.error("Error retrieving account by email:", error)
+    return null
+  }
+}
+
+
+/* *****************************
 *   Reset password
 * *************************** */
-async function resetAccount(account_email){
+async function resetAccount(account_email, hashedPassword) {
   try {
-    const sql = "SELECT * FROM account WHERE account_email = $1 SET account_password = `{hashedpassword}`"
-    const email = await pool.query(sql, [account_email])
-      return email.rowCount
+    const sql = `
+      UPDATE account
+      SET account_password = $1
+      WHERE account_email = $2
+      RETURNING account_id, account_email
+    `
+    const result = await pool.query(sql, [hashedPassword, account_email])
+    return result.rowCount
   } catch (error) {
-      return error.message    
+    console.error("Error resetting password:", error)
+    return 0
   }
 }
 
@@ -62,6 +91,7 @@ async function resetAccount(account_email){
 
 module.exports = { 
   registerAccount, 
-  checkExistingEmail, 
+  checkExistingEmail,
+  getAccountByEmail, 
   resetAccount 
   }

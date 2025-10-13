@@ -1,5 +1,7 @@
 const accountModel = require("../models/account-model")
 const utilities = require("../utilities/") //Import Utilities
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 
 /* ****************************************
@@ -75,13 +77,14 @@ async function registerAccount(req, res) {
     }
   } catch (err) {
     console.error("Registration error:", err)
-    req.flash("notice-error", "Sorry, the registration failed.")
+    req.flash("notice", "Sorry, the registration failed.")
     res.status(501).render("account/register", {
       title: "Register",
       nav,
       
-      messages: req.flash("notice-error") || [],
+      messages: req.flash("notice") || [],
       errors: null,
+
       account_firstname,
       account_lastname,
       account_email,
@@ -91,11 +94,91 @@ async function registerAccount(req, res) {
   }
 }
 
+/* ****************************************
+ *  Process login request
+ * ************************************ */
+async function accountLogin(req, res) {
+  let nav = await utilities.getNav()
+  const { account_email, account_password } = req.body
+  const accountData = await accountModel.getAccountByEmail(account_email)
+  
+  //If the user's email does not exist in the database, return a message
+  if (!accountData) {
+    req.flash("notice", "Please check your credentials and try again.")
+    res.status(400).render("account/login", {
+      title: "Login",
+      nav,
+      
+      messages: req.flash("notice") || [],
+      errors: null,
+
+      account_email,
+    })
+    return
+  }
+
+  //If the user exists in the database, process authentication
+  try {
+    //uses the bcrypt.compare() function which takes the incoming, plain text password and the hashed password from the database and compares them to see if they match.
+    if (await bcrypt.compare(account_password, accountData.account_password)) {
+      delete accountData.account_password //If the passwords match, then the JavaScript delete function is used to remove the hashed password from the accountData array.
+      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 }) //the JWT token is created. The accountData is inserted as the payload. The secret is read from the .env file. When the token is ready, it is stored into an "accessToken" variable.
+
+      /**
+       * if the development environment is "development" (meaning local for testing), a new cookie is created, named "jwt", the JWT token is stored in the cookie, and the options of "httpOnly: true" and "maxAge: 3600 * 1000" are set. 
+       * 
+       * This means that the cookie can only be passed through the HTTP protocol and cannot be accessed by client-side JavaScript. It will also expire in 1 hour.
+       */
+      if(process.env.NODE_ENV === 'development') {
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+      } else {
+        res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+      }
+      return res.redirect("/account/") 
+    }
+    else {
+      req.flash("notice", "Please check your credentials and try again.")
+      res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        messages: req.flash("notice") || [],
+        errors: null,
+        account_email,
+      })
+    }
+  } catch (error) {
+    throw new Error('Access Forbidden')
+  }
+}
+
+/* ***************************
+ *  Deliver Account Management view
+ * ************************** */
+async function buildAccountManagement(req, res, next) {
+  try {
+    const nav = await utilities.getNav()
+    res.render("account/management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+      messages: req.flash("notice") || [],
+      loggedin: true,
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
+
+
+
 
 
 
 module.exports = { 
   buildLogin,
   buildRegister,
-  registerAccount 
+  registerAccount,
+  accountLogin,
+  buildAccountManagement,
 }

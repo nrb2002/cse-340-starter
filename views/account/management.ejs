@@ -1,0 +1,34 @@
+<!-- EJS code block to contain a JavaScript if structure to determine if a "title" variable exists. If the variable exists, displays within an <h1> element.
+-->
+<% if (title) { %>
+    <h1>
+        <%= title || "Account Management" %>
+    </h1>
+<% } %>
+
+
+<!-- Flash message (if any) -->
+<% if (messages && messages.length> 0) { %>
+    <div class="flash-message">
+        <% messages.forEach(function(message){ %>
+            <p>
+                <%= message %>
+            </p><br>
+            <% }) %>
+    </div>
+<% } %>
+
+<!-- Errors to display, if any -->
+<!-- If there are errors, create an unordered list with a class for styling. -->
+<% if (errors && errors.array && errors.array().length> 0) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error=> { %>
+            <li>
+                <%= error.msg %>
+            </li>
+            <% }) %>
+    </ul>
+<% } %>
+
+
+<p>You're logged in!</p>

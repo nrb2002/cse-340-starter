@@ -7,14 +7,36 @@ const regValidate = require('../utilities/account-validation') //Import the acco
 
 
 /* ***************************
- *  Route to deliver Login view
+ *  Route to deliver Account Management View
  * ************************** */
 
 // Route for "My Account" page
 router.get(
+  "/",
+  utilities.handleErrors(accountController.buildAccountManagement) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
+)
+
+/* ***************************
+ *  Route to deliver Login view
+ * ************************** */
+
+// Route for "Login" page
+router.get(
   "/login",
   utilities.handleErrors(accountController.buildLogin) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
 )
+
+/* ***************************
+ *  Route to login in account
+ * ************************** */
+// Process the login request
+router.post(
+  "/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
+)
+
 
 /* ***************************
  *  Route to deliver Registration view
@@ -35,6 +57,8 @@ router.post(
   regValidate.checkRegData, //The call to run the validation and handle the errors, if any.
   utilities.handleErrors(accountController.registerAccount) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
 )
+
+
 
 
 

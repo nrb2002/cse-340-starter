@@ -3,16 +3,126 @@
     <%- nav %>
     
     <!-- Static nav bar -->
-    <!-- <button id="ham-btn" class="hamburger" aria-label="hamburgerMenu"></button>
+    <!-- <button id="ham-btn" class="hamburger" aria-label="hamburgertop-nav"></button>
     <ul>
-        <li aria-label="homeMenu"><a href="/">Home</a></li>
-        <li aria-label="customeMenu"><a href="/custom">Custom</a></li>
-        <li aria-label="sedanMenu"><a href="/sedan">Sedan</a></li>
-        <li aria-label="suvMenu"><a href="/suv">SUV</a></li>
-        <li aria-label="truckMenu"><a href="/truck">Truck</a></li> 
+        <li aria-label="hometop-nav"><a href="/">Home</a></li>
+        <li aria-label="custometop-nav"><a href="/custom">Custom</a></li>
+        <li aria-label="sedantop-nav"><a href="/sedan">Sedan</a></li>
+        <li aria-label="suvtop-nav"><a href="/suv">SUV</a></li>
+        <li aria-label="trucktop-nav"><a href="/truck">Truck</a></li> 
     </ul> -->
 
     
 </nav>
+
+<style>
+    .top-nav{
+        width: 100%;
+        margin: 0 auto;
+        background-color: var(--accent-3);
+        
+    }
+
+    .top-nav ul{
+        display: flex;
+        flex-direction: column;
+        list-style-type: none;
+        width: 100%;
+    }
+
+    .top-nav ul li{
+        /* width: 25%; */
+        text-align: center;
+        position: relative;
+    }
+
+    .top-nav ul::after{
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .top-nav a{
+        display: block;
+        text-decoration: none;
+        color: black;
+        border-bottom: 2px solid transparent;
+        padding: 10px 0px;
+    }
+
+    .top-nav .active,
+    .top-nav a:hover{
+        color: var(--primary-color);
+        background-color: var(--secondary-color);
+        border-bottom: 2px solid var(--primary-color);
+    }
+
+    .top-nav .submenu{
+        display: none;
+        box-shadow: 0px 1px 2px #CCC;
+        background-color: white;
+        position: absolute;
+        width: 100%;
+        z-index: 1000;
+    }
+    .top-nav nav > ul li:hover .submenu{
+        display: block;
+    }
+    .top-nav .submenu li{
+        float: none;
+        width: 100%;
+        text-align: left;
+    }
+    .top-nav .submenu a{
+        padding: 10px;
+        border-bottom: none;
+    }
+    .top-nav .submenu a:hover{
+        border-bottom: none;
+        background-color: rgba(200,200,200,0.1);
+    }
+    .top-nav .dropdown > a::after{
+        content:" ▼";
+        font-size: 12px;
+    }
+
+    .top-nav .conteneur{
+        margin: 50px 20px;
+        height: 1500px;
+    }
+</style>
+
+<div class="top-nav">
+    <nav >
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li class="dropdown"><a href="#">Vehicles &ensp;</a>
+                <ul class="submenu">
+                    <li><a href="#">Cours HTML et CSS</a></li>
+                    <li><a href="#">Cours JavaScript</a></li>
+                    <li><a href="#">Cours PHP et MySQL</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a href="#">Vehicles in Inventory &ensp;</a>
+                <ul class="submenu">
+                    <li><a href="#">CSS display</a></li>
+                    <li><a href="#">CSS position</a></li>
+                    <li><a href="#">CSS float</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    </div>
+    
+    
+
+
+
+
+
+
+
+
+
 
 
