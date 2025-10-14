@@ -65,9 +65,10 @@ validate.checkLoginData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
     res.render("account/login", {
-      errors,
       title: "Login",
-      nav,      
+      nav, 
+      errors,
+      messages: req.flash("notice") || [],     
       account_email,
     })
     return
