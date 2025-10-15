@@ -52,14 +52,22 @@ async function registerAccount(req, res) {
   let nav = await utilities.getNav()
 
   //collects and stores the values from the HTML form that are being sent from the browser in the body of the request object.
-  const { account_firstname, account_lastname, account_email, account_password } = req.body 
+  const { 
+    account_firstname, 
+    account_lastname, 
+    account_email, 
+    account_password 
+  } = req.body 
+  
+  const hashedPassword = await bcrypt.hashSync(account_password, 10) //Has the password
+
   try{
     //calls registerAccount function, from the model, and uses the "await" keyword to indicate that a result should be returned and wait until it arrives. The result is stored in a local variable.
     const regResult = await accountModel.registerAccount(
       account_firstname,
       account_lastname,
       account_email,
-      account_password,
+      hashedPassword,
     )
   
     //if a result was received, sets a flash message to be displayed.
