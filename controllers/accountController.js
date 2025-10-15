@@ -73,7 +73,7 @@ async function registerAccount(req, res) {
     //if a result was received, sets a flash message to be displayed.
     if (regResult && regResult.rows && regResult.rows.length > 0) {
       req.flash(
-        "notice-success",
+        "notice",
         `Congratulations, ${account_firstname}! You\'re now registered. Please log in.`
       )
       //calls the render function to return the login view, along with an HTTP 201 status code for a successful insertion of data
@@ -81,7 +81,7 @@ async function registerAccount(req, res) {
         title: "Login",
         nav,
         errors: null,
-        messages: req.flash("notice-success") || []
+        messages: req.flash("notice") || []
       })
     } else {
       throw new Error("Registration failed")
@@ -158,10 +158,7 @@ async function accountLogin(req, res) {
       })
     }
   } catch (error) {
-    throw new Error('Access Forbidden')
-    // console.error("Login error:", error)
-    // next(error)
-    
+    throw new Error('Access Forbidden')    
   }
 }
 
