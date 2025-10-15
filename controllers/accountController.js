@@ -1,7 +1,10 @@
-const accountModel = require("../models/account-model")
+const accountModel = require("../models/account-model") //Import account-model file
 const utilities = require("../utilities/") //Import Utilities
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken") //Import JWT
+const bcrypt = require("bcryptjs") //Import bcrypt
+
 require("dotenv").config()
+
 
 
 /* ****************************************
@@ -148,6 +151,9 @@ async function accountLogin(req, res) {
     }
   } catch (error) {
     throw new Error('Access Forbidden')
+    // console.error("Login error:", error)
+    // next(error)
+    
   }
 }
 

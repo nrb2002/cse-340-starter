@@ -35,11 +35,11 @@ const accountModel = require("../models/account-model")
     .isEmail()
     .normalizeEmail() // refer to validator.js docs
     .withMessage("A valid email is required.")
-    //Check if email exists in the database before creating a new user
+    //Check if email exists in the database before granting access to a user
     .custom(async (account_email) => {
       const emailExists = await accountModel.checkExistingEmail(account_email)
-      if (emailExists){
-        throw new Error("Email exists. Please log in or use different email")
+      if (!emailExists){
+        throw new Error("Email does not exist. Please log in with a different email or register. ")
       }
     }),
 
@@ -54,7 +54,7 @@ const accountModel = require("../models/account-model")
         minNumbers: 1,
         minSymbols: 1,
       })
-      .withMessage("Password does not meet requirements."),
+      .withMessage("Invalid password; must have at least the following: 12 characters, 1 lowercase, 1 uppercase, 1 number, and 1 special character. "),
   ]
 }
 
