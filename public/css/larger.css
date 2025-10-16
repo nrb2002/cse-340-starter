@@ -147,6 +147,11 @@
 
   }
 
+  .management-links ul{
+  flex-direction: row;
+  align-items: end;
+}
+
   /* End Vehicle Management Page Style */
 
   /* SINGLE VEHICLE VIEW */
