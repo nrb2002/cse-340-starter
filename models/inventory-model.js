@@ -104,6 +104,21 @@ async function checkExistingInventory(inv_make, inv_model, inv_year) {
 }
 
 /* *****************************
+ * Get inventory by ID
+ * ***************************** */
+async function getInventoryById(inv_id) {
+  try {
+    const data = await pool.query(
+      "SELECT * FROM public.inventory WHERE inv_id = $1",
+      [inv_id]
+    )
+    return data.rows[0]
+  } catch (error) {
+    console.error("getInventoryById error:", error)
+  }
+}
+
+/* *****************************
 *   Insert New Inventory into the database
 * *************************** */
 async function insertInventory(
@@ -157,4 +172,5 @@ module.exports = {
   insertInventory,
   checkExistingClassification,
   checkExistingInventory,
+  getInventoryById,
 }

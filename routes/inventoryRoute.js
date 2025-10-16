@@ -82,7 +82,23 @@ router.post(
   invValidate.inventoryRules(), // validation rules
   invValidate.checkInvData,    // check validation
   utilities.handleErrors(invController.addInventory)
-);
+)
+
+/* ***************************
+ *  Route to edit inventory
+ * ************************** */
+router.get(
+    "/edit/:inv_id", 
+    utilities.handleErrors(invController.buildEditInventoryView)
+)
+
+/* ***************************
+ *  Route to delete inventory
+ * ************************** */
+router.get(
+    "/delete/:inv_id", 
+    utilities.handleErrors(invController.buildDeleteInventory )
+)
 
 
 //Export the router to be used in other areas of the application

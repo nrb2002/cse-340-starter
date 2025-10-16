@@ -78,4 +78,71 @@
   .notice{
     font-size: 1.1rem;
   }
+
+  /* ----------------------------
+    Larger screens: show real table
+    ---------------------------- */
+  
+
+    /* Restore table layout */
+    #inventoryDisplay thead {
+      display: table-header-group;
+      background: #111;
+      color: var(--accent-3);
+    }
+
+    #inventoryDisplay,
+    #inventoryDisplay thead,
+    #inventoryDisplay tbody,
+    #inventoryDisplay tr,
+    #inventoryDisplay th,
+    #inventoryDisplay td {
+      display: table;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #inventoryDisplay tr {
+      display: table-row;
+      box-shadow: none;
+      margin: 0;
+      border: none;
+    }
+
+    #inventoryDisplay th,
+    #inventoryDisplay td {
+      display: table-cell;
+      padding: 0.6rem 0.8rem;
+      vertical-align: middle;
+      font-size: 0.95rem;
+    }
+
+    /* Header style */
+    #inventoryDisplay thead th {
+      text-align: left;
+      padding: 0.7rem 0.8rem;
+      font-weight: 700;
+    }
+
+    #inventoryDisplay thead tr {
+      background-color: var(--primary-color);
+    }
+
+    /* Zebra striping */
+    #inventoryDisplay tbody tr:hover,
+    #inventoryDisplay tbody tr:nth-child(even) {
+      background: var(--accent-3);
+    }
+
+    /* Action link compact style for desktop */
+    #inventoryDisplay a {
+      padding: 0.35rem 0.5rem;
+      border-radius: 5px;
+    }
+
+    /* Remove the label pseudo-elements on desktop (they're not needed) */
+    #inventoryDisplay td::before {
+      content: none;
+    }
+  
 }
