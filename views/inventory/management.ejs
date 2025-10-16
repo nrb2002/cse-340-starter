@@ -19,21 +19,47 @@
 
 
 
-<section class="form-container">
-    <h2>Actions</h2>
+<section class="management-links">    
     <ul>
-        <li class="action-link btn">
+        <li class="btn">
             <a href="/inv/add-classification" >
                 ➕ Add New Classification
             </a>
         </li>
-        <li class="action-link btn">
+        <li class="btn">
             <a href="/inv/add-inventory" >
                 ➕ Add New Inventory Item
             </a>
         </li>
-    </ul>
+    </ul>    
+</section>
+<section>
+    <h2>Manage Inventory</h2><hr><br>
+    <p>Please select a classification from the list below to see relevant items</p>
+    <!-- Select element display the Classifications' list -->
+    <p class="form-group">
+        <%- classificationList %>
+    </p>
+    <!-- table that inventory items returned from the controller will be displayed -->
+    <table id="inventoryDisplay"></table>
+    <!-- display a message if JavaScript is disabled -->
+    <noscript>JavaScript must be enabled to use this page.</noscript>
 </section>
 
 
+
+
+
+
+
+
+
+
+
+
+<!-- 
+Our JavaScript file will do two things for us: 1) listen to the classifications select element to detect when a new classification is selected. When a change occurs it will send a request which will ask the inventory controller to fetch the items from inventory based on the classification and send them back, and 2) when the inventory data is returned, it will send the data, as a JavaScript object, to a new JavaScript function to build the table structure around it, then inject it into the table that we just added to the inventory management view.
+
+-->
+<script src="../../js/inventory.js"></script>
 
