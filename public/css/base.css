@@ -411,34 +411,23 @@ main {
 
 /*Flash message style*/
 .flash-message,
-.notice{
+.notice,
+.success,
+.error{
   max-width: 600px;
-  margin: 2rem auto;
+  margin: 1rem auto;
   font-style: italic;
   font-weight: bold;
   font-size: 1rem;
 }
-.flash-message{
-  color:green;
-}
-.notice{
-  color:red;
-}
-ul.notice-success,
-ul.notice-error {
-  padding: 2%;
-  font-size: 1.1rem;
-  margin: 0 auto;
-  width: 50%;
-}
 
-ul.notice-success {
-  background: #e4f3da;
+.flash-message,
+.success {
   color: green;
 }
 
-ul.notice-error {
-  background-color: var(--accent-3);
+.notice,
+.error {
   color: red;
   font-weight: bold;
 }

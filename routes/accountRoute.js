@@ -13,7 +13,8 @@ const regValidate = require('../utilities/account-validation') //Import the acco
 // Route for "My Account" page
 router.get(
   "/",
-  utilities.handleErrors(accountController.buildAccountManagement) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
+  utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  utilities.handleErrors(accountController.buildAccountManagement), //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
 )
 
 /* ***************************

@@ -73,7 +73,7 @@ async function registerAccount(req, res) {
     //if a result was received, sets a flash message to be displayed.
     if (regResult && regResult.rows && regResult.rows.length > 0) {
       req.flash(
-        "notice",
+        "success",
         `Congratulations, ${account_firstname}! You\'re now registered. Please log in.`
       )
       //calls the render function to return the login view, along with an HTTP 201 status code for a successful insertion of data
@@ -81,7 +81,7 @@ async function registerAccount(req, res) {
         title: "Login",
         nav,
         errors: null,
-        messages: req.flash("notice") || []
+        messages: req.flash("success") || []
       })
     } else {
       throw new Error("Registration failed")
@@ -115,12 +115,12 @@ async function accountLogin(req, res) {
   
   //If the user's email does not exist in the database, return a message
   if (!accountData) {
-    req.flash("notice", "Please check your credentials and try again.")
+    req.flash("error", "Please check your credentials and try again.")
     res.status(400).render("account/login", {
       title: "Login",
       nav,
       
-      messages: req.flash("notice") || [],
+      messages: req.flash("error") || [],
       errors: null,
 
       account_email,
@@ -148,11 +148,11 @@ async function accountLogin(req, res) {
       return res.redirect("/account/") 
     }
     else {
-      req.flash("notice", "Please check your credentials and try again.")
+      req.flash("error", "Please check your credentials and try again.")
       res.status(400).render("account/login", {
         title: "Login",
         nav,
-        messages: req.flash("notice") || [],
+        messages: req.flash("error") || [],
         errors: null,
         account_email,
       })

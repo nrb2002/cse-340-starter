@@ -39,12 +39,6 @@ Util.getNav = async function (req, res, next) {
   return hambMenu + list //return both the hamburger menu and the menu items.
 }
 
-
-
-
-
-
-
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
@@ -170,6 +164,20 @@ Util.checkJWTToken = (req, res, next) => {
   next()
  }
 }
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+ Util.checkLogin = (req, res, next) => {
+  //check to see if the login flag exists and is "true" in the response object
+  if (res.locals.loggedin) {
+    next() //allows the process of the application to continue
+  } else {
+    req.flash("notice", "Please log in.") //create a flash message
+    return res.redirect("/account/login") //redirects to the login route, because the login flag does not exist.
+  }
+ }
+
 
 
 /* ****************************************

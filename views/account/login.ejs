@@ -9,7 +9,7 @@
 
 <!-- Flash message (if any) -->
 <% if (messages && messages.length> 0) { %>
-    <div class="flash-message">
+    <div class="notice success">
         <% messages.forEach(function(message){ %>
             <p>
                 <%= message %>
@@ -21,7 +21,7 @@
 <!-- Errors to display, if any -->
 <!-- If there are errors, create an unordered list with a class for styling. -->
 <% if (errors && errors.array && errors.array().length> 0) { %>
-    <ul class="notice">
+    <ul class="error">
         <% errors.array().forEach(error=> { %>
             <li>
                 <%= error.msg %>

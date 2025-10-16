@@ -39,7 +39,7 @@ const accountModel = require("../models/account-model")
     .custom(async (account_email) => {
       const emailExists = await accountModel.checkExistingEmail(account_email)
       if (!emailExists){
-        throw new Error("Email does not exist. Please log in with a different email or register. ")
+        throw new Error("User does not exist. Please log in with a different email or register. ")
       }
     }),
 
@@ -115,7 +115,7 @@ validate.registrationRules = () => {
       .custom(async (account_email) => {
         const emailExists = await accountModel.checkExistingEmail(account_email)
         if (emailExists){
-          throw new Error("Email exists. Please log in or use different email")
+          throw new Error("User already registered. Please log in or create new user with a different email.")
         }
       }),
   
