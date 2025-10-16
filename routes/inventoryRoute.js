@@ -10,21 +10,23 @@ const invValidate = require('../utilities/inventory-validation') //Import the ac
 /* ***************************
  *  Route to build inventory management view
  * ************************** */
-
-/**"get" indicates that the route will listen for the GET method within the request (typically a clicked link or the URL itself).
- * 
- */
-//Route to the management view
 router.get(
     "/", 
     utilities.handleErrors(invController.buildManagementView)
 )
-//Route to the addClassification view
+
+/* ***************************
+ *  Route to the addClassification view
+ * ************************** */
 router.get(
     "/add-classification", 
     utilities.handleErrors(invController.buildAddClassificationView)
 )
-//Route to the addInventory view
+
+/* ***************************
+ *  Route to the addInventory view
+ * ************************** */
+
 router.get(
     "/add-inventory", 
     utilities.handleErrors(invController.buildAddInventoryView)
@@ -46,13 +48,20 @@ router.get(
     utilities.handleErrors(invController.buildByClassificationId)
 )
 
-
 /* ***************************
  *  Route for single vehicle detail view
  * ************************** */
 router.get(
     "/detail/:inv_id", 
     utilities.handleErrors(invController.buildByDetailView) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
+)
+
+/* ***************************
+ *  Route to get inventory by classification_id and return the data as JSON 
+ * ************************** */
+router.get(
+    "/getInventory/:classification_id", 
+    utilities.handleErrors(invController.getInventoryJSON)
 )
 
 /* ***************************
