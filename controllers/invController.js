@@ -9,15 +9,18 @@ const invCont = {} //Empty object
  * ************************** */
 invCont.buildManagementView = async function (req, res, next) {
   try {
-    // Get navigation bar
-    let nav = await utilities.getNav()
+    let nav = await utilities.getNav() // Get navigation bar
+
+    const classificationList = await utilities.buildClassificationList() //create a select list to be displayed in the inventory management view
 
     // Render the management view
     res.render("inventory/management", {
       title: "Inventory Management",
       nav,
       errors: null,
-      messages: req.flash("notice") || null
+      messages: req.flash("notice") || null,
+
+      classificationList,
     })
   } catch (error) {
     console.error("Error displaying Invetory Management page:", error)
@@ -59,7 +62,7 @@ invCont.buildAddInventoryView = async function (req, res, next) {
       nav,
       classificationList,
       errors: null,
-      messages: req.flash("notice") || [],
+      messages: req.flash("success") || [],
       locals: {}, // empty sticky form
     });
   } catch (error) {
@@ -88,6 +91,20 @@ invCont.buildByClassificationId = async function (req, res, next) {
     grid,
   })
 }
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
+  }
+}
+
 
 /* ***************************
  * Build single vehicle detail view
