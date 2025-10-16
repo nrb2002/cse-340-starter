@@ -169,10 +169,14 @@ body {
 }
 
 h1 {
-  color: var(--primary-color);
   font-size: 1.5rem;
   background-color: var(--secondary-color);
   padding: 1rem;
+}
+
+h1,
+h2{
+  color:var(--primary-color);
 }
 
 
@@ -775,7 +779,7 @@ button.togglePassword:focus {
 }
 
 /* Action buttons */
-.form-container .action-link {
+/* .management-links ul{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -783,7 +787,7 @@ button.togglePassword:focus {
   text-decoration: none;
   transition: all 0.25s ease;
   width: 100%;
-}
+} */
 
 .form-container .action-link:hover {
   transform: translateY(-2px);
@@ -792,6 +796,174 @@ button.togglePassword:focus {
 .form-container .action-link:active {
   transform: scale(0.98);
 }
+
+.management-links ul{
+  display: flex;
+  flex-direction:column;
+  width:100%;
+  margin:1rem auto;
+  gap:0;
+}
+
+.management-links .btn{
+  padding: .75rem 2rem 1.25rem 2rem;
+  text-align: center;
+  justify-content:center; 
+}
+
+
+/* ============================
+   Mobile-first responsive table
+   Targets: #inventoryDisplay
+   ============================ */
+
+/* Basic reset + layout for mobile (stacked "cards") */
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* Hide the table header on small screens (we'll show labels in each cell) */
+#inventoryDisplay thead {
+  display: none;
+}
+
+/* Each row becomes a block (card) */
+#inventoryDisplay tbody,
+#inventoryDisplay tr {
+  display: block;
+  width: 100%;
+}
+
+/* Row (card) wrapper */
+#inventoryDisplay tr {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  padding: 0.6rem;
+  margin: 0.6rem 0;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Cells become stacked blocks */
+#inventoryDisplay td {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+  font-size: 0.95rem;
+  color: #111;
+  border: none;
+}
+
+/* Make action links/buttons look like buttons on mobile for easier tapping */
+#inventoryDisplay a {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Visual styles for specific actions (tweak colors to match theme) */
+#inventoryDisplay a[title*="update"],
+#inventoryDisplay a[title*="Modify"] {
+  background: #f3f7ff;
+  color: #0b5cff;
+  border-color: rgba(11,92,255,0.12);
+}
+#inventoryDisplay a[title*="delete"],
+#inventoryDisplay a[title*="Delete"] {
+  background: #fff6f6;
+  color: #c91e1e;
+  border-color: rgba(201,30,30,0.12);
+}
+
+/* Accessibility: focus styles */
+#inventoryDisplay a:focus {
+  outline: 3px solid rgba(11,92,255,0.18);
+  outline-offset: 2px;
+}
+
+/* ----------------------------
+   Larger screens: show real table
+   ---------------------------- */
+@media (min-width: 700px) {
+  /* Restore table layout */
+  #inventoryDisplay thead {
+    display: table-header-group;
+    background: #111;
+    color: #fff;
+  }
+
+  #inventoryDisplay,
+  #inventoryDisplay thead,
+  #inventoryDisplay tbody,
+  #inventoryDisplay tr,
+  #inventoryDisplay th,
+  #inventoryDisplay td {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #inventoryDisplay tr {
+    display: table-row;
+    box-shadow: none;
+    margin: 0;
+    border: none;
+  }
+
+  #inventoryDisplay th,
+  #inventoryDisplay td {
+    display: table-cell;
+    padding: 0.6rem 0.8rem;
+    vertical-align: middle;
+    font-size: 0.95rem;
+  }
+
+  /* Header style */
+  #inventoryDisplay thead th {
+    text-align: left;
+    padding: 0.7rem 0.8rem;
+    font-weight: 700;
+  }
+
+  #inventoryDisplay thead tr{    
+    background-color: var(--primary-color);
+  }
+
+  /* Zebra striping */
+  #inventoryDisplay tbody tr:hover,
+  #inventoryDisplay tbody tr:nth-child(even) {
+    background: var(--accent-3);
+  }
+
+  /* Action link compact style for desktop */
+  #inventoryDisplay a {
+    padding: 0.35rem 0.5rem;
+    border-radius: 5px;
+  }
+
+  /* Remove the label pseudo-elements on desktop (they're not needed) */
+  #inventoryDisplay td::before {
+    content: none;
+  }
+}
+
+/* Optional: horizontal overflow fallback for mid-size screens */
+@media (min-width: 500px) and (max-width: 699px) {
+  #inventoryDisplay {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+
 
 /* Vehicle Detail View */
 .vehicle-detail-container {
