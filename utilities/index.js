@@ -107,7 +107,7 @@ Util.buildClassificationList = async function (classification_id = null) {
   let data = await invModel.getClassifications()
   
   // The key fix here: name="classification_id" and id="classification_id"
-  let classificationList = '<select name="classification_id" id="classification_id" required>'
+  let classificationList = '<select name="classification_id" class="classification_id" id="classification_id" required>'
   classificationList += "<option value=''>Choose a Classification</option>"
 
   data.rows.forEach((row) => {
