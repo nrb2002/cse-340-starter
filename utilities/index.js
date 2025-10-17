@@ -182,25 +182,27 @@ Util.checkJWTToken = (req, res, next) => {
  *  Middleware to Check JWT and account type
  * ************************************ */
 //Only allows access to certain pages if accountType is "Employee" or "Admin"
-Util.checkInventoryAuth = (req, res, next) => {
+Util.checkInventoryAuth = async (req, res, next) => {
   try {
     const token = req.cookies.jwt
     if (!token) throw new Error('Access denied. No token provided.')
 
     const accountData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
-    req.accountData = accountData // attach for route handlers if needed
+    req.accountData = accountData
+    res.locals.accountData = accountData
+    res.locals.loggedin = 1
 
-    // Check account type
+    // Only allow Employee or Admin
     if (accountData.account_type !== 'Employee' && accountData.account_type !== 'Admin') {
       throw new Error('Access denied. Insufficient privileges.')
     }
 
-    next() // allow access
+    next()
   } catch (error) {
     console.warn('Inventory access denied:', error.message)
 
     // Render login view with flash message
-    let nav = await utilities.getNav()
+    const nav = await Util.getNav() // <- use `Util`, not `utilities`
     req.flash('error', 'You must be logged in as Employee or Admin to access that page.')
     res.status(401).render('account/login', {
       title: 'Login',
@@ -211,6 +213,7 @@ Util.checkInventoryAuth = (req, res, next) => {
     })
   }
 }
+
 
 
 

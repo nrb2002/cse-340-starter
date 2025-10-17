@@ -6,7 +6,7 @@
   --primary-color: #6A2055;
   --secondary-color: #F4E2DE;
   --tertiary-color: rgba(202, 243, 202, 1);
-  --accent-1: #d1cccc;
+  --accent-1: #eae6e6ff;
   --accent-2: #064c9c;
   --accent-3: #fcf9f9;
   --accent-4: #fca0a0ff;
@@ -415,6 +415,17 @@ main {
   background-color: white;
   padding: 0 1rem;
   margin: 0 auto;
+}
+
+.profile-link a{
+  color:var(--accent-2);
+  font-style: italic;
+}
+.profile-link a:hover{
+  font-style:underline;
+}
+.profile-link a:visited{
+  color:red;
 }
 
 /* Hero */
@@ -986,3 +997,107 @@ footer {
 
 /* End Footer */
 
+
+/* ****************************************
+ *  Account Management Dashboard Style
+ * ************************************ */
+.account-dashboard {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background: #f9fafb;
+  min-height: 100vh;
+}
+
+/* Header */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-header h2 {
+  font-size: 1.6rem;
+  color: var(--secondary-color);
+}
+
+.dashboard-header .subtitle {
+  font-size: 0.95rem;
+  color: var(--secondary-color);
+}
+
+/* Layout */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Sidebar */
+.dashboard-sidebar {
+  background: var(--secondary-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+.dashboard-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-sidebar li {
+  margin-bottom: 0.8rem;
+}
+
+.dashboard-sidebar a {
+  display: block;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dashboard-sidebar a:hover {
+  color: var(--accent-2);
+}
+
+/* Main Content */
+.dashboard-main {
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 1.2rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}
+
+/* Desktop layout */
+@media (min-width: 768px) {
+  .dashboard-container {
+    flex-direction: row;
+  }
+
+  .dashboard-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+  }
+
+  .dashboard-main {
+    flex: 1;
+  }
+}
+
+/* Flash & error messages */
+.flash-message {
+  background: #e8f4ff;
+  border-left: 4px solid #0077cc;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  border-radius: 0.25rem;
+}
+
+.notice {
+  background: #fff0f0;
+  border-left: 4px solid #d9534f;
+  padding: 0.8rem;
+  border-radius: 0.25rem;
+}

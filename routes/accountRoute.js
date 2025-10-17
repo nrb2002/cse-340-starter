@@ -3,7 +3,7 @@ const express = require("express") //import express
 const router = new express.Router() //create a new router from express package
 const accountController = require("../controllers/accountController") //Import Account controller
 const utilities = require("../utilities/") //Import utilities index.js file
-const regValidate = require('../utilities/account-validation') //Import the account-validation file from utilities
+const accountValidate = require('../utilities/account-validation') //Import the account-validation file from utilities
 
 
 /* ***************************
@@ -28,17 +28,6 @@ router.get(
 )
 
 /* ***************************
- *  Route to login in account
- * ************************** */
-// Process the login request
-router.post(
-  "/login",
-  regValidate.loginRules(),
-  regValidate.checkLoginData,
-  utilities.handleErrors(accountController.accountLogin)
-)
-
-/* ***************************
  *  Route to logout from account
  * ************************** */
 // Process the logout request
@@ -58,13 +47,53 @@ router.get(
 )
 
 /* ***************************
+ *  Route to deliver update view
+ * ************************** */
+router.get(
+  "/update/:account_id",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildUpdateAccount)
+)
+
+/* ***************************
+ *  Route to login in account
+ * ************************** */
+// Process the login request
+router.post(
+  "/login",
+  accountValidate.loginRules(),
+  accountValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
+)
+
+
+
+/* ***************************
  *  Route to register new account
  * ************************** */
 router.post(
   "/register", //The path being watched for in the route.
-  regValidate.registrationRules(), //The function containing the rules to be used in the validation process.
-  regValidate.checkRegData, //The call to run the validation and handle the errors, if any.
+  accountValidate.registrationRules(), //The function containing the rules to be used in the validation process.
+  accountValidate.checkRegData, //The call to run the validation and handle the errors, if any.
   utilities.handleErrors(accountController.registerAccount) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
+)
+
+// Process account info update
+router.post(
+  "/update-account",
+  utilities.checkLogin,
+  accountValidate.updateAccountRules(),
+  accountValidate.checkUpdateAccountData,
+  utilities.handleErrors(accountController.updateAccount)
+)
+
+// Process password change
+router.post(
+  "/update-password",
+  utilities.checkLogin,
+  accountValidate.passwordRules(),
+  accountValidate.checkPasswordData,
+  utilities.handleErrors(accountController.updatePassword)
 )
 
 

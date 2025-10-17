@@ -144,28 +144,105 @@ will be returned to the registration view for correction
 
 */
 validate.checkRegData = async (req, res, next) => {
-    const { account_firstname, account_lastname, account_email } = req.body //use JavaScript destructuring method to collect and store the firstname, lastname and email address values from the request body.
-    
-    let errors = [] //creates an empty "errors" array.
-    errors = validationResult(req) //calls the express-validator "validationResult" function and sends the request object (containing all the incoming data) as a parameter. All errors, if any, will be stored into the errors array.
+  const { account_firstname, account_lastname, account_email } = req.body //use JavaScript destructuring method to collect and store the firstname, lastname and email address values from the request body.
+  
+  let errors = [] //creates an empty "errors" array.
+  errors = validationResult(req) //calls the express-validator "validationResult" function and sends the request object (containing all the incoming data) as a parameter. All errors, if any, will be stored into the errors array.
 
-    //If there are any errors, call the render function to rebuild the registration view.
-    if (!errors.isEmpty()) {
-      let nav = await utilities.getNav()
-      res.render("account/register", {
-        errors,
-        title: "Registration",
-        nav,
-        //These variables below - except the password - will be used to re-populate the form if errors are found.
-        account_firstname,
-        account_lastname,
-        account_email,
-      })
-      return
-    }
-    next() //if no errors are detected, the "next()" function is called, which allows the process to continue into the controller for the registration to be carried out.
+  //If there are any errors, call the render function to rebuild the registration view.
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("account/register", {
+      errors,
+      title: "Registration",
+      nav,
+      //These variables below - except the password - will be used to re-populate the form if errors are found.
+      account_firstname,
+      account_lastname,
+      account_email,
+    })
+    return
   }
+  next() //if no errors are detected, the "next()" function is called, which allows the process to continue into the controller for the registration to be carried out.
+}
 
+
+
+validate.updateAccountRules = () => {
+  return [
+    body("account_firstname")
+      .trim()
+      .notEmpty()
+      .withMessage("First name is required."),
+
+    body("account_lastname")
+      .trim()
+      .notEmpty()
+      .withMessage("Last name is required."),
+
+    body("account_email")
+      .trim()
+      .isEmail()
+      .withMessage("A valid email is required.")
+      .custom(async (account_email, { req }) => {
+        const existingEmail = await accountModel.getAccountByEmail(account_email)
+        if (
+          existingEmail &&
+          existingEmail.account_id != req.body.account_id
+        ) {
+          throw new Error("Email already in use. Please choose another.")
+        }
+      }),
+  ]
+}
+
+validate.passwordRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .isLength({ min: 8 })
+      .withMessage("Password must be at least 8 characters long.")
+      .matches(/[A-Z]/)
+      .withMessage("Password must contain an uppercase letter.")
+      .matches(/[a-z]/)
+      .withMessage("Password must contain a lowercase letter.")
+      .matches(/[0-9]/)
+      .withMessage("Password must contain a number.")
+      .matches(/[@$!%*?&]/)
+      .withMessage("Password must contain a special character."),
+  ]
+}
+
+// Validation handlers
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav()
+    return res.render("account/update", {
+      title: "Update Account",
+      nav,
+      errors,
+      messages: req.flash("error") || [],
+      accountData: req.body,
+    })
+  }
+  next()
+}
+
+validate.checkPasswordData = async (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav()
+    return res.render("account/update", {
+      title: "Update Account",
+      nav,
+      errors,
+      messages: req.flash("error") || [],
+      accountData: req.body,
+    })
+  }
+  next()
+}
 /************************************************************************************************** */
 /** RESET VALIDATIONS */
 /************************************************************************************************** */

@@ -8,9 +8,9 @@
   <div id="tools">
     <% if (locals.accountData) { %>
       <!-- When logged in -->
-      <a href="/account/" class="welcome-badge" title="Go to your account">
-        👋 Welcome, <%= accountData.account_firstname %>
-      </a>
+      <a href="/account/" class="welcome-badge" title="Go to your dashboard">
+        Hi, <%= accountData.account_firstname %>! Here's your Dashboard.
+      </a> |
       <a href="/account/logout" class="logout-btn" title="Log out of your account">
         Logout
       </a>

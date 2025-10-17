@@ -1,34 +1,53 @@
-<!-- EJS code block to contain a JavaScript if structure to determine if a "title" variable exists. If the variable exists, displays within an <h1> element.
--->
-<% if (title) { %>
-    <h1>
-        <%= title || "Account Management" %>
-    </h1>
-<% } %>
+<!-- Dashboard Header -->
+  <header class="dashboard-header">
+    <h2>Welcome, <%= accountData.account_firstname %> 👋</h2>
+    <p class="subtitle">Manage your account and access system features</p>
+  </header>
 
+  <div class="dashboard-container">
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <nav>
+        <ul>
+          <li><a href="/account/update/<%= accountData.account_id %>">Update Account Info</a></li>
 
-<!-- Flash message (if any) -->
-<% if (messages && messages.length> 0) { %>
-    <div class="flash-message">
-        <% messages.forEach(function(message){ %>
-            <p>
-                <%= message %>
-            </p><br>
-            <% }) %>
-    </div>
-<% } %>
+          <% if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
+            <li><a href="/inv">Inventory Management</a></li>
+            <li><a href="/inv/add-classification">Add Classification</a></li>
+            <li><a href="/inv/add-inventory">Add Inventory</a></li>
+          <% } %>
 
-<!-- Errors to display, if any -->
-<!-- If there are errors, create an unordered list with a class for styling. -->
-<% if (errors && errors.array && errors.array().length> 0) { %>
-    <ul class="notice">
-        <% errors.array().forEach(error=> { %>
-            <li>
-                <%= error.msg %>
-            </li>
-            <% }) %>
-    </ul>
-<% } %>
+          <li><a href="/account/logout" class="logout">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
 
+    <!-- Main Dashboard Content -->
+    <section class="dashboard-main">
+      <% if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
+        <h3>Inventory Management</h3>
+        <p>You have access to manage classifications and vehicles.</p><hr>
+      <% } else { %>
+        <h3>Your Account</h3>
+        <p>Review and update your personal information.</p>
+      <% } %>
 
-<p>You're logged in!</p>
+      <!-- Flash messages -->
+      <% if (messages && messages.length > 0) { %>
+        <div class="flash-message">
+          <% messages.forEach(function(message) { %>
+            <p><%= message %></p>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <!-- Error messages -->
+      <% if (errors && errors.array && errors.array().length > 0) { %>
+        <ul class="notice">
+          <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </section>
+  </div>
