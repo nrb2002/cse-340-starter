@@ -38,6 +38,14 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
+/* ***************************
+ *  Route to logout from account
+ * ************************** */
+// Process the logout request
+router.get(
+  "/logout",
+  utilities.handleErrors(accountController.accountLogout)
+)
 
 /* ***************************
  *  Route to deliver Registration view

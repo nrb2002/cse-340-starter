@@ -178,6 +178,40 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+/* ****************************************
+ *  Middleware to Check JWT and account type
+ * ************************************ */
+//Only allows access to certain pages if accountType is "Employee" or "Admin"
+Util.checkInventoryAuth = (req, res, next) => {
+  try {
+    const token = req.cookies.jwt
+    if (!token) throw new Error('Access denied. No token provided.')
+
+    const accountData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    req.accountData = accountData // attach for route handlers if needed
+
+    // Check account type
+    if (accountData.account_type !== 'Employee' && accountData.account_type !== 'Admin') {
+      throw new Error('Access denied. Insufficient privileges.')
+    }
+
+    next() // allow access
+  } catch (error) {
+    console.warn('Inventory access denied:', error.message)
+
+    // Render login view with flash message
+    let nav = await utilities.getNav()
+    req.flash('error', 'You must be logged in as Employee or Admin to access that page.')
+    res.status(401).render('account/login', {
+      title: 'Login',
+      nav,
+      messages: req.flash('error') || [],
+      errors: null,
+      account_email: '',
+    })
+  }
+}
+
 
 
 /* ****************************************

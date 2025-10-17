@@ -17,6 +17,8 @@ const validate = {}
 //Import the account model
 const accountModel = require("../models/account-model")
 
+const jwt = require('jsonwebtoken')//Import JWT package
+
 
 /*  **********************************
   *  Login Data Validation Rules
@@ -75,7 +77,6 @@ validate.checkLoginData = async (req, res, next) => {
   }
   next()
 }
-
 
 
 /*  **********************************

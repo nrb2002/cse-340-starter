@@ -10,7 +10,6 @@ require("dotenv").config()
 /* ****************************************
 *  Deliver login view
 * *************************************** */
-
 async function buildLogin(req, res, next) {
   let nav = await utilities.getNav() //retrieves and stores the navigation bar string for use in the view.
   
@@ -26,7 +25,6 @@ async function buildLogin(req, res, next) {
 /* ****************************************
 *  Deliver Registration view
 * *************************************** */
-
 async function buildRegister(req, res, next) {
   let nav = await utilities.getNav() //retrieves and stores the navigation bar string for use in the view.
 
@@ -140,6 +138,9 @@ async function accountLogin(req, res) {
        * 
        * This means that the cookie can only be passed through the HTTP protocol and cannot be accessed by client-side JavaScript. It will also expire in 1 hour.
        */
+      // Save user data in session
+      req.session.accountData = accountData
+      //For the development environment
       if(process.env.NODE_ENV === 'development') {
         res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
       } else {
@@ -160,6 +161,16 @@ async function accountLogin(req, res) {
   } catch (error) {
     throw new Error('Access Forbidden')    
   }
+}
+
+/* ****************************************
+ *  Process logout and clear session
+ * ************************************ */
+async function accountLogout(req, res) {
+  res.clearCookie("jwt")
+  req.session.destroy(() => {
+    res.redirect("/") // back to home
+  })
 }
 
 /* ***************************
@@ -191,5 +202,6 @@ module.exports = {
   buildRegister,
   registerAccount,
   accountLogin,
+  accountLogout,
   buildAccountManagement,
 }

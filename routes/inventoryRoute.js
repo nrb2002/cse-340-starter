@@ -13,6 +13,7 @@ const invValidate = require('../utilities/inventory-validation') //Import the ac
 router.get(
     "/", 
     utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+    utilities.checkInventoryAuth, //Middleware to check JWT and account type
     utilities.handleErrors(invController.buildManagementView)
 )
 

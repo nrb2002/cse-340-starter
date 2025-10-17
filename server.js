@@ -41,12 +41,20 @@ const utilities = require("./utilities/") //Import the utilities
   saveUninitialized: true, //this setting is important to the creation process when the session is first created.
   name: 'sessionId', //this is the "name" we are assigning to the unique "id" that will be created for each session.
 }))
-
+//This ensures accountData is always available in all restricted views
+app.use((req, res, next) => {
+  res.locals.accountData = req.session.accountData
+  next()
+})
 //Use the cookie-parser package
 app.use(cookieParser())
 
 //Use the JWT middleware to check token
 app.use(utilities.checkJWTToken)
+
+
+
+
 
 // Express Messages Middleware
 app.use(flash()) //Make connect-flash package accessible throughout the application.
