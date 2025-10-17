@@ -40,7 +40,9 @@ const invModel = require("../models/inventory-model")
   ]
 }
 
-//Inventory Data Validation Rules
+/* ******************************
+* New Inventory Data Validation Rules
+* ***************************** */
 
  /*This is a function that will return an array of rules to be used when checking the incoming data. 
  Each rule focuses on a specific input from the Inventory form.
@@ -135,9 +137,91 @@ const invModel = require("../models/inventory-model")
   ]
 }
 
+/* ******************************
+* Update Inventory Data Validation Rules
+* ***************************** */
+ invValidate.udpateInventoryRules = () => {
+  return [
+    // Make is required and must be string
+    body("inv_make")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a make."), // on error this message is sent.
 
+    // lastname is required and must be string
+    body("inv_model")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a model."), // on error this message is sent.
 
+      // Make is required and must be string
+    body("inv_year")
+    .trim()
+    .escape()
+    .notEmpty()
+    .isLength({ min: 4 })
+    .withMessage("Please provide a year."), // on error this message is sent.
 
+    // Make is required and must be string
+    body("inv_description")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 2 })
+      .withMessage("Please provide a description."), // on error this message is sent.
+
+      // Make is required and must be string
+    body("inv_image")
+    .trim()
+    .escape()
+    .notEmpty()
+    .isLength({ min: 3 })
+    .withMessage("Please provide an image."), // on error this message is sent.
+
+    // Make is required and must be string
+    body("inv_thumbnail")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a thumbnail."), // on error this message is sent.
+
+      // Make is required and must be string
+    body("inv_price")
+    .trim()
+    .escape()
+    .notEmpty()
+    .isLength({ min: 3 })
+    .withMessage("Please provide a price."), // on error this message is sent.
+
+    // Make is required and must be string
+    body("inv_miles")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isLength({ min: 3 })
+      .withMessage("Please provide the mileage."), // on error this message is sent.
+
+      // Make is required and must be string
+    body("inv_color")
+    .trim()
+    .escape()
+    .notEmpty()
+    .isLength({ min: 3 })
+    .withMessage("Please provide a color."), // on error this message is sent.
+
+    // Make is required and must be string
+    body("classification_id")
+      .trim()
+      .escape()
+      .notEmpty()
+      .withMessage("Please provide a classification."), // on error this message is sent.
+  ]
+}
 
 /* ******************************
 * Check data and return errors or continue to registration
@@ -194,6 +278,53 @@ invValidate.checkInvData = async (req, res, next) => {
       nav,
       classificationList,
       
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id
+    })
+    return
+  }
+  next()
+}
+
+//Check updated inventory data
+invValidate.checkUpdateData = async (req, res, next) => {
+  const {
+    inv_id, 
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+
+  } = req.body
+
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    const classificationList = await utilities.buildClassificationList()
+
+    res.render("inventory/edit-inventory", {      
+      title: "Edit Vehicle: " + itemName,
+      nav,
+      classificationList,
+
+      errors,
+      
+      inv_id,
       inv_make,
       inv_model,
       inv_year,

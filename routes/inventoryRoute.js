@@ -12,6 +12,7 @@ const invValidate = require('../utilities/inventory-validation') //Import the ac
  * ************************** */
 router.get(
     "/", 
+    utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
     utilities.handleErrors(invController.buildManagementView)
 )
 
@@ -20,6 +21,7 @@ router.get(
  * ************************** */
 router.get(
     "/add-classification", 
+    utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
     utilities.handleErrors(invController.buildAddClassificationView)
 )
 
@@ -29,6 +31,7 @@ router.get(
 
 router.get(
     "/add-inventory", 
+    utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
     utilities.handleErrors(invController.buildAddInventoryView)
 )
 
@@ -37,6 +40,7 @@ router.get(
  * ************************** */
 router.get(
     "/edit/:inv_id", 
+    utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
     utilities.handleErrors(invController.buildEditInventoryView)
 )
 
@@ -45,6 +49,7 @@ router.get(
  * ************************** */
 router.get(
     "/delete/:inv_id", 
+    utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
     utilities.handleErrors(invController.buildDeleteInventoryView )
 )
 
@@ -78,6 +83,7 @@ router.get(
  * ************************** */
 router.get(
     "/getInventory/:classification_id", 
+    utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
     utilities.handleErrors(invController.getInventoryJSON)
 )
 
@@ -86,6 +92,7 @@ router.get(
  * ************************** */
 router.post(
   "/add-classification", //The path being watched for in the route.
+  utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
   invValidate.classificationRules(), //The function containing the rules to be used in the validation process.
   invValidate.checkClassData, //The call to run the validation and handle the errors, if any.
   utilities.handleErrors(invController.addClassification) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
@@ -96,15 +103,22 @@ router.post(
  * ************************** */
 router.post(
   "/add-inventory",
+  utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
   invValidate.inventoryRules(), // validation rules
   invValidate.checkInvData,    // check validation
   utilities.handleErrors(invController.addInventory)
 )
 
 /* ***************************
- *  Route to edit new inventory
+ *  Route to update inventory
  * ************************** */
-
+router.post(
+  "/update-inventory",
+  utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  invValidate.udpateInventoryRules(), // validation rules
+  invValidate.checkUpdateData,    // check validation
+  utilities.handleErrors(invController.updateInventory)
+)
 
 
 //Export the router to be used in other areas of the application

@@ -25,7 +25,7 @@
 <section class="form-container">
   <h2>Use this form to update this vehicle’s information</h2>
 
-  <form class="account-form" action="/inv/update/" method="POST">
+  <form id="updateForm" class="account-form" action="/inv/update-inventory" method="POST">
 
     <fieldset>
       <legend>Vehicle Details</legend>
@@ -103,10 +103,18 @@
       </div>
     </fieldset>
 
-    <button type="submit">Update Vehicle</button>
+    <button id="updateBtn" type="submit" disabled>Update Vehicle</button>
   </form>
 
   <p class="form-footer">
     <a href="/inv">Return to Vehicle Management</a>
   </p>
 </section>
+
+
+
+
+
+
+<!-- Activate form button only if at least one field has been changed -->
+<script src="../../js/inv-update.js"></script>

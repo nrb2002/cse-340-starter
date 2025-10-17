@@ -189,6 +189,12 @@ a {
   color: var(--secondary-color);
 }
 
+button:disabled,
+button:disabled:hover{
+  background-color: var(--accent-1);
+  color:black;
+}
+
 button,
 .btn,
 input[type=submit] {
