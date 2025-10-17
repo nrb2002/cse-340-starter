@@ -120,6 +120,15 @@ router.post(
   utilities.handleErrors(invController.updateInventory)
 )
 
+/* ***************************
+ *  Route to delete inventory
+ * ************************** */
+router.post(
+  "/delete-inventory",
+  utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  utilities.handleErrors(invController.deleteInventory)
+)
+
 
 //Export the router to be used in other areas of the application
 module.exports = router;

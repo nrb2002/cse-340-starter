@@ -1,0 +1,49 @@
+<!-- EJS code block to contain a JavaScript if structure to determine if a "title" variable exists. -->
+<% if (title) { %>
+  <h1><%= title || "Delete Inventory Item" %></h1>
+<% } %>
+
+<!-- Flash message (if any) -->
+<% if (messages && messages.length > 0) { %>
+  <div class="flash-message">
+    <% messages.forEach(function(message) { %>
+      <p><%= message %></p><br>
+    <% }) %>
+  </div>
+<% } %>
+
+<!-- Errors to display, if any -->
+<% if (errors && errors.array && errors.array().length > 0) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<p class="notice">⚠️ Confirm Deletion - This action is permanent and cannot be undone.</p>
+
+<section id="delete-confirm" class="vehicle-detail">
+
+  <!-- Vehicle display -->
+  <div class="vehicle-image">
+    <img src="<%= inv_image %>" alt="Image of <%= inv_make %> <%= inv_model %>">
+  </div>
+
+  <div class="vehicle-info">
+    <h2><%= inv_year %> <%= inv_make %> <%= inv_model %> ($<%= inv_price.toLocaleString() %>)</h2>
+    <ul>
+      <li><strong>Price:</strong> $<%= inv_price.toLocaleString() %></li>
+      <li><strong>Mileage:</strong> <%= inv_miles.toLocaleString() %> miles</li>
+      <li><strong>Color:</strong> <%= inv_color %></li>
+      <li><strong>Description:</strong> <%= inv_description %></li>
+    </ul>
+  </div>
+
+  <!-- Delete form -->
+  <form action="/inv/delete-inventory" method="POST" class="delete-form">
+    <input type="hidden" name="inv_id" value="<%= inv_id %>">
+    <button type="submit" class="delete-btn">Delete Vehicle</button>
+    <a href="/inv" class="cancel-btn">Cancel</a>
+  </form>
+</section>
