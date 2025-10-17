@@ -33,6 +33,23 @@ router.get(
 )
 
 /* ***************************
+ *  Route to edit inventory view
+ * ************************** */
+router.get(
+    "/edit/:inv_id", 
+    utilities.handleErrors(invController.buildEditInventoryView)
+)
+
+/* ***************************
+ *  Route to delete inventory view
+ * ************************** */
+router.get(
+    "/delete/:inv_id", 
+    utilities.handleErrors(invController.buildDeleteInventoryView )
+)
+
+
+/* ***************************
  *  Route to build inventory by classification view
  * ************************** */
 
@@ -85,20 +102,9 @@ router.post(
 )
 
 /* ***************************
- *  Route to edit inventory
+ *  Route to edit new inventory
  * ************************** */
-router.get(
-    "/edit/:inv_id", 
-    utilities.handleErrors(invController.buildEditInventoryView)
-)
 
-/* ***************************
- *  Route to delete inventory
- * ************************** */
-router.get(
-    "/delete/:inv_id", 
-    utilities.handleErrors(invController.buildDeleteInventory )
-)
 
 
 //Export the router to be used in other areas of the application
