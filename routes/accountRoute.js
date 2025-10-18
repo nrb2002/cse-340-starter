@@ -21,10 +21,18 @@ router.get(
  *  Route to deliver Login view
  * ************************** */
 
-// Route for "Login" page
 router.get(
   "/login",
-  utilities.handleErrors(accountController.buildLogin) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
+  (req, res, next) => {
+    // If user already has a valid JWT cookie → log them out first
+    const token = req.cookies.jwt
+    if (token) {
+      res.clearCookie("jwt")
+      req.flash("notice", "You have been signed out to log in again.")
+    }
+    next()
+  },
+  utilities.handleErrors(accountController.buildLogin)
 )
 
 /* ***************************

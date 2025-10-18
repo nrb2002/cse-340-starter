@@ -99,54 +99,60 @@ async function getAccountById(account_id) {
   }
 }
 
-/* Update account info */
-async function updateAccount(account_id, firstname, lastname, email) {
+/* *****************************
+ *  Update Account Information
+ * ***************************** */
+async function updateAccount(account_id, account_firstname, account_lastname, account_email) {
   try {
     const sql = `
-      UPDATE account
-      SET account_firstname = $1,
-          account_lastname = $2,
-          account_email = $3
+      UPDATE public.account
+      SET 
+        account_firstname = $1,
+        account_lastname = $2,
+        account_email = $3
       WHERE account_id = $4
       RETURNING *;
     `
-    const data = await pool.query(sql, [firstname, lastname, email, account_id])
-    return data.rowCount
+    const data = await pool.query(sql, [
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id
+    ])
+    return data.rows[0]
   } catch (error) {
-    console.error("updateAccount error:", error)
+    console.error("Error updating account:", error)
+    throw error
   }
 }
 
-/* Update password */
+/* *****************************
+ *  Update Password
+ * ***************************** */
 async function updatePassword(account_id, hashedPassword) {
   try {
     const sql = `
-      UPDATE account
+      UPDATE public.account
       SET account_password = $1
-      WHERE account_id = $2;
+      WHERE account_id = $2
+      RETURNING *;
     `
     const data = await pool.query(sql, [hashedPassword, account_id])
-    return data.rowCount
+    return data.rows[0]
   } catch (error) {
-    console.error("updatePassword error:", error)
+    console.error("Error updating password:", error)
+    throw error
   }
 }
-
-module.exports = {
-  getAccountByEmail,
-  registerAccount,
-  getAccountById,
-  updateAccount,
-  updatePassword,
-}
-
-
 
 
 
 module.exports = { 
+  getAccountByEmail,
+  getAccountById,
+  updateAccount,
+  updatePassword,
   registerAccount, 
   checkExistingEmail,
-  getAccountByEmail, 
   resetAccount 
   }

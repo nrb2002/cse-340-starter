@@ -18,6 +18,10 @@
     </div>
 <% } %>
 
+<% if (locals.logoutSignal) { %>
+<script>localStorage.setItem("logout", Date.now());</script>
+<% } %>
+
 <!-- Errors to display, if any -->
 <!-- If there are errors, create an unordered list with a class for styling. -->
 <% if (errors && errors.array && errors.array().length> 0) { %>
@@ -64,4 +68,8 @@
     </p>
 </section>
     
-    
+
+
+
+
+<script src="../../js/login.js"></script>

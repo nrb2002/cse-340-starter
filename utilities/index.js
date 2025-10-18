@@ -214,7 +214,32 @@ Util.checkInventoryAuth = async (req, res, next) => {
   }
 }
 
+/* ****************************************
+ *  Middleware to inject account info
+ * ************************************ */
+Util.injectDashboardData = async function (req, res, next) {
+  try {
+    const token = req.cookies.jwt
 
+    if (token) {
+      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+      res.locals.accountData = decoded
+      res.locals.isLoggedIn = true
+    } else if (req.session.accountData) {
+      // fallback if you’re still using session for some areas
+      res.locals.accountData = req.session.accountData
+      res.locals.isLoggedIn = true
+    } else {
+      res.locals.isLoggedIn = false
+      res.locals.accountData = null
+    }
+  } catch (err) {
+    console.error("Error injecting account data:", err)
+    res.locals.isLoggedIn = false
+    res.locals.accountData = null
+  }
+  next()
+}
 
 
 /* ****************************************

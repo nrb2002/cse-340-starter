@@ -51,6 +51,10 @@
     width: 50%;
   }
 
+  #tools a{
+    font-size: 1rem;
+  }
+
   
 
   /* Inventory Display */

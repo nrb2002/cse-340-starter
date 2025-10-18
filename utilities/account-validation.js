@@ -170,46 +170,38 @@ validate.checkRegData = async (req, res, next) => {
 
 validate.updateAccountRules = () => {
   return [
-    body("account_firstname")
-      .trim()
-      .notEmpty()
-      .withMessage("First name is required."),
-
-    body("account_lastname")
-      .trim()
-      .notEmpty()
-      .withMessage("Last name is required."),
-
-    body("account_email")
-      .trim()
-      .isEmail()
-      .withMessage("A valid email is required.")
-      .custom(async (account_email, { req }) => {
-        const existingEmail = await accountModel.getAccountByEmail(account_email)
-        if (
-          existingEmail &&
-          existingEmail.account_id != req.body.account_id
-        ) {
-          throw new Error("Email already in use. Please choose another.")
-        }
-      }),
+    // firstname is required and must be string
+      body("account_firstname")
+        .trim()
+        .escape()
+        .notEmpty()
+        .isLength({ min: 1 })
+        .withMessage("Please provide a first name."), // on error this message is sent.
+  
+      // lastname is required and must be string
+      body("account_lastname")
+        .trim()
+        .escape()
+        .notEmpty()
+        .isLength({ min: 2 })
+        .withMessage("Please provide a last name."), // on error this message is sent.
   ]
 }
 
 validate.passwordRules = () => {
   return [
+    // password is required and must be strong password
     body("account_password")
       .trim()
-      .isLength({ min: 8 })
-      .withMessage("Password must be at least 8 characters long.")
-      .matches(/[A-Z]/)
-      .withMessage("Password must contain an uppercase letter.")
-      .matches(/[a-z]/)
-      .withMessage("Password must contain a lowercase letter.")
-      .matches(/[0-9]/)
-      .withMessage("Password must contain a number.")
-      .matches(/[@$!%*?&]/)
-      .withMessage("Password must contain a special character."),
+      .notEmpty()
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage("Password does not meet requirements."),
   ]
 }
 

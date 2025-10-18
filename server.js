@@ -52,8 +52,16 @@ app.use(cookieParser())
 //Use the JWT middleware to check token
 app.use(utilities.checkJWTToken)
 
+//Inject dashboard data in every signed view
+app.use(utilities.injectDashboardData)
 
-
+//Prevent caching of the login page
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-cache, no-store, must-revalidate")
+  res.set("Pragma", "no-cache")
+  res.set("Expires", "0")
+  next()
+})
 
 
 // Express Messages Middleware

@@ -12,6 +12,15 @@ const invValidate = require('../utilities/inventory-validation') //Import the ac
  * ************************** */
 router.get(
     "/", 
+    (req, res, next) => {
+      // If user already has a valid JWT cookie → log them out first
+      const token = req.cookies.jwt
+      if (token) {
+        res.clearCookie("jwt")
+        req.flash("notice", "You have been signed out to log in again.")
+      }
+      next()
+    },
     utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
     utilities.checkInventoryAuth, //Middleware to check JWT and account type
     utilities.handleErrors(invController.buildManagementView)

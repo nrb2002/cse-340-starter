@@ -141,56 +141,64 @@ async function registerAccount(req, res) {
  *  Process Account Update
  * **************************************** */
 async function updateAccount(req, res, next) {
-  const { account_id, account_firstname, account_lastname, account_email } = req.body
+  const { account_firstname, account_lastname, account_email, account_id } = req.body
+  try {
+    const updatedAccount = await accountModel.updateAccount(
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    )
 
-  const updateResult = await accountModel.updateAccount(
-    account_id,
-    account_firstname,
-    account_lastname,
-    account_email
-  )
+    if (updatedAccount) {
+      // Refresh JWT token with new user info
+      const accessToken = jwt.sign(
+        {
+          account_id: updatedAccount.account_id,
+          account_firstname: updatedAccount.account_firstname,
+          account_lastname: updatedAccount.account_lastname,
+          account_email: updatedAccount.account_email,
+          account_type: updatedAccount.account_type,
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "1h" }
+      )
 
-  const nav = await utilities.getNav()
+      //Clear old cookie and set new one
+      res.clearCookie("jwt")
+      res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600000 })
 
-  if (updateResult) {
-    const updatedAccount = await accountModel.getAccountById(account_id)
-    req.flash("notice", "Account information updated successfully.")
-    res.render("account/management", {
-      title: "Account Management",
-      nav,
-      errors: null,
-      messages: req.flash("notice") || [],
-      accountData: updatedAccount,
-    })
-  } else {
-    req.flash("error", "Update failed. Please try again.")
-    res.redirect(`/account/update/${account_id}`)
+      req.flash("notice", "Account information updated successfully.")
+      return res.redirect("/account/")
+    } else {
+      req.flash("notice", "Account update failed. Please try again.")
+      return res.redirect(`/account/update/${account_id}`)
+    }
+  } catch (error) {
+    console.error("Account update error:", error)
+    next(error)
   }
 }
 
-/* ****************************************
+/* *****************************
  *  Process Password Update
- * **************************************** */
+ * ***************************** */
 async function updatePassword(req, res, next) {
-  const { account_id, account_password } = req.body
-  const hashedPassword = await bcrypt.hash(account_password, 10)
+  const { account_password, account_id } = req.body
+  try {
+    const hashedPassword = await bcrypt.hash(account_password, 10)
+    const updateResult = await accountModel.updatePassword(account_id, hashedPassword)
 
-  const passwordResult = await accountModel.updatePassword(account_id, hashedPassword)
-  const nav = await utilities.getNav()
-
-  if (passwordResult) {
-    req.flash("notice", "Password updated successfully.")
-    const updatedAccount = await accountModel.getAccountById(account_id)
-    res.render("account/management", {
-      title: "Account Management",
-      nav,
-      errors: null,
-      messages: req.flash("notice") || [],
-      accountData: updatedAccount,
-    })
-  } else {
-    req.flash("error", "Password update failed. Try again.")
-    res.redirect(`/account/update/${account_id}`)
+    if (updateResult) {
+      req.flash("flash-message", "Password updated successfully.")
+      res.redirect("/account/")
+    } else {
+      req.flash("notice", "Password update failed. Please try again.")
+      res.redirect(`/account/update/${account_id}`)
+    }
+  } catch (error) {
+    console.error("Password update error:", error)
+    next(error)
   }
 }
 
@@ -259,20 +267,29 @@ async function accountLogin(req, res) {
 /* ****************************************
  *  Process logout and clear session
  * ************************************ */
-async function accountLogout(req, res, next) {
+async function accountLogout(req, res) {
   try {
-    // Clear the JWT cookie
-    res.clearCookie("jwt", { httpOnly: true, secure: process.env.NODE_ENV !== "development" })
-    
-    // Optional: clear any session data
-    if (req.session) {
-      req.session.destroy()
-    }
+    // Clear JWT cookie (applies to all tabs)
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: false, // true if using HTTPS
+      sameSite: "strict",
+      path: "/", // important so it applies to all routes
+    })
+    // Optional: prevent cached content
+    res.set("Cache-Control", "no-store, no-cache, must-revalidate, private")
+    res.set("Pragma", "no-cache")
+    res.set("Expires", "0")
 
-    // Redirect to home page
-    res.redirect("/")
+    res.cookie("jwt", "", { expires: new Date(0), path: "/" })
+    res.set("Clear-Site-Data", '"cookies", "storage"')
+    res.locals.logoutSignal = true
+
+    req.flash("notice", "You have been logged out.")
+    return res.redirect("/account/login")
   } catch (error) {
-    next(error)
+    console.error("Logout error:", error)
+    res.redirect("/account/login")
   }
 }
 

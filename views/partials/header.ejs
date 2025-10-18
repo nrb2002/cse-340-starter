@@ -6,19 +6,19 @@
   </span>
 
   <div id="tools">
-    <% if (locals.accountData) { %>
+    <% if (accountData) { %>
       <!-- When logged in -->
       <a href="/account/" class="welcome-badge" title="Go to your dashboard">
-        Hi, <%= accountData.account_firstname %>! Here's your Dashboard.
-      </a> |
+        👋 Hi, <%= accountData.account_firstname %>!
+      </a>
       <a href="/account/logout" class="logout-btn" title="Log out of your account">
         Logout
       </a>
-      <% } else { %>
-        <!-- When not logged in -->
-        <a href="/account/login" class="login-link" title="Click to log in">
-          My Account
-        </a>
-      <% } %>
+    <% } else { %>
+      <!-- When not logged in -->
+      <a href="/account/login" class="login-link" title="Click to log in">
+        My Account
+      </a>
+    <% } %>
   </div>
 </header>
