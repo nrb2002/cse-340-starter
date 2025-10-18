@@ -426,7 +426,7 @@ invCont.updateClassification = async function (req, res, next) {
 }
 
 /* ***************************
- *  Delete classification
+ *  Process Delete classification
  * ************************** */
 invCont.deleteClassification = async function (req, res, next) {
   try {
