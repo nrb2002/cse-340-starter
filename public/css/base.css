@@ -837,85 +837,135 @@ button.togglePassword:focus {
    Targets: #inventoryDisplay
    ============================ */
 
-/* Basic reset + layout for mobile (stacked "cards") */
-#inventoryDisplay {
+/* Mobile-first: full-width table cards */
+#inventoryDisplay,
+#classificationDisplay {
   width: 100%;
   border-collapse: collapse;
   font-family: inherit;
-  margin: 0;
+  margin: 0.5rem 0;
 }
 
-/* Hide the table header on small screens (we'll show labels in each cell) */
-#inventoryDisplay thead {
+/* Hide the header by default on mobile */
+#inventoryDisplay thead,
+#classificationDisplay thead {
   display: none;
 }
 
-/* Each row becomes a block (card) */
+/* Each row becomes a full-width block */
 #inventoryDisplay tbody,
-#inventoryDisplay tr {
+#inventoryDisplay tr,
+#classificationDisplay tbody,
+#classificationDisplay tr {
   display: block;
   width: 100%;
-}
-
-/* Row (card) wrapper */
-#inventoryDisplay tr {
-  background: #fff;
+  margin-bottom: 1rem;
+  border: 1px solid #e1e1e1;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  padding: 0.6rem;
-  margin: 0.6rem 0;
-  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  background: #fff;
+  padding: 0.5rem;
+  box-sizing: border-box; /* ensure padding doesn't break width */
 }
 
-/* Cells become stacked blocks */
-#inventoryDisplay td {
+/* Each cell stacked with label */
+#inventoryDisplay td,
+#classificationDisplay td {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 0.35rem 0;
+  width: 100%;
+  padding: 0.5rem;
   font-size: 0.95rem;
-  color: #111;
   border: none;
+  box-sizing: border-box;
 }
 
-/* Make action links/buttons look like buttons on mobile for easier tapping */
-#inventoryDisplay a {
+/* Label before value for mobile */
+#inventoryDisplay td:before,
+#classificationDisplay td:before {
+  content: attr(data-label);
+  font-weight: 600;
+  flex-basis: 50%;
+  color: #555;
+}
+
+/* Action buttons aligned right */
+#inventoryDisplay td.actions,
+#classificationDisplay td.actions {
+  justify-content: flex-end;
+}
+
+/* Action buttons styling */
+#inventoryDisplay a,
+#classificationDisplay a {
   display: inline-block;
   padding: 0.35rem 0.6rem;
   border-radius: 6px;
   text-decoration: none;
   font-weight: 600;
   border: 1px solid rgba(0,0,0,0.08);
+  margin-left: 0.5rem;
 }
 
-/* Visual styles for specific actions (tweak colors to match theme) */
 #inventoryDisplay a[title*="update"],
-#inventoryDisplay a[title*="Modify"] {
+#classificationDisplay a[title*="update"] {
   background: #f3f7ff;
   color: #0b5cff;
   border-color: rgba(11,92,255,0.12);
 }
+
 #inventoryDisplay a[title*="delete"],
-#inventoryDisplay a[title*="Delete"] {
+#classificationDisplay a[title*="delete"] {
   background: #fff6f6;
   color: #c91e1e;
   border-color: rgba(201,30,30,0.12);
 }
 
-/* Accessibility: focus styles */
-#inventoryDisplay a:focus {
-  outline: 3px solid rgba(11,92,255,0.18);
-  outline-offset: 2px;
-}
+/* Desktop view: full-width table with headers */
+@media (min-width: 700px) {
+  #inventoryDisplay,
+  #classificationDisplay {
+    width: 100%;
+    table-layout: fixed;  /* columns take available width evenly */
+  }
 
-/* Optional: horizontal overflow fallback for mid-size screens */
-@media (min-width: 500px) and (max-width: 699px) {
-  #inventoryDisplay {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  #inventoryDisplay thead,
+  #classificationDisplay thead {
+    display: table-header-group;
+    background: #f3f7ff;
+  }
+
+  #inventoryDisplay tr,
+  #classificationDisplay tr {
+    display: table-row;
+    border: 1px solid #e1e1e1;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  #inventoryDisplay td,
+  #classificationDisplay td {
+    display: table-cell;
+    padding: 0.75rem 1rem;
+    width: auto;  /* allows table-layout: fixed to distribute space */
+  }
+
+  #inventoryDisplay td.actions,
+  #classificationDisplay td.actions {
+    width: 25%; /* optional: reserve space for action buttons */
+  }
+
+  #inventoryDisplay td:first-child,
+  #classificationDisplay td:first-child {
+    width: 75%; /* first column takes remaining space */
+  }
+
+  #inventoryDisplay td:before,
+  #classificationDisplay td:before {
+    content: none;
   }
 }
+
 
 
 
@@ -1109,3 +1159,6 @@ footer {
   padding: 0.8rem;
   border-radius: 0.25rem;
 }
+
+
+

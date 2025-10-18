@@ -63,7 +63,6 @@ app.use((req, res, next) => {
   next()
 })
 
-
 // Express Messages Middleware
 app.use(flash()) //Make connect-flash package accessible throughout the application.
 app.use(function(req, res, next){

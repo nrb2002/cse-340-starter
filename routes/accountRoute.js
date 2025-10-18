@@ -28,7 +28,7 @@ router.get(
     const token = req.cookies.jwt
     if (token) {
       res.clearCookie("jwt")
-      req.flash("notice", "You have been signed out to log in again.")
+      req.flash("notice", "You have been signed out: PLease, log in again.")
     }
     next()
   },

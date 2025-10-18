@@ -12,15 +12,6 @@ const invValidate = require('../utilities/inventory-validation') //Import the ac
  * ************************** */
 router.get(
     "/", 
-    (req, res, next) => {
-      // If user already has a valid JWT cookie → log them out first
-      const token = req.cookies.jwt
-      if (token) {
-        res.clearCookie("jwt")
-        req.flash("notice", "You have been signed out to log in again.")
-      }
-      next()
-    },
     utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
     utilities.checkInventoryAuth, //Middleware to check JWT and account type
     utilities.handleErrors(invController.buildManagementView)
@@ -32,6 +23,7 @@ router.get(
 router.get(
     "/add-classification", 
     utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+    utilities.checkInventoryAuth,  // <-- Only Employees/Admins
     utilities.handleErrors(invController.buildAddClassificationView)
 )
 
@@ -42,6 +34,7 @@ router.get(
 router.get(
     "/add-inventory", 
     utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+    utilities.checkInventoryAuth,  // <-- Only Employees/Admins
     utilities.handleErrors(invController.buildAddInventoryView)
 )
 
@@ -51,6 +44,7 @@ router.get(
 router.get(
     "/edit/:inv_id", 
     utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+    utilities.checkInventoryAuth,  // <-- Only Employees/Admins
     utilities.handleErrors(invController.buildEditInventoryView)
 )
 
@@ -60,6 +54,7 @@ router.get(
 router.get(
     "/delete/:inv_id", 
     utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+    utilities.checkInventoryAuth,  // <-- Only Employees/Admins
     utilities.handleErrors(invController.buildDeleteInventoryView )
 )
 
@@ -94,6 +89,7 @@ router.get(
 router.get(
     "/getInventory/:classification_id", 
     utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+    utilities.checkInventoryAuth,  // <-- Only Employees/Admins
     utilities.handleErrors(invController.getInventoryJSON)
 )
 
@@ -103,6 +99,7 @@ router.get(
 router.post(
   "/add-classification", //The path being watched for in the route.
   utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  utilities.checkInventoryAuth,  // <-- Only Employees/Admins
   invValidate.classificationRules(), //The function containing the rules to be used in the validation process.
   invValidate.checkClassData, //The call to run the validation and handle the errors, if any.
   utilities.handleErrors(invController.addClassification) //Uses utilities.handleErrors() to wrap your controller → this catches errors automatically.
@@ -114,6 +111,7 @@ router.post(
 router.post(
   "/add-inventory",
   utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  utilities.checkInventoryAuth,  // <-- Only Employees/Admins
   invValidate.inventoryRules(), // validation rules
   invValidate.checkInvData,    // check validation
   utilities.handleErrors(invController.addInventory)
@@ -125,6 +123,7 @@ router.post(
 router.post(
   "/update-inventory",
   utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  utilities.checkInventoryAuth,  // <-- Only Employees/Admins
   invValidate.udpateInventoryRules(), // validation rules
   invValidate.checkUpdateData,    // check validation
   utilities.handleErrors(invController.updateInventory)
@@ -136,9 +135,58 @@ router.post(
 router.post(
   "/delete-inventory",
   utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  utilities.checkInventoryAuth,  // <-- Only Employees/Admins
   utilities.handleErrors(invController.deleteInventory)
 )
 
+/* ***************************
+ *  Route to manage classifications
+ * ************************** */
+//Get all classifications
+router.get(
+    "/classifications/getAll",
+    utilities.checkLogin,
+    utilities.checkInventoryAuth, // Only Employee/Admin
+    utilities.handleErrors(invController.getAllClassificationsJSON)
+)
+
+// Only Employee/Admin
+router.get(
+  "/classifications/manage",
+  utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  utilities.checkInventoryAuth,  // <-- Only Employees/Admins
+  utilities.handleErrors(invController.buildClassificationManagement)
+)
+
+router.post(
+  "/classifications/update",
+  utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  utilities.checkInventoryAuth,  // <-- Only Employees/Admins
+  utilities.handleErrors(invController.updateClassification)
+)
+
+router.get(
+  "/classifications/delete/:classification_id",
+  utilities.checkLogin, //Middleware checking authorization to access designed areas of the site
+  utilities.checkInventoryAuth,  // <-- Only Employees/Admins
+  utilities.handleErrors(invController.deleteClassification)
+)
+
+// Show the update classification form
+router.get(
+  "/classifications/update/:classification_id",
+  utilities.checkLogin,
+  utilities.checkInventoryAuth,
+  utilities.handleErrors(invController.buildUpdateClassificationView)
+)
+
+// Show the update classification form
+router.get(
+  "/classifications/update/:classification_id",
+  utilities.checkLogin,
+  utilities.checkInventoryAuth,
+  utilities.handleErrors(invController.buildUpdateClassificationView)
+)
 
 //Export the router to be used in other areas of the application
 module.exports = router;

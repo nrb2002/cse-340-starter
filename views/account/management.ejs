@@ -13,8 +13,9 @@
 
           <% if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
             <li><a href="/inv">Inventory Management</a></li>
-            <li><a href="/inv/add-classification">Add Classification</a></li>
-            <li><a href="/inv/add-inventory">Add Inventory</a></li>
+            <li><a href="/inv/add-inventory">Add New Inventory</a></li>
+            <li><a href="/inv/classifications/manage">Manage Classifications</a></li>
+            <li><a href="/inv/add-classification">Add New Classification</a></li>
           <% } %>
 
           <li><a href="/account/logout" class="logout">Logout</a></li>

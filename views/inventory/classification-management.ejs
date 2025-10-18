@@ -1,0 +1,42 @@
+<!-- Display page title -->
+<% if (title) { %>
+    <h1><%= title || "Classification Management" %></h1>
+<% } %>
+
+<!-- Flash message (if any) -->
+<% if (messages && messages.length > 0) { %>
+<div class="flash-message">
+    <% messages.forEach(function(message){ %>
+        <p><%= message %></p><br>
+    <% }) %>
+</div>
+<% } %>
+
+<section class="management-links">    
+    <ul>
+        <li class="btn">
+            <a href="/inv/add-classification">
+                ➕ Add New Classification
+            </a>
+        </li>
+        <li class="btn">
+            <a href="/inv/">
+                Inventory Management
+            </a>
+        </li>
+    </ul>    
+</section>
+
+<section>
+    <h2>Manage Classifications</h2><hr><br>
+    <p>Below are all current classifications. You can update or delete them.</p><br>
+
+    <!-- Table for classifications -->
+    <table id="classificationDisplay"></table>
+
+    <!-- display a message if JavaScript is disabled -->
+    <noscript>JavaScript must be enabled to use this page.</noscript>
+</section>
+
+<!-- Load classification management JS -->
+<script src="../../js/classifications.js"></script>

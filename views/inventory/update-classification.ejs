@@ -1,0 +1,16 @@
+<h1><%= title %></h1>
+
+<% if (messages.length) { %>
+  <div class="flash-message">
+    <% messages.forEach(msg => { %>
+      <p><%= msg %></p>
+    <% }) %>
+  </div>
+<% } %>
+
+<form action="/inv/classifications/update" method="post">
+  <input type="hidden" name="classification_id" value="<%= classification_id %>">
+  <label for="classification_name">Classification Name</label>
+  <input type="text" name="classification_name" id="classification_name" value="<%= classification_name %>" required>
+  <button type="submit">Update Classification</button>
+</form>

@@ -375,9 +375,94 @@ invCont.deleteInventory = async function (req, res, next) {
   }
 }
 
+/* ***************************
+ *  Show classification management
+ * ************************** */
+invCont.buildClassificationManagement = async function (req, res, next) {
+  try {
+    const classifications = await invModel.getClassifications();
+    res.render("inventory/classification-management", {
+      title: "Classification Management",
+      classifications: classifications.rows,
+      messages: req.flash("success") || [],
+      errors: req.flash("error") || [],
+      nav: await utilities.getNav() // optional if you want nav
+    });
+  } catch (error) {
+    console.error("Error building classification management:", error);
+    next(error);
+  }
+}
+
+/* ***************************
+ *  Return all classifications as JSON
+ * ************************** */
+invCont.getAllClassificationsJSON = async function (req, res, next) {
+    try {
+        const classifications = await invModel.getClassifications()
+        res.json(classifications.rows)
+    } catch (error) {
+        console.error("Error fetching classifications:", error)
+        res.status(500).json({ error: "Failed to get classifications" })
+    }
+}
 
 
+/* ***************************
+ *  Update classification
+ * ************************** */
+invCont.updateClassification = async function (req, res, next) {
+  try {
+    const { classification_id, classification_name } = req.body;
+    const result = await invModel.updateClassification(classification_id, classification_name);
+    if (result) req.flash("success", "Classification updated successfully.");
+    else req.flash("error", "Update failed.");
+    res.redirect("/inv/classifications/manage");
+  } catch (error) {
+    console.error("Error updating classification:", error);
+    req.flash("error", "Update failed. Please try again.");
+    res.redirect("/inv/classifications/manage");
+  }
+}
 
+/* ***************************
+ *  Delete classification
+ * ************************** */
+invCont.deleteClassification = async function (req, res, next) {
+  try {
+    const { classification_id } = req.params;
+    const result = await invModel.deleteClassification(classification_id);
+    if (result) req.flash("success", "Classification deleted successfully.");
+    else req.flash("error", "Delete failed.");
+    res.redirect("/inv/classifications/manage");
+  } catch (error) {
+    console.error("Error deleting classification:", error);
+    req.flash("error", "Delete failed. Please try again.");
+    res.redirect("/inv/classifications/manage");
+  }
+}
+
+/* ***************************
+ *  Build Update classification View
+ * ************************** */
+invCont.buildUpdateClassificationView = async function(req, res, next) {
+  const classification_id = parseInt(req.params.classification_id)
+  const classification = await invModel.getClassificationById(classification_id)
+  if (!classification) {
+    req.flash("error", "Classification not found")
+    return res.redirect("/inv/classifications/manage")
+  }
+
+  const nav = await utilities.getNav()
+  res.render("inventory/update-classification", {
+    title: `Update: ${classification.classification_name}`,
+    nav,
+    errors: null,
+    messages: req.flash("notice") || [],
+    classification_id: classification.classification_id,
+    classification_name: classification.classification_name
+  })
+}
 
 
 
